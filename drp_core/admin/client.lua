@@ -1,0 +1,6 @@
+RegisterNetEvent("DRP_Core:HealCharacter")
+AddEventHandler("DRP_Core:HealCharacter", function()
+    local ped = GetPlayerPed(PlayerId())
+    local maxHealth = GetEntityMaxHealth(ped)
+    SetEntityHealth(ped, maxHealth)
+end)
