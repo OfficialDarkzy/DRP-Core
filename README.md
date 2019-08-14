@@ -18,15 +18,15 @@ Have a standard working FXServer!!
 
 Download the framework folder from the GitHub, which you are most likely reading this on! - Then you will see numbered folders, please follow it accordingly.
 
-1. In your resource folder you have from making an FXServer please put the [DRPCORE] in the main resource folder.
+1. In your resource folder you have from making an FXServer please put drp_core in the main resource folder.
 
-2. Next remove FiveM from your server.cfg resource list, it will look like this "start FiveM", just remove it completely
+2. Next remove the `start fivem` from your server.cfg resource list, it will look like this "start FiveM", just remove it completely as it has been replaced with drp_core code
 
 3. Next in your main resource folder you will see FiveM-Map-Skater, open that folder then open the \_\_resource.lua file. You will see something like this: `resource_type 'map' { gameTypes = { fivem = true } }` please replace that with `resource_type 'map' { gameTypes = { drp_core = true } }`.
 
 ## Database Installation
 
-1. Open Database Installation in the DRP-Framework files and move the [DRPDATABASE] folder into your resource main folder where [DRPCORE] should be located
+1. To Install the Database in the DRPfiles move the DatabaseAPI & externalsql files into your resource main folder
 
 2. Then open the config file in DatabaseAPI folder (JavaScript) and ExternalSQL folder (LUA)
 
@@ -38,14 +38,11 @@ Download the framework folder from the GitHub, which you are most likely reading
 
 ## Server.cfg Installation
 
-`
-# DRP-Database Resources
+```
 start DatabaseAPI
 start externalsql
-
-# DRP-Core Resource
 start drp_core
-`
+```
 
 This is a perfect example below, made by myself :D (Please bare in mind you will not see all these resources, that is because some of these are my own personal custom ones, which are not open to the public yet)
 http://prntscr.com/ns3kwl
@@ -63,4 +60,3 @@ Xander1998 For the DatabaseAPI and ExternalSQL resource
 Frazzle For NativeUILUA / Client Base Of Model Menu
 
 SEND YOUR CUSTOM RESOURCES TO ME AND ILL ADD IT TO THE COMMUNITY RELEASES
-
