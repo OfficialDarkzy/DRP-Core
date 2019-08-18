@@ -150,3 +150,7 @@ RegisterCommand("respawn", function(source, args, raw)
         TriggerEvent("DRP_Core:Error", "Death", tostring("You are not dead!"), 5000, false, "leftCenter")
     end
 end, false)
+
+function isPedDead()
+    return playerDied
+end

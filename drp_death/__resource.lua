@@ -14,3 +14,5 @@ client_script "config.lua"
 -- Server Scripts
 server_script "config.lua"
 server_script "server.lua"
+
+export "isPedDead"

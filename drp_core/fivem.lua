@@ -10,13 +10,18 @@ AddEventHandler('playerSpawned', function()
             TriggerServerEvent("DRP_ID:RequestOpenMenu")
             firstSpawn = false
         end
+    else
         print("Character Creator Not Active... Loading Basic DRP Core.")
     end
 end)
 ---------------------------------------------------------------------------
 AddEventHandler("onClientMapStart", function()
     exports["spawnmanager"]:spawnPlayer()
-    exports["spawnmanager"]:setAutoSpawn(false)
+    if DRPCoreConfig.AutoRespawn then
+        exports["spawnmanager"]:setAutoSpawn(true)
+    else
+        exports["spawnmanager"]:setAutoSpawn(false)
+    end
     -- Remove Patrolling cars etc.
     for a = 1, 15 do
         EnableDispatchService(a, false)

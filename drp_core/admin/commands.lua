@@ -58,6 +58,50 @@ RegisterCommand("heal", function(source, args, raw)
     end
 end, false)
 ---------------------------------------------------------------------------
+--- Add Yourself To A Group
+---------------------------------------------------------------------------
+-- RegisterCommand("addgroup", function(source, args, raw)
+--     local src = source
+--     local player = GetPlayerData(src)
+--     local adminid = args[1]
+--     local groups = args[2]
+--     if player ~= false then
+--         if adminid ~= nil then
+--             print(adminid)
+--             if groups ~= nil then
+--                 print(groups)
+--                 if DoesRankHavePerms(player.rank, "addgroup") then
+--                     exports["externalsql"]:DBAsyncQuery({
+--                         string = "UPDATE `users` SET `rank` = :group WHERE `id` = :sid",
+--                         data = {
+--                             sid = adminid,
+--                             group = groups
+--                         }
+--                     }, function(esteadmin)
+--                         TriggerClientEvent("DRP_Core:Info", src, "Admin System", tostring("I-ai dat gradul de : '"..groups.."' lui : "..adminid), 2500, false, "leftCenter")
+--                         TriggerClientEvent("DRP_Core:Info", src, "Admin System", tostring("Ai primit gradul de : '"..groups.."' de la : "..src), 2500, false, "leftCenter")
+--                     end)
+--                 else
+--                     TriggerClientEvent("DRP_Core:Info", src, "Admin System", tostring("Nah you can't do this"), 2500, false, "leftCenter")
+--                 end
+--             end
+--         end
+--     end
+-- end, false)
+
+RegisterCommand("gotow", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "teleport") then
+            TriggerClientEvent("DRP_Core:Success", src, "Admin System", tostring("You succesfuly teleported to waypoint"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Admin:TeleportToMarker", src)
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to teleport to waypoint"), 2500, false, "leftCenter")
+        end
+    end
+end, false) 
+---------------------------------------------------------------------------
 --- Set Yourself Or Others In Police Force USAGE: /adminaddcop id
 ---------------------------------------------------------------------------
 -- RegisterCommand("adminaddcop", function(source, args, raw)

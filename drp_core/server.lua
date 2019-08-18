@@ -5,34 +5,34 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
 	local src = source
 	local joinTime = os.time()
 	deferrals.defer()
-	deferrals.update("Checking Your Information, please wait...")
-	SetTimeout(2500, function()
-		exports["externalsql"]:DBAsyncQuery({
-			string = "SELECT * FROM `users` WHERE `identifier` = :identifier",
-			data = {
-				identifier = PlayerIdentifier("license", src)
-			}
-		}, function(results)
-			if #results["data"] >= 1 then
-				local player = results["data"][1]
-				local isBanned = json.decode(player.ban_data)
-				local isWhitelisted = player.whitelisted
-				if DRPCoreConfig.Whitelisted then
-					if isWhitelisted == 0 then
-						deferrals.done("["..DRPCoreConfig.CommunityName.."]: You are not whitelisted")
-						return
-					end
-				end
-				if isBanned.banned then
-					if isBanned.perm == true then
-						deferrals.done("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - Permanent")
-						return
-					end
+    deferrals.update("Checking Your Information, please wait...")
+    SetTimeout(2500, function()
+        exports["externalsql"]:DBAsyncQuery({
+            string = "SELECT * FROM `users` WHERE `identifier` = :identifier",
+            data = {
+                identifier = PlayerIdentifier("license", src)
+            }
+        }, function(results)
+            if #results["data"] >= 1 then
+                local player = results["data"][1]
+                local isBanned = json.decode(player.ban_data)
+                local isWhitelisted = player.whitelisted
+                if DRPCoreConfig.Whitelisted then
+                    if isWhitelisted == 0 then
+                        deferrals.done("["..DRPCoreConfig.CommunityName.."]: You are not whitelisted")
+                        return
+                    end
+                end
+                if isBanned.banned then
+                    if isBanned.perm == true then
+                        deferrals.done("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - Permanent")
+                        return
+                    end
 
-					local timeLeft = isBanned.time - joinTime
-					local banString = ""
+                    local timeLeft = isBanned.time - joinTime
+                    local banString = ""
                     if math.floor(timeLeft / 60) <= 0 then -- REMOVE BAN
-						exports["externalsql"]:DBAsyncQuery({
+                        exports["externalsql"]:DBAsyncQuery({
                             string = "UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier",
                             data = {
                                 bandata = json.encode({banned = false, reason = "", by = "", time = 0, perm = false}),
@@ -43,35 +43,36 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
                         end)
                         banString = tostring("["..DRPCoreConfig.CommunityName.."]: Ban Removed Sucessfully, please reconnect!")
                     else
-						banString = tostring("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - ( " .. math.floor(timeLeft / 60) .. " ) minutes")
-					end
-					deferrals.done(banString)
-					return
-				end
-				deferrals.done()
-			else
-				exports["externalsql"]:DBAsyncQuery({
-					string = "INSERT INTO `users` SET `identifier` = :identifier, `name` = :name, `rank` = :rank, `ban_data` = :bandata, `whitelisted` = :whitelisted",
-					data = {
-						identifier = PlayerIdentifier("license", src),
-						name = GetPlayerName(src),
-						rank = "User",
-						bandata = json.encode({banned = false, reason = "", by = "", time = 0, perm = false}),
-						whitelisted = false
-					}
-				}, function(createdPlayer)
-				------------------------------------------------------------------------------------
-					if DRPCoreConfig.Whitelisted then
-						deferrals.done("Please reconnect.. Your information has been saved and now ready to be whitelisted")
-					else
-						deferrals.done()
-					end
-				end)
-			end
-		end)
-	end)
+                        banString = tostring("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - ( " .. math.floor(timeLeft / 60) .. " ) minutes")
+                    end
+                    deferrals.done(banString)
+                    return
+                end
+                deferrals.done()
+            else
+                exports["externalsql"]:DBAsyncQuery({
+                    string = "INSERT INTO `users` SET `identifier` = :identifier, `name` = :name, `rank` = :rank, `ban_data` = :bandata, `whitelisted` = :whitelisted",
+                    data = {
+                        identifier = PlayerIdentifier("license", src),
+                        name = GetPlayerName(src),
+                        rank = "User",
+                        bandata = json.encode({banned = false, reason = "", by = "", time = 0, perm = false}),
+                        whitelisted = false
+                    }
+                }, function(createdPlayer)
+                ------------------------------------------------------------------------------------
+                    if DRPCoreConfig.Whitelisted then
+                        deferrals.done("Please reconnect.. Your information has been saved and now ready to be whitelisted")
+                    else
+                        deferrals.done()
+                    end
+                end)
+            end
+        end)
+    end)
 end)
 ---------------------------------------------------------------------------
+
 if DRPCoreConfig.ID then -- ALL CUSTOM CHAT MESSAGES FOR CHARACTER SYSTEM DO NOT REMOVE THIS IF STATEMENT IF YOU ARENT USING CHARACTER SYSTEM IT WILL BREAK IT
     AddEventHandler("chatMessage", function(source, color, message)
         local src = source
@@ -93,7 +94,7 @@ if DRPCoreConfig.ID then -- ALL CUSTOM CHAT MESSAGES FOR CHARACTER SYSTEM DO NOT
             end
         end
     end)
-
+---------------------------------------------------------------------------
     RegisterCommand('tweet', function(source, args, rawCommand)
         local src = source
         local msg = rawCommand:sub(6)
@@ -103,13 +104,13 @@ if DRPCoreConfig.ID then -- ALL CUSTOM CHAT MESSAGES FOR CHARACTER SYSTEM DO NOT
             args = { character.name, msg }
         })
     end, false)
-
+---------------------------------------------------------------------------
     RegisterCommand('advert', function(source, args, user)
         local src = source
         local character = exports["drp_id"]:GetCharacterData(src)
             TriggerClientEvent('chatMessage', -1, "^0^3Advert^0", {30, 144, 255}, table.concat(args, " "))
     end, false)
-
+---------------------------------------------------------------------------
     RegisterCommand('ooc', function(source, args, rawCommand)
         local src = source
         local player = GetPlayerData(src)
@@ -123,7 +124,7 @@ if DRPCoreConfig.ID then -- ALL CUSTOM CHAT MESSAGES FOR CHARACTER SYSTEM DO NOT
         })
         end
     end, false)
-
+---------------------------------------------------------------------------
     RegisterCommand('me', function(source, args, user)
         local src = source
         local character = exports["drp_id"]:GetCharacterData(src)
@@ -133,7 +134,7 @@ if DRPCoreConfig.ID then -- ALL CUSTOM CHAT MESSAGES FOR CHARACTER SYSTEM DO NOT
         TriggerClientEvent("sendProximityMessageMe", -1, src, character.name, table.concat(args, " "))
         end
     end, false)
-
+---------------------------------------------------------------------------
     local num = 0
     RegisterCommand('rolldice', function(source, args, user)
         local src = source
@@ -141,7 +142,7 @@ if DRPCoreConfig.ID then -- ALL CUSTOM CHAT MESSAGES FOR CHARACTER SYSTEM DO NOT
         num = math.random(1,6)
         TriggerClientEvent("sendProximityMessageRoll", -1, src, character.name..num, table.concat(args, " "))
     end, false)
-
+---------------------------------------------------------------------------
     RegisterCommand("showid", function(source, args, raw)
         local src = source
         local character = exports["drp_id"]:GetCharacterData(src)
@@ -162,7 +163,7 @@ AddEventHandler("DRP_Core:AddPlayerToTable", function()
         }
 	}, function(playerResults)
 	------------------------------------------------------------------------------------
-		table.insert(players, {id = src, rank = playerResults.data[1].rank, playerid = playerResults.data[1].id})
+	table.insert(players, {id = src, rank = playerResults.data[1].rank, playerid = playerResults.data[1].id})
     end)
 end)
 ---------------------------------------------------------------------------
