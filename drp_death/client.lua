@@ -35,6 +35,7 @@ Citizen.CreateThread(function()
                 if not playerDied then
                     TriggerServerEvent("DRP_Core:TriggerDeathStart")
                     TriggerServerEvent("DRP_Death:Revived", true)
+                    TriggerServerEvent("DRP_Bank:DropOnDeath")
                     diedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
                     playerDied = true
                     ResetPedMovementClipset(ped, 0.0)
@@ -75,8 +76,8 @@ AddEventHandler("DRP_Core:InitDeath", function(time)
     local pedPos = GetEntityCoords(ped, false)
     ResurrectPed(ped)
     SetEntityCoords(ped, pedPos.x, pedPos.y, pedPos.z, 0.0, 0.0, 0.0, 0)
+    Citizen.Wait(1000)
     startAnimation = true
-    Citizen.Wait(500)
     timeLeft = time
     for a = 1, time do
         Citizen.Wait(1000)

@@ -39,3 +39,29 @@ AddEventHandler("DRP_Death:GetDeathStatus", function()
         TriggerClientEvent("DRP_Death:IsDeadStatus", src, deadResults["data"])
     end)
 end)
+------------------------------------------------------------------------------------
+RegisterServerEvent("DRP_Bank:DropOnDeath")
+AddEventHandler("DRP_Bank:DropOnDeath", function()
+    local src = source
+    print("triggeredd this")
+    local character = exports["drp_id"]:GetCharacterData(src)
+    if DRP_Core.DropCashOnDeath then
+        TriggerEvent("DRP_Bank:GetCharacterMoney", character.charid, function(characterMoney)
+            local cash = characterMoney.data[1].cash
+            if cash > 0 then
+                TriggerEvent("DRP_Bank:RemoveCashMoney", src, cash)
+                TriggerClientEvent("DRP_Bank:DropCashOnDeath", src, cash)
+                print("dropping "..cash.." on the floor")
+            end
+        end)
+    end
+end)
+---------------------------------------------------------------------------
+-- Pick Up Money From Bodies
+---------------------------------------------------------------------------
+RegisterServerEvent("DRP_Bank:PickupDroppedCash")
+AddEventHandler("DRP_Bank:PickupDroppedCash", function(amount)
+    local src = source
+    TriggerEvent("DRP_Bank:AddCashMoney", src, amount)
+    TriggerClientEvent("DRP_Death:PickedUpDroppedCash", src)
+end)

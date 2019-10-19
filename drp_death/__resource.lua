@@ -9,6 +9,7 @@ dependencies {
 
 -- Client Scripts
 client_script "client.lua"
+client_script "dropondeath.lua"
 client_script "config.lua"
 
 -- Server Scripts

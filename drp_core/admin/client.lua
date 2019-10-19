@@ -1,3 +1,6 @@
+---------------------------------------------------------------------------
+--- THREAD
+---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     while true do
         -- Remove Blacklisted Weapons
@@ -12,24 +15,15 @@ Citizen.CreateThread(function()
         for i = 1, #weaponsList, 1 do
             local weaponHash = GetHashKey(weaponsList[i].name)
             if HasPedGotWeapon(ped, weaponHash, false) and weaponsList[i].name ~= 'WEAPON_UNARMED' then
-                if #weaponsList > 4 then
-                    print("too many weapons on ya")
-                end
+                print(weaponsList[i].name)
             end
         end
         Citizen.Wait(1000)
     end
 end)
-
-
-RegisterNetEvent("DRP_Core:HealCharacter")
-AddEventHandler("DRP_Core:HealCharacter", function()
-    local ped = GetPlayerPed(PlayerId())
-    local maxHealth = GetEntityMaxHealth(ped)
-    SetEntityHealth(ped, maxHealth)
-    ClearPedBloodDamage(ped)
-end)
-
+---------------------------------------------------------------------------
+--- FUNCTIONS
+---------------------------------------------------------------------------
 local function TeleportToMarker()
     local targetPed = GetPlayerPed(PlayerId())
     local targetVeh = GetVehiclePedIsUsing(targetPed)
@@ -60,5 +54,16 @@ local function TeleportToMarker()
     end
     SetEntityCoordsNoOffset(targetPed, x,y,z, 0, 0, 1)
 end
+---------------------------------------------------------------------------
+--- EVENTS
+---------------------------------------------------------------------------
+RegisterNetEvent("DRP_Core:HealCharacter")
+AddEventHandler("DRP_Core:HealCharacter", function()
+    local ped = GetPlayerPed(PlayerId())
+    local maxHealth = GetEntityMaxHealth(ped)
+    SetEntityHealth(ped, maxHealth)
+    ClearPedBloodDamage(ped)
+end)
+
 RegisterNetEvent("DRP_Admin:TeleportToMarker")
 AddEventHandler("DRP_Admin:TeleportToMarker", TeleportToMarker)
