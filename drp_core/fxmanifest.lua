@@ -4,6 +4,9 @@
 
 resource_type 'gametype' { name = 'DRP' }
 
+fx_version 'adamant'
+games { 'rdr3', 'gta5' }
+
 -- resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 
 dependencies {
@@ -45,6 +48,3 @@ export "getRealWeapons"
 export "drawText"
 server_export "GetPlayerData"
 server_export "DoesRankHavePerms"
-
-game 'common'
-fx_version 'adamant'
