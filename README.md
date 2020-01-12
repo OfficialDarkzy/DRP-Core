@@ -20,11 +20,6 @@ Download the framework folder from the GitHub, which you are most likely reading
 
 1. In your resource folder you have from making an FXServer please put drp_core in the main resource folder.
 
-2. Next remove the `start FiveM` from your server.cfg resource list, it will look like this "start FiveM", just remove it completely as it has been replaced with drp_core code
-
-3. Next in your main resource folder you will see FiveM-Map-Skater, open that folder then open the \_\_resource.lua file. You will see something like this:
-   `resource_type 'map' { gameTypes = { fivem = true } }` please replace that with `resource_type 'map' { gameTypes = { drp_core = true } }`.
-
 ## Database Installation
 
 1. To Install the Database in the Git repo then move the DatabaseAPI & externalsql files into your resource main folder
@@ -40,9 +35,15 @@ Download the framework folder from the GitHub, which you are most likely reading
 ## Server.cfg Installation
 
 ```
-start DatabaseAPI
-start externalsql
-start drp_core
+ensure DatabaseAPI
+ensure externalsql
+ensure drp_core
+ensure drp_id
+ensure drp_bank
+ensure drp_clothing
+ensure drp_death
+ensure drp_medical
+ensure drp_garages
 ```
 
 This is a perfect example below, made by myself :D (Please bare in mind you will not see all these resources, that is because some of these are my own personal custom ones, which are not open to the public yet)

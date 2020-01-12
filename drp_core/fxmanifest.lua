@@ -2,7 +2,7 @@
    Scripted By: Darkzy
 --]]
 
-resource_type 'gametype' { name = 'DRP' }
+-- resource_type 'gametype' { name = 'DRP' }
 
 fx_version 'adamant'
 games { 'rdr3', 'gta5' }
