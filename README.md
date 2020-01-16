@@ -20,6 +20,12 @@ Download the framework folder from the GitHub, which you are most likely reading
 
 1. In your resource folder you have from making an FXServer please put drp_core in the main resource folder.
 
+2. Open your resources folder, go to [gamemodes] then [maps] open "fivem-map-skater" go into fxmanifest then change `` resource_type 'map' { gameTypes = { ['basic_gamemode'] = true } } `` to `` resource_type 'map' { gameTypes = { ['drp_core'] = true } } ``
+
+3. Open server.cfg and then comment ensure fivem so it will look like this #ensure fivem
+
+
+
 ## Database Installation
 
 1. To Install the Database in the Git repo then move the DatabaseAPI & externalsql files into your resource main folder
