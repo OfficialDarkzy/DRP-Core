@@ -20,7 +20,8 @@ Download the framework folder from the GitHub, which you are most likely reading
 
 1. In your resource folder you have from making an FXServer please put drp_core in the main resource folder.
 
-2. Open your resources folder, go to [gamemodes] then [maps] open "fivem-map-skater" go into fxmanifest then change `` resource_type 'map' { gameTypes = { ['basic_gamemode'] = true } } `` to `` resource_type 'map' { gameTypes = { ['drp_core'] = true } } ``
+2. Open your resources folder, go to [gamemodes] then [maps] open "fivem-map-skater" go into fxmanifest then change 
+`` resource_type 'map' { gameTypes = { ['basic_gamemode'] = true } } `` to `` resource_type 'map' { gameTypes = { ['drp_core'] = true } } ``
 
 3. Open server.cfg and then comment ensure fivem so it will look like this #ensure fivem
 
@@ -34,7 +35,7 @@ Download the framework folder from the GitHub, which you are most likely reading
 
 3. Edit The Config Accordiningly here is what it will look like http://prntscr.com/ns3p54 and http://prntscr.com/ns3pdf
 
-4. Import the Database Dump into your Database Tool of choice (I use HeidiSQL) to load all the tables required
+4. Import the relevant Database Dump into your Database Tool of choice (I use HeidiSQL) to load all the tables required
 
 5. Load The Server Up With XAMPP OR MAMP open for your local SQL server etc.
 

@@ -10,37 +10,37 @@ AddEventHandler("DRP_Bank:DropCashOnDeath", function(money)
     local playerPos = GetEntityCoords(GetPlayerPed(PlayerId()), true)
 
     if money > 0 then
-        local remainingBal = money
+        local balLeft = money
 
-        if remainingBal / 1000 >= 1 then
-            while remainingBal / 1000 >= 1 do
+        if balLeft / 1000 >= 1 then
+            while balLeft / 1000 >= 1 do
                 dropObject("prop_anim_cash_pile_02")
 
-                remainingBal = remainingBal - 1000
+                balLeft = balLeft - 1000
             end
         end
 
-        if remainingBal / 100 >= 1 then
-            while remainingBal / 100 >= 1 do
+        if balLeft / 100 >= 1 then
+            while balLeft / 100 >= 1 do
                 dropObject("prop_anim_cash_pile_01")
 
-                remainingBal = remainingBal - 100
+                balLeft = balLeft - 100
             end
         end
 
-        if remainingBal / 10 >= 1 then
-            while remainingBal / 10 >= 1 do
+        if balLeft / 10 >= 1 then
+            while balLeft / 10 >= 1 do
                 dropObject("prop_anim_cash_note_b")
 
-                remainingBal = remainingBal - 10
+                balLeft = balLeft - 10
             end
         end
 
-        if remainingBal / 1 >= 1 then
-           while remainingBal > 0 do
+        if balLeft / 1 >= 1 then
+           while balLeft > 0 do
                dropObject("prop_anim_cash_note")
 
-               remainingBal = remainingBal - 1
+               balLeft = balLeft - 1
            end
         end
     end
