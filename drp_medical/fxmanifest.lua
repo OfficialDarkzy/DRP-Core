@@ -8,11 +8,9 @@ games { 'rdr3', 'gta5' }
 
 
 dependencies {
-    -- "drp_jobcore",
     "externalsql"
 }
 
 client_script "client.lua"
-client_script "shittywheelchair.lua"
 server_script "config.lua"
 server_script "server.lua"
