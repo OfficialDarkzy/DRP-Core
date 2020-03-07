@@ -29,6 +29,8 @@ Download the framework folder from the GitHub, which you are most likely reading
 
 ## Database Installation
 
+--- https://github.com/OfficialDarkzy/DRP-Core/blob/master/DatabaseAPI/README.md ---
+
 1. To Install the Database in the Git repo then move the DatabaseAPI & externalsql files into your resource main folder
 
 2. Then open the config file in DatabaseAPI folder (JavaScript) and ExternalSQL folder (LUA)
