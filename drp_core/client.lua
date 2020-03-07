@@ -2,6 +2,7 @@ Citizen.CreateThread(function()
     SetNuiFocus(false, false)
     TriggerServerEvent("DRP_Core:AddPlayerToTable")
     TriggerServerEvent("DRP_Core:ConnectionSetWeather")
+    TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
 end)
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()

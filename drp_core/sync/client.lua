@@ -32,10 +32,7 @@ end)
 ---------------------------------------------------------------------------
 local setHours = 0
 local setMinutes = 0
-
-Citizen.CreateThread(function()
-    TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
-end)
+local isPlayerReady = false
 
 RegisterNetEvent("DRP_TimeSync:SetTime")
 AddEventHandler("DRP_TimeSync:SetTime", function(hours, minutes)
