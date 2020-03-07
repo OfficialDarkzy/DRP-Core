@@ -7,8 +7,8 @@ DRPCoreConfig.BlackListedWeapons = {}
 -------------------------------------------------------
 
 -- GAME SETTINGS EDIT THESE TO THE ADDONS YOU HAVE INSTALLED
-DRPCoreConfig.ID = true -- Have you got CHARACTER CREATION ADDON ADDED?
-DRPCoreConfig.Inventory = true -- Have you got DRP INVENTORY ADDON ADDED?
+DRPCoreConfig.ID = false -- Have you got CHARACTER CREATION ADDON ADDED?
+DRPCoreConfig.Inventory = false -- Have you got DRP INVENTORY ADDON ADDED?
 
 -- CORE SETTINGS
 DRPCoreConfig.AutoRespawn = false -- Turn this True if DO NOT HAVE A CUSTOM DEATH SYSTEM I.E. drp_death

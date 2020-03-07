@@ -25,6 +25,7 @@ AddEventHandler("DRP_Core:SetWeather", function(weatherType)
 end)
 
 AddEventHandler("DRP_Core:GetPlayerWeather", function(callback)
+    Citizen.Wait(3500)
     callback(currentWeather)
 end)
 ---------------------------------------------------------------------------
