@@ -1,9 +1,29 @@
+local isPlayerReady = false
 Citizen.CreateThread(function()
     SetNuiFocus(false, false)
     TriggerServerEvent("DRP_Core:AddPlayerToTable")
-    TriggerServerEvent("DRP_Core:ConnectionSetWeather")
-    TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
 end)
+
+if DRPCoreConfig.ID then
+	Citizen.CreateThread(function()
+	  while true do
+		if exports["drp_id"]:isPlayerLoadedIn() then
+			isPlayerReady = true
+			if isPlayerReady then
+				TriggerServerEvent("DRP_Core:ConnectionSetWeather")
+	    			TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
+				break
+			end
+		end
+	  Citizen.Wait(1)		
+	  end
+	end)
+else
+	AddEventHandler('onClientMapStart', function()
+	    TriggerServerEvent("DRP_Core:ConnectionSetWeather")
+	    TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
+	end)
+end
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     if DRPCoreConfig.MapLocations then
