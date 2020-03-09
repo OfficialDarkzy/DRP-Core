@@ -15,7 +15,7 @@ if DRPCoreConfig.ID then
 				break
 			end
 		end
-	  Citizen.Wait(1)		
+	  Citizen.Wait(750)		
 	  end
 	end)
 else
