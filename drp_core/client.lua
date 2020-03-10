@@ -5,6 +5,7 @@ Citizen.CreateThread(function()
 end)
 
 if DRPCoreConfig.ID then
+    if not isPlayerReady then
 	Citizen.CreateThread(function()
 	  while true do
 		if exports["drp_id"]:SpawnedInAndLoaded() then
@@ -17,6 +18,7 @@ if DRPCoreConfig.ID then
 	  Citizen.Wait(1000)		
 	  end
 	end)
+    end
 else
 	AddEventHandler('onClientMapStart', function()
 	    TriggerServerEvent("DRP_Core:ConnectionSetWeather")
