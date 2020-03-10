@@ -12,10 +12,9 @@ if DRPCoreConfig.ID then
 			if isPlayerReady then
 				TriggerServerEvent("DRP_Core:ConnectionSetWeather")
 	    			TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
-				break
 			end
 		end
-	  Citizen.Wait(750)		
+	  Citizen.Wait(1000)		
 	  end
 	end)
 else
