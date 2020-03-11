@@ -1,30 +1,18 @@
+---------------------------------------------------------------------------
+--- DO NOT EDIT
+---------------------------------------------------------------------------
 local isPlayerReady = false
 Citizen.CreateThread(function()
     SetNuiFocus(false, false)
     TriggerServerEvent("DRP_Core:AddPlayerToTable")
 end)
 
-if DRPCoreConfig.ID then
-    if not isPlayerReady then
-	Citizen.CreateThread(function()
-	  while true do
-		if exports["drp_id"]:SpawnedInAndLoaded() then
-			isPlayerReady = true
-			if isPlayerReady then
-				TriggerServerEvent("DRP_Core:ConnectionSetWeather")
-	    			TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
-			end
-		end
-	  Citizen.Wait(1000)		
-	  end
-	end)
-    end
-else
-	AddEventHandler('onClientMapStart', function()
-	    TriggerServerEvent("DRP_Core:ConnectionSetWeather")
-	    TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
-	end)
-end
+AddEventHandler('onClientMapStart', function()
+	TriggerServerEvent("DRP_Core:ConnectionSetWeather")
+	TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
+end)
+---------------------------------------------------------------------------
+--- DO NOT EDIT
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     if DRPCoreConfig.MapLocations then
@@ -206,7 +194,7 @@ Citizen.CreateThread(function()
     end
 end)
 ---------------------------------------------------------------------------
---- Core Functions
+--- Core Functions Edit If you know what you are doing
 ---------------------------------------------------------------------------
 function AddTextEntry(key, value)
 	Citizen.InvokeNative(GetHashKey("ADD_TEXT_ENTRY"), key, value)

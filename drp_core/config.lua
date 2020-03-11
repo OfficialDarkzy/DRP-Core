@@ -33,7 +33,7 @@ DRPCoreConfig.BlackListedWeapons = {
 -- Do not edit this unless you know what you are doing!
 DRPCoreConfig.StaffRanks.ranks = {"User", "Moderator", "Administrator", "Developer", "Founder"}
 
-DRPCoreConfig.StaffRanks.perms = {
+DRPCoreConfig.StaffRanks.perms = { -- This is what you need to reference too in the database for your rank :)
     ["User"] = {},
     ["Moderator"] = {"heal"},
     ["Administrator"] = {"time", "weather", "adminaddcop", "heal"},
