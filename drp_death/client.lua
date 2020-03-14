@@ -35,7 +35,7 @@ Citizen.CreateThread(function()
                 if not playerDied then
                     TriggerServerEvent("DRP_Core:TriggerDeathStart")
                     TriggerServerEvent("DRP_Death:Revived", true)
-                    TriggerServerEvent("DRP_Bank:DropOnDeath")
+                    TriggerServerEvent("DRP_Bank:DropOnDeath") -- if bank is installed
                     diedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
                     playerDied = true
                     ResetPedMovementClipset(ped, 0.0)
@@ -70,7 +70,7 @@ end)
 RegisterNetEvent("DRP_Core:InitDeath")
 AddEventHandler("DRP_Core:InitDeath", function(time)
     local ped = GetPlayerPed(PlayerId())
-    while GetEntitySpeed(ped) >= 0.35 do
+    while GetEntitySpeed(ped) >= 0.25 do
         Citizen.Wait(1000)
     end
     local pedPos = GetEntityCoords(ped, false)
