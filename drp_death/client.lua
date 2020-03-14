@@ -82,6 +82,8 @@ AddEventHandler("DRP_Core:InitDeath", function(time)
     for a = 1, time do
         Citizen.Wait(1000)
         timeLeft = timeLeft - 1
+        if timeLeft > 0 and DRP_Core.TimerActive then 
+               RespawnTimerNotify()  
         if timeLeft == 0 then
             canRespawn = true
             if canRespawn then
@@ -115,6 +117,13 @@ AddEventHandler("DRP_Core:Revive", function()
     SetEntityCoords(GetPlayerPed(PlayerId()), pedPos.x, pedPos.y, pedPos.z + 0.3, 0.0, 0.0, 0.0, 0)
     TriggerServerEvent("DRP_Death:Revived", false)
 end)
+    
+ ---------------------------------------------------------------------------
+-- Function
+---------------------------------------------------------------------------   
+  function RespawnTimerNotify()
+  TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn in " .. timeLeft .. " seconds"), 1000, false, "centerTop")
+end  
 ---------------------------------------------------------------------------
 -- Commands
 ---------------------------------------------------------------------------
