@@ -83,11 +83,12 @@ AddEventHandler("DRP_Core:InitDeath", function(time)
         Citizen.Wait(1000)
         timeLeft = timeLeft - 1
         if timeLeft > 0 and DRP_Core.TimerActive then 
-               RespawnTimerNotify()  
-        if timeLeft == 0 then
-            canRespawn = true
-            if canRespawn then
-                TriggerEvent("DRP_Core:Error", "Medical", "You can now respawn!", 2500, false, "leftCenter")
+            RespawnTimerNotify()  
+            if timeLeft == 0 then
+                canRespawn = true
+                if canRespawn then
+                    TriggerEvent("DRP_Core:Error", "Medical", "You can now respawn!", 2500, false, "leftCenter")
+                end
             end
         end
     end
