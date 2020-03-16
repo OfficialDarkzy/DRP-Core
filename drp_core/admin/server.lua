@@ -2,7 +2,8 @@
 --- Functions
 ---------------------------------------------------------------------------
 function DoesRankHavePerms(rank, perm)
-    local playerPerms = DRPCoreConfig.StaffRanks.perms[rank]
+    local playerRank = string.lower(rank)
+    local playerPerms = DRPCoreConfig.StaffRanks.perms[playerRank]
     for a = 1, #playerPerms do
         if playerPerms[a] == perm then
             return true
