@@ -65,5 +65,5 @@ AddEventHandler("DRP_Core:HealCharacter", function()
     ClearPedBloodDamage(ped)
 end)
 
-RegisterNetEvent("DRP_Admin:TeleportToMarker")
-AddEventHandler("DRP_Admin:TeleportToMarker", TeleportToMarker)
+RegisterNetEvent("DRP_Core:TeleportToMarker")
+AddEventHandler("DRP_Core:TeleportToMarker", TeleportToMarker)
