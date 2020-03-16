@@ -185,7 +185,7 @@ function PlayerIdentifier(type, id)
     return false
 end
 ---------------------------------------------------------------------------
-function GetPlayerData(id) -- Prob Wont Use This Much
+function GetPlayerData(id) -- USE THIS MORE OFTEN!!!
     for a = 1, #players do
         if players[a].id == id then
             return players[a]
@@ -198,8 +198,8 @@ end
 AddEventHandler("DRP_Core:GetPlayerData", function(id, callback)
 	for a = 1, #players do
         if players[a].id == id then
-			callback(players[a])
-			return
+		callback(players[a])
+		return
         end
     end
     callback(false)
