@@ -69,7 +69,7 @@ function StartTimeChanging()
             if minutes >= 60 then
                 hours = hours + 1
                 minutes = 0
-                if hours > 24 then
+                if hours >= 24 then
                     hours = 0
                 end
             end
