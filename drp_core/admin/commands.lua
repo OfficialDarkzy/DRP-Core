@@ -89,13 +89,13 @@ end, false)
 --     end
 -- end, false)
 
-RegisterCommand("gotow", function(source, args, raw)
+RegisterCommand("tpm", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "teleport") then
             TriggerClientEvent("DRP_Core:Success", src, "Admin System", tostring("You succesfuly teleported to waypoint"), 2500, false, "leftCenter")
-            TriggerClientEvent("DRP_Admin:TeleportToMarker", src)
+            TriggerClientEvent("DRP_Core:TeleportToMarker", src)
         else
             TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to teleport to waypoint"), 2500, false, "leftCenter")
         end
