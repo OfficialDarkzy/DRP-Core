@@ -1,18 +1,20 @@
 ---------------------------------------------------------------------------
 --- DO NOT EDIT
 ---------------------------------------------------------------------------
-local isPlayerReady = false
+local isPlayerReady = false											
 Citizen.CreateThread(function()
     SetNuiFocus(false, false)
     TriggerServerEvent("DRP_Core:AddPlayerToTable")
 end)
-
 AddEventHandler('onClientMapStart', function()
 	TriggerServerEvent("DRP_Core:ConnectionSetWeather")
 	TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
 end)
+
 ---------------------------------------------------------------------------
---- DO NOT EDIT
+--- You Can Edit The Below To Your Requirements, 
+--  only touch if you know what you are doing,
+--  Darkzy will not help you if you break it
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     if DRPCoreConfig.MapLocations then
@@ -28,17 +30,14 @@ Citizen.CreateThread(function()
         end
     end
     while true do
-        -- Disable Health Regeneration
+--------------------Disable Health Regeneration----------------------------
         SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
-
-        -- Enable PVP
+------------------------------Enable PVP-----------------------------------	
         SetCanAttackFriendly(GetPlayerPed(PlayerId()), true, false)
         NetworkSetFriendlyFireOption(true)
-
-        -- Remove Audio
+------------------------------Remove Police Audio--------------------------	
         DisablePoliceReports()
-
-        -- Hiding Hud Components
+----------------------Hiding Hud Components--------------------------------
         HideHudComponentThisFrame(1) -- Wanted Stars
         HideHudComponentThisFrame(2) -- Weapon icon
         HideHudComponentThisFrame(3) -- Cash
@@ -47,25 +46,23 @@ Citizen.CreateThread(function()
         if not DRPCoreConfig.Crosshair then
             HideHudComponentThisFrame(14) -- Cross Hair
         end
-
-        -- Remove Wanted Level
+----------------------Remove Wanted Level----------------------------------
         ClearPlayerWantedLevel(PlayerId())
         SetMaxWantedLevel(0)
         SetPoliceIgnorePlayer(PlayerId(), true)
-
-        -- Controller For PED and VEHICLE density!
+------------------Controller For PED and VEHICLE density!------------------
         SetVehicleDensityMultiplierThisFrame(0.2)
         SetPedDensityMultiplierThisFrame(0.2)
         SetRandomVehicleDensityMultiplierThisFrame(0.1)
 
-        -- Remove Getting Weapons From Vehicles
+--------------Remove Getting Weapons From Vehicles--------------------------
         DisablePlayerVehicleRewards(PlayerId())
 
-        -- -- Stop Pistol/Gun Whipping
+--------------Stop Pistol/Gun Whipping--------------------------------------
         DisableControlAction(0, 140, true)
 
-        -- Remove Drops
-         RemoveAllPickupsOfType(0x550447A9)
+----------------Remove Drops------------------------------------------------		
+        RemoveAllPickupsOfType(0x550447A9)
         RemoveAllPickupsOfType(0xF92F486C)
         RemoveAllPickupsOfType(0x602941D0)
         RemoveAllPickupsOfType(0xE013E01C)
@@ -189,7 +186,7 @@ Citizen.CreateThread(function()
         RemoveAllPickupsOfType(0xDDE4181A)
         RemoveAllPickupsOfType(0xEBF89D5F)
         RemoveAllPickupsOfType(0xE5121369)
-       
+---------------------------------------------------------------------------       
         Citizen.Wait(1)
     end
 end)
