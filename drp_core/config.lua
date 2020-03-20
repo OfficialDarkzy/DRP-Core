@@ -17,6 +17,7 @@ DRPCoreConfig.Debug = false -- Developer Mode, this will be seen by all the play
 DRPCoreConfig.CommunityName = "DRP" -- This will show when you load into the server to tell you, you are banned, been kicked or not whitelisted
 DRPCoreConfig.MapLocations = false -- This will display all the locations below on the map
 DRPCoreConfig.Crosshair = false -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
+DRPCoreConfig.Voip = true -- TOGGLE IF YOU WANT THE BUILT IN VOIP OR NOT
 -------------------------------------------------------
 
 DRPCoreConfig.BlackListedWeapons = {
