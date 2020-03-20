@@ -11,6 +11,16 @@ AddEventHandler('onClientMapStart', function()
 	TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
 end)
 
+AddEventHandler("playerSpawned", function()
+    Citizen.CreateThread(function()
+
+      local playerPed = PlayerPedId()
+
+      NetworkSetFriendlyFireOption(true)
+      SetCanAttackFriendly(playerPed, true, true)
+    end)
+end)
+
 ---------------------------------------------------------------------------
 --- You Can Edit The Below To Your Requirements, 
 --  only touch if you know what you are doing,
@@ -32,35 +42,43 @@ Citizen.CreateThread(function()
     while true do
 --------------------Disable Health Regeneration----------------------------
         SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
-------------------------------Enable PVP-----------------------------------	
-        SetCanAttackFriendly(GetPlayerPed(PlayerId()), true, false)
-        NetworkSetFriendlyFireOption(true)
 ------------------------------Remove Police Audio--------------------------	
         DisablePoliceReports()
 ----------------------Hiding Hud Components--------------------------------
-        HideHudComponentThisFrame(1) -- Wanted Stars
-        HideHudComponentThisFrame(2) -- Weapon icon
-        HideHudComponentThisFrame(3) -- Cash
-        HideHudComponentThisFrame(4) -- MP CASH
+      	if IsHudComponentActive(1) then 
+            HideHudComponentThisFrame(1)  -- Wanted Stars
+        end
+			
+        if IsHudComponentActive(2) then 
+            HideHudComponentThisFrame(2) -- Weapon icon
+        end
+			
+        if IsHudComponentActive(3) then 
+            HideHudComponentThisFrame(3) -- Cash
+        end
+			
+        if IsHudComponentActive(4) then
+            HideHudComponentThisFrame(4) -- MP CASH
+        end
 
         if not DRPCoreConfig.Crosshair then
-            HideHudComponentThisFrame(14) -- Cross Hair
+            if IsHudComponentActive(14) then
+                HideHudComponentThisFrame(14) -- Cross Hair
+            end
         end
 ----------------------Remove Wanted Level----------------------------------
-        ClearPlayerWantedLevel(PlayerId())
-        SetMaxWantedLevel(0)
-        SetPoliceIgnorePlayer(PlayerId(), true)
+        if GetPlayerWantedLevel(PlayerId()) ~= 0 then
+            SetPlayerWantedLevel(PlayerId(), 0, false)
+            SetPlayerWantedLevelNow(PlayerId(), false)
+        end
 ------------------Controller For PED and VEHICLE density!------------------
         SetVehicleDensityMultiplierThisFrame(0.2)
         SetPedDensityMultiplierThisFrame(0.2)
         SetRandomVehicleDensityMultiplierThisFrame(0.1)
-
 --------------Remove Getting Weapons From Vehicles--------------------------
         DisablePlayerVehicleRewards(PlayerId())
-
 --------------Stop Pistol/Gun Whipping--------------------------------------
         DisableControlAction(0, 140, true)
-
 ----------------Remove Drops------------------------------------------------		
         RemoveAllPickupsOfType(0x550447A9)
         RemoveAllPickupsOfType(0xF92F486C)
