@@ -1,11 +1,13 @@
 ---------------------------------------------------------------------------
 --- DO NOT EDIT
 ---------------------------------------------------------------------------
-local isPlayerReady = false											
+local isPlayerReady = false
+						
 Citizen.CreateThread(function()
     SetNuiFocus(false, false)
     TriggerServerEvent("DRP_Core:AddPlayerToTable")
 end)
+
 AddEventHandler('onClientMapStart', function()
 	TriggerServerEvent("DRP_Core:ConnectionSetWeather")
 	TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
@@ -85,14 +87,20 @@ end)
 ---------------------------------------------------------------------------
 --- Prevent NPCs from dropping weapons when dead
 ---------------------------------------------------------------------------
+local hashes = {
+    0xA9355DCD, -- PUMP SHOTGUN
+    0xDF711959, -- CARBINE RIFLE
+    0xF9AFB48F -- PISTOL
+}
+
 Citizen.CreateThread(function()
 	while true do
-	  Citizen.Wait(1)
-	  RemoveAllPickupsOfType(0xA9355DCD) -- PUMP SHOTGUN
-	  RemoveAllPickupsOfType(0xDF711959) -- CARBINE RIFLE
-	  RemoveAllPickupsOfType(0xF9AFB48F) -- PISTOL
+      Citizen.Wait(1)
+        for k,v in pairs(hashes) do
+            RemoveAllPickupsOfType(v)
+        end
 	end
-  end)
+end)
 ---------------------------------------------------------------------------
 --- Core Functions Edit If you know what you are doing
 ---------------------------------------------------------------------------
