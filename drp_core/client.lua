@@ -85,26 +85,14 @@ end)
 ---------------------------------------------------------------------------
 --- Prevent NPCs from dropping weapons when dead
 ---------------------------------------------------------------------------
-function SetWeaponDrops()
-	local handle, ped = FindFirstPed()
-	local finished = false
-
-	repeat
-		if not IsEntityDead(ped) then
-			SetPedDropsWeaponsWhenDead(ped, false)
-		end
-		finished, ped = FindNextPed(handle)
-	until not finished
-
-	EndFindPed(handle)
-end
-
 Citizen.CreateThread(function()
 	while true do
-		Wait(1000)
-		SetWeaponDrops()
+	  Citizen.Wait(1)
+	  RemoveAllPickupsOfType(0xA9355DCD) -- PUMP SHOTGUN
+	  RemoveAllPickupsOfType(0xDF711959) -- CARBINE RIFLE
+	  RemoveAllPickupsOfType(0xF9AFB48F) -- PISTOL
 	end
-end)
+  end)
 ---------------------------------------------------------------------------
 --- Core Functions Edit If you know what you are doing
 ---------------------------------------------------------------------------
