@@ -6,8 +6,8 @@ local currentWeather = ""
 RegisterNetEvent("DRP_Core:SetWeather")
 AddEventHandler("DRP_Core:SetWeather", function(weatherType)
     if currentWeather ~= weatherType then
-        SetWeatherTypeOverTime(weatherType, 1.0)
-        Citizen.Wait(1000)
+        SetWeatherTypeOverTime(weatherType, 15.0)
+        Citizen.Wait(15000)
     end
     ClearOverrideWeather()
     ClearWeatherTypePersist()
