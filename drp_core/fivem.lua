@@ -22,9 +22,6 @@ AddEventHandler("onClientMapStart", function()
     else
         exports["spawnmanager"]:setAutoSpawn(false)
     end
-    if DRPCoreConfig.Inventory then
-        TriggerServerEvent("DRP_Inventory:LoadItemsData")
-    end
     -- Remove Patrolling cars etc.
     for a = 1, 15 do
         EnableDispatchService(a, false)
