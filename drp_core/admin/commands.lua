@@ -149,3 +149,70 @@ end, false)
 --         end
 --     end
 -- end, false)
+
+RegisterCommand("addcash", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "economy") then
+            if args[2] ~= nil then
+                TriggerEvent("DRP_Bank:AddCashMoney", tonumber(args[1]), tonumber(args[2])) 
+            else
+                print('test 2')
+                TriggerEvent("DRP_Bank:AddCashMoney", src, tonumber(args[1]))
+            end
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
+        end
+    end
+end, false) 
+
+RegisterCommand("removecash", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "economy") then
+            if args[2] ~= nil then
+                TriggerEvent("DRP_Bank:RemoveCashMoney", tonumber(args[1]), tonumber(args[2])) 
+            else
+                TriggerEvent("DRP_Bank:RemoveCashMoney", src, tonumber(args[1]))
+            end
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
+        end
+    end
+end, false) 
+
+RegisterCommand("addbank", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "economy") then
+            if args[2] ~= nil then
+                TriggerEvent("DRP_Bank:AddBankMoney", tonumber(args[1]), tonumber(args[2])) 
+            else
+                TriggerEvent("DRP_Bank:AddBankMoney", src, tonumber(args[1]))
+            end
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
+        end
+    end
+end, false) 
+
+RegisterCommand("removebank", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "economy") then
+            if args[2] ~= nil then
+                TriggerEvent("DRP_Bank:RemoveBankMoney", tonumber(args[1]), tonumber(args[2])) 
+            else
+                TriggerEvent("DRP_Bank:RemoveBankMoney", src, tonumber(args[1]))
+            end
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
+        end
+    end
+end, false) 
+
+
