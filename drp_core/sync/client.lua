@@ -2,19 +2,20 @@
 ---- Weather Sync
 ---------------------------------------------------------------------------
 local currentWeather = ""
+local weatherChanging = false
 
 RegisterNetEvent("DRP_Core:SetWeather")
 AddEventHandler("DRP_Core:SetWeather", function(weatherType)
-    if currentWeather ~= weatherType then
+    if currentWeather ~= weatherType and not weatherChanging then
+        weatherChanging = true
         SetWeatherTypeOverTime(weatherType, 15.0)
         Citizen.Wait(15000)
+        SetWeatherTypeNowPersist(weatherType)
+        SetWeatherTypeNow(weatherType)
+        weatherChanging = false
+        currentWeather = weatherType
     end
-    ClearOverrideWeather()
-    ClearWeatherTypePersist()
-    SetWeatherTypeNowPersist(weatherType)
-    SetWeatherTypeNow(weatherType)
-    currentWeather = weatherType
-
+    
     if currentWeather == 'XMAS' then
         SetForceVehicleTrails(true)
         SetForcePedFootstepsTracks(true)
