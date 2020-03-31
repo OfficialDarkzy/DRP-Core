@@ -72,7 +72,6 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
     end)
 end)
 ---------------------------------------------------------------------------
-
 if DRPCoreConfig.ID then -- ALL CUSTOM CHAT MESSAGES FOR CHARACTER SYSTEM DO NOT REMOVE THIS IF STATEMENT IF YOU ARENT USING CHARACTER SYSTEM IT WILL BREAK IT
     AddEventHandler("chatMessage", function(source, color, message)
         local src = source

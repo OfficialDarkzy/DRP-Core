@@ -1,4 +1,26 @@
 ---------------------------------------------------------------------------
+-- NUI CALLBACKS
+---------------------------------------------------------------------------
+RegisterNUICallback("close_admin_menu", function(data, cb)
+    SetNuiFocus(false, false)
+    cb("ok")
+end)
+
+RegisterNUICallback("kick_player", function(data, cb)
+    TriggerServerEvent("DRP_Core:KickPlayer", data.player, data.msg)
+    cb("ok")
+end)
+
+RegisterNUICallback("ban_player", function(data, cb)
+    TriggerServerEvent("DRP_Core:BanPlayer", data.player, data.msg, data.time, data.perm)
+    cb("ok")
+end)
+
+RegisterNUICallback("send_message", function(data, cb)
+    TriggerServerEvent("DRP_Core:SendMessage", data.message)
+    cb("ok")
+end)
+---------------------------------------------------------------------------
 --- THREAD
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
@@ -64,6 +86,31 @@ AddEventHandler("DRP_Core:HealCharacter", function()
     SetEntityHealth(ped, maxHealth)
     ClearPedBloodDamage(ped)
 end)
-
+---------------------------------------------------------------------------
+--- Trigger Teleport to Marker
+---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Core:TeleportToMarker")
 AddEventHandler("DRP_Core:TeleportToMarker", TeleportToMarker)
+---------------------------------------------------------------------------
+-- Open Admin Menu
+---------------------------------------------------------------------------
+RegisterNetEvent("DRP_Core:OpenAdminMenu")
+AddEventHandler("DRP_Core:OpenAdminMenu", function(players)
+    SetNuiFocus(true, true)
+    SendNUIMessage({
+        type = "open_admin_menu",
+        players = players
+    })
+end)
+---------------------------------------------------------------------------
+-- Send Admin Chat Message
+---------------------------------------------------------------------------
+RegisterNetEvent("DRP_Core:PassAdminMessage")
+AddEventHandler("DRP_Core:PassAdminMessage", function(messageData, isSender)
+    SendNUIMessage({
+        type = "recieve_admin_message",
+        name = messageData.name,
+        message = messageData.message,
+        isSender = isSender
+    })
+end)

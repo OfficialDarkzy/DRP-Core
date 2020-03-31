@@ -1,16 +1,140 @@
 <html>
+    <head>
+        <title>CADOJRP Admin Menu</title>
+        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'>
+        <link rel="stylesheet" href="libraries/vuetify.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        
+        <v-app id="DRP_Admin" v-show="showMenu">
+            <v-content>
+                <div id="DRP_Admin_Base">
+                    <div id="DRP_Admin_Header">
+                        <div id="MenuHeaderText">ADMIN MENU</div>
+                        <v-btn color="red" slot="activator" absolute right top fab dark small @click="CloseAdminMenu()"><v-icon>clear</v-icon></v-btn>
+                    </div>
+                    <div id="DRP_Admin_Body">
+                        <!-- TOP BAR -->
+                        <v-toolbar>
+                            <v-tooltip right>
+                                <v-toolbar-side-icon slot="activator" @click="OpenPlayerModal()"></v-toolbar-side-icon>
+                                <span>Players</span>
+                            </v-tooltip>
+                            <v-spacer></v-spacer>
+                            <v-toolbar-items class="hidden-sm-and-down">
+                                <v-btn flat dense v-for="(page, pageIndex) in pages" :key="pageIndex" @click="ChangePage(page)" :disabled="currentPage == page">{{ page }}</v-btn>
+                            </v-toolbar-items>
+                        </v-toolbar>
 
-<head>
-    <link rel="stylesheet" href="libraries/material.css">
-</head>
+                        <!-- Player Modal -->
+                        <v-dialog v-model="playerModalActive" scrollable :overlay="true" max-width="500px" max-height="500px" transition="dialog-transition">
+                            <v-card>
+                                <div style="text-align: center; padding: 10px; font-size: 15px;">PLAYERS</div>
+                                <v-card-text>
+                                    <v-container grid-list-xs>
+                                        <v-layout row wrap v-for="(player, playerIndex) in players">
+                                            <v-flex xs12>
+                                                <v-btn color="white" block @click="SelectPlayer(playerIndex)">{{player.id}} | {{player.name}}</v-btn>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-container>
+                                </v-card-text>
+                            </v-card>
+                        </v-dialog>
 
-<body style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
-    <div id="DRPNotifications">
-        <vue-snotify></vue-snotify>
-    </div>
-    <script src="libraries/vue.min.js"></script>
-    <script src="libraries/vue-snotify.min.js"></script>
-    <script src="script.js"></script>
-</body>
+                        <!-- PAGES -->
+                        <div id="DRP_Admin_Page_Chat" v-if="currentPage == 'Chat'">
+                            <v-container grid-list-xs>
+                                <v-layout row>
+                                    <v-flex xs12>
+                                        <div id="AdminMessageBox">
+                                            <div id="AdminMessageContainer" v-for="(msg, msgIndex) in messages">
+                                                <div id="AdminMessageName">{{ msg.name }}:</div> <div id="AdminMessageMsg">{{ msg.message }}</div>
+                                                <v-divider style="float: right"></v-divider>
+                                            </div>
+                                        </div>
+                                    </v-flex>
+                                </v-layout>
+                                <v-layout row>
+                                    <v-flex xs8>
+                                        <v-text-field v-model="messageToSend" label="Message"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs2>
+                                        <v-btn color="blue" dark block @click="SendMessage()">SEND</v-btn>
+                                    </v-flex>
+                                    <v-flex xs2>
+                                        <v-btn color="blue" dark block @click="muteMessageSound = !muteMessageSound">
+                                            <v-icon v-if="!muteMessageSound">volume_up</v-icon>
+                                            <v-icon v-if="muteMessageSound">volume_off</v-icon>
+                                        </v-btn>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </div>
 
+                        <div id="DRP_Admin_Page_Reports" v-if="currentPage == 'Reports'">
+                            Reports Not Available
+                        </div>
+
+                        <div id="DRP_Admin_Page_Kick" v-if="currentPage == 'Kick'">
+                            <div id="showSelectedPlayer">Player: {{selectedPlayer.id}} - {{selectedPlayer.name}}</div>
+                            <v-container grid-list-xs>
+                                <v-layout row wrap>
+                                    <v-flex xs12>
+                                        <v-text-field box label="Kick Reason" v-model="kickReason" height="400px"></v-text-field>
+                                    </v-flex>
+                                </v-layout>
+                                <v-layout row>
+                                    <v-flex xs12>
+                                        <v-btn color="red" @click="KickPlayer()" dark block>Kick Player</v-btn>
+                                    </v-flex>  
+                                </v-layout>
+                            </v-container>
+                        </div>
+
+                        <div id="DRP_Admin_Page_Ban" v-if="currentPage == 'Ban'">
+                            <div id="showSelectedPlayer">Player: {{selectedPlayer.id}} - {{selectedPlayer.name}}</div>
+                            <v-container grid-list-xs>
+                                <v-layout row>
+                                    <v-flex xs6>
+                                        <v-layout row>
+                                            <v-flex xs12>
+                                                <v-select :items="banTypes" v-model="banType" label="Ban Type"></v-select>
+                                            </v-flex>
+                                        </v-layout>
+                                        <v-layout row>
+                                            <v-flex xs6>
+                                                <v-text-field label="Time" type="number" v-model="banAmount"></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs6>
+                                                <v-switch label="Permanent" v-model="banPermanent"></v-switch>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-flex>
+                                    <v-flex xs6>
+                                        <v-text-field box label="Reason" v-model="banReason" textarea></v-text-field>
+                                    </v-flex>
+                                </v-layout>
+                                <v-layout row>
+                                    <v-flex xs12>
+                                        <v-btn color="red" @click="BanPlayer()" dark block>Ban Player</v-btn>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </div>
+
+                        <div id="DRP_Admin_Page_Whitelist" v-if="currentPage == 'Whitelist'">
+                            Whitelisting Not Available
+                        </div>
+                    </div>
+                </div>
+            </v-content>
+        </v-app>
+
+        <script src="libraries/axios.min.js"></script>
+        <script src="libraries/vue.min.js"></script>
+        <script src="libraries/vuetify.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>

@@ -1,0 +1,72 @@
+html {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    /*background-color: black;*/
+}
+
+#ISRP_Admin {
+    height: 100%;
+    left: 100%;
+    background-color: transparent !important;
+}
+
+#ISRP_Admin_Base {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 750px;
+    height: 400px;
+    transform: translate(-50%, -50%);
+}
+
+#ISRP_Admin_Header {
+    background-color: rgb(0, 140, 255);
+    padding: 20px;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#ISRP_Admin_Body {
+    background-color: white;
+    max-height: 100%;
+}
+
+#showSelectedPlayer {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+#AdminMessageBox {
+    background-color: gray;
+    height: 250px;
+    width: 100%;
+    max-width: 100%;
+    padding: 5px;
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+#AdminMessageContainer div {
+    width: 100%;
+    overflow-wrap: break-word;
+}
+
+#AdminMessageName {
+    color: black; 
+    font-size: 20px;
+    font-weight: bold; 
+    float: left; 
+    margin-right: 5px;
+}
+
+#AdminMessageMsg {
+    color: white;
+    float: left;
+    font-size: 20px;
+}

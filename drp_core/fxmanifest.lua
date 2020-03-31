@@ -7,8 +7,6 @@ resource_type 'gametype' { name = 'DRP' }
 fx_version 'adamant'
 games { 'rdr3', 'gta5' }
 
--- resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
-
 dependencies {
     "externalsql"
 }
@@ -16,16 +14,17 @@ dependencies {
 ui_page "ui/index.html"
 
 files {
-    "ui/index.html",
-    "ui/libraries/vue.min.js",
     "ui/libraries/axios.min.js",
-    "ui/libraries/material.css",
-    "ui/libraries/vue-snotify.min.js",
-    "ui/script.js"
+    "ui/libraries/vue.min.js",
+    "ui/libraries/vuetify.js",
+    "ui/libraries/vuetify.css",
+    "ui/index.html",
+    "ui/style.css",
+    "ui/script.js",
+    "ui/sounds/admin_chat_notification.ogg"
 }
 
 client_script "fivem.lua"
-client_script "notifications/notifications.lua"
 client_script "client.lua"
 client_script "config.lua"
 client_script "player.lua"
@@ -36,6 +35,7 @@ client_script "managers/chat.lua"
 client_script "debug/client.lua"
 client_script "sync/client.lua"
 client_script "admin/client.lua"
+client_script "weaponanimation.lua"
 
 server_script "config.lua"
 server_script "server.lua"

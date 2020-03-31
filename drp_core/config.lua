@@ -7,7 +7,7 @@ DRPCoreConfig.BlackListedWeapons = {}
 -------------------------------------------------------
 
 -- GAME SETTINGS EDIT THESE TO THE ADDONS YOU HAVE INSTALLED
-DRPCoreConfig.ID = false -- Have you got CHARACTER CREATION ADDON ADDED?
+DRPCoreConfig.ID = true -- Have you got CHARACTER CREATION ADDON ADDED?
 
 -- CORE SETTINGS
 DRPCoreConfig.AutoRespawn = false -- Turn this True if DO NOT HAVE A CUSTOM DEATH SYSTEM I.E. drp_death
@@ -20,7 +20,7 @@ DRPCoreConfig.Voip = true -- TOGGLE IF YOU WANT THE BUILT IN VOIP OR NOT
 -------------------------------------------------------
 
 DRPCoreConfig.BlackListedWeapons = {
-    	"WEAPON_RAILGUN",
+    "WEAPON_RAILGUN",
 	"WEAPON_GARBAGEBAG",
 	"WEAPON_RPG",
 	"WEAPON_MINIGUN",
@@ -36,7 +36,7 @@ DRPCoreConfig.StaffRanks.ranks = {"user", "admin", "superadmin"}
 DRPCoreConfig.StaffRanks.perms = { -- This is what you need to reference too in the database for your rank :)
     ["User"] = {},
     ["admin"] = {"time", "weather", "adminaddcop", "heal"},
-    ["superadmin"] = {"time", "weather", "adminaddcop", "heal", "addgroup", "teleport", "economy"}
+    ["superadmin"] = {"time", "weather", "adminaddcop", "heal", "addgroup", "teleport", "economy", "adminmenu", "kick", "ban"}
 }
 -- Edit these to your needs
 DRPCoreConfig.Locations = {
