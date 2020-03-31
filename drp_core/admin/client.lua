@@ -47,7 +47,7 @@ end)
 --- FUNCTIONS
 ---------------------------------------------------------------------------
 local function TeleportToMarker()
-    local targetPed = GetPlayerPed(PlayerId())
+    local targetPed = PlayerPedId()
     local targetVeh = GetVehiclePedIsUsing(targetPed)
     if(IsPedInAnyVehicle(targetPed))then
         targetPed = targetVeh
@@ -81,7 +81,7 @@ end
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Core:HealCharacter")
 AddEventHandler("DRP_Core:HealCharacter", function()
-    local ped = GetPlayerPed(PlayerId())
+    local ped = PlayerPedId()
     local maxHealth = GetEntityMaxHealth(ped)
     SetEntityHealth(ped, maxHealth)
     ClearPedBloodDamage(ped)

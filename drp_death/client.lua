@@ -13,7 +13,7 @@ local deadData = {health = nil, cause = nil, source = nil, time = nil}
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     while true do
-            local ped = GetPlayerPed(PlayerId())
+            local ped = PlayerPedId()
             health = GetEntityHealth(ped)
             currentHealth = health
             if IsEntityDead(ped) then
@@ -36,13 +36,13 @@ Citizen.CreateThread(function()
                     TriggerServerEvent("DRP_Core:TriggerDeathStart")
                     TriggerServerEvent("DRP_Death:Revived", true)
                     TriggerServerEvent("DRP_Bank:DropOnDeath") -- if bank is installed
-                    diedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
+                    diedPos = GetEntityCoords(PlayerPedId(), false)
                     playerDied = true
                     ResetPedMovementClipset(ped, 0.0)
                 end
             end
         if startAnimation then
-            local ped = GetPlayerPed(PlayerId())
+            local ped = PlayerPedId()
             SetPlayerInvincible(PlayerId(), true)
             isInvincible = true
             local dict = "combat@damage@rb_writhe"
@@ -69,7 +69,7 @@ end)
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Core:InitDeath")
 AddEventHandler("DRP_Core:InitDeath", function(time)
-    local ped = GetPlayerPed(PlayerId())
+    local ped = PlayerPedId()
     while GetEntitySpeed(ped) >= 0.25 do
         Citizen.Wait(1000)
     end
@@ -96,7 +96,7 @@ end)
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Death:IsDeadStatus")
 AddEventHandler("DRP_Death:IsDeadStatus", function(data)
-    local ped = GetPlayerPed(PlayerId())
+    local ped = PlayerPedId()
     if data[1].isDead == 1 then
         print("This Person Is Dead")
         SetEntityHealth(ped, 0) -- This will set them to die
@@ -107,15 +107,15 @@ end)
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Core:Revive")
 AddEventHandler("DRP_Core:Revive", function()
-    local ped = GetPlayerPed(PlayerId())
+    local ped = PlayerPedId()
     startAnimation = false
     playerDied = false
     canRespawn = false
     timeLeft = -1
     ResurrectPed(ped)
-    ClearPedTasksImmediately(GetPlayerPed(PlayerId()))
-    local pedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
-    SetEntityCoords(GetPlayerPed(PlayerId()), pedPos.x, pedPos.y, pedPos.z + 0.3, 0.0, 0.0, 0.0, 0)
+    ClearPedTasksImmediately(PlayerPedId())
+    local pedPos = GetEntityCoords(PlayerPedId(), false)
+    SetEntityCoords(PlayerPedId(), pedPos.x, pedPos.y, pedPos.z + 0.3, 0.0, 0.0, 0.0, 0)
     TriggerServerEvent("DRP_Death:Revived", false)
 end)
     
@@ -140,7 +140,7 @@ end, false)
 RegisterCommand("respawn", function(source, args, raw)
     if playerDied then
         if canRespawn then
-            local ped = GetPlayerPed(PlayerId())
+            local ped = PlayerPedId()
             startAnimation = false
             canRespawn = false
             playerDied = false

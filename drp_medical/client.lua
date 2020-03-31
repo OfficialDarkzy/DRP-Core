@@ -16,7 +16,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        local ped = GetPlayerPed(PlayerId())
+        local ped = PlayerPedId()
         local playerHealth = GetEntityHealth(ped)
         if playerHealth <= 150 then
             RequestAnimSet("move_heist_lester")

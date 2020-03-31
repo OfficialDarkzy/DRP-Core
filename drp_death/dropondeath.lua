@@ -7,7 +7,7 @@ end)
 
 RegisterNetEvent("DRP_Bank:DropCashOnDeath")
 AddEventHandler("DRP_Bank:DropCashOnDeath", function(money)
-    local playerPos = GetEntityCoords(GetPlayerPed(PlayerId()), true)
+    local playerPos = GetEntityCoords(PlayerPedId(), true)
 
     if money > 0 then
         local balLeft = money
@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(moneyWaitTime)
         moneyWaitTime = 1000
 
-        local ped = GetPlayerPed(PlayerId())
+        local ped = PlayerPedId()
         if not isPedDead() and not IsPedInAnyVehicle(ped, true) and not pickingUp then
             local pos = GetEntityCoords(ped, 1)
 
@@ -135,7 +135,7 @@ function takeNetworkControl(entity, cb)
 end
 
 function dropObject(obj)
-    playerX, playerY, playerZ = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
+    playerX, playerY, playerZ = table.unpack(GetEntityCoords(PlayerPedId(), true))
     playerZ = playerZ + 1.3
 
     x = math.random() + math.random(-2, 2)

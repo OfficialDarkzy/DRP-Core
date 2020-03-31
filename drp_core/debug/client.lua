@@ -6,7 +6,7 @@ if DRPCoreConfig.Debug then
         while true do
             Citizen.Wait(0)
             local player = PlayerPedId()
-            x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
+            x, y, z = table.unpack(GetEntityCoords(player, true))
             
             roundx = tonumber(string.format("%.2f", x))
             roundy = tonumber(string.format("%.2f", y))
@@ -16,7 +16,7 @@ if DRPCoreConfig.Debug then
             DrawTxt("~r~Y:~s~ "..roundy, 0.44, 0.00)
             DrawTxt("~r~Z:~s~ "..roundz, 0.55, 0.00)
 
-            heading = GetEntityHeading(GetPlayerPed(-1))
+            heading = GetEntityHeading(player)
             roundh = tonumber(string.format("%.2f", heading))
             DrawTxt("~r~Heading:~s~ "..roundh, 0.40, 0.05)
 
