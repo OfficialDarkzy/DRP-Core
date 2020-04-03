@@ -35,7 +35,6 @@ pool.on("connection", (connection) => {
             return txt;
         }.bind(this));
     };
-	console.log(`Connection: ${connection.threadId}`);
 });
 
 pool.on("acquire", (connection) => {
