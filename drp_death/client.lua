@@ -35,8 +35,8 @@ Citizen.CreateThread(function()
                 if not playerDied then
                     TriggerServerEvent("DRP_Core:TriggerDeathStart")
                     TriggerServerEvent("DRP_Death:Revived", true)
-                    TriggerServerEvent("DRP_Bank:DropOnDeath") -- if bank is installed
-                    diedPos = GetEntityCoords(PlayerPedId(), false)
+                    TriggerServerEvent("DRP_Bank:DropOnDeath")
+                    diedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
                     playerDied = true
                     ResetPedMovementClipset(ped, 0.0)
                 end
@@ -64,13 +64,38 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
     end
 end)
+
+Citizen.CreateThread(function()
+  while true do
+      Citizen.Wait(1000)
+      if(timeLeft > 0)then
+          timeLeft = timeLeft - 1
+     
+    end
+  end
+end)
+
+Citizen.CreateThread(function()
+  while true do
+      Citizen.Wait(1000)
+      if startAnimation and timeLeft > 0 then
+        TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn in " .. timeLeft .. " seconds"), 1000, false, "leftCenter")
+    elseif startAnimation and timeLeft == 0 then
+      canRespawn = true
+      TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn now"), 1000, false, "leftCenter")
+      Citizen.Wait(5000)
+     end
+  end
+end)
+
+
 ---------------------------------------------------------------------------
 -- Events 
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Core:InitDeath")
 AddEventHandler("DRP_Core:InitDeath", function(time)
     local ped = PlayerPedId()
-    while GetEntitySpeed(ped) >= 0.25 do
+    while GetEntitySpeed(ped) >= 0.35 do
         Citizen.Wait(1000)
     end
     local pedPos = GetEntityCoords(ped, false)
@@ -79,20 +104,9 @@ AddEventHandler("DRP_Core:InitDeath", function(time)
     Citizen.Wait(1000)
     startAnimation = true
     timeLeft = time
-    for a = 1, time do
-        Citizen.Wait(1000)
-        timeLeft = timeLeft - 1
-        if timeLeft > 0 and DRP_Core.TimerActive then 
-            RespawnTimerNotify()  
-            if timeLeft == 0 then
-                canRespawn = true
-                if canRespawn then
-                    TriggerEvent("DRP_Core:Error", "Medical", "You can now respawn!", 2500, false, "leftCenter")
-                end
-            end
-        end
-    end
 end)
+
+
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Death:IsDeadStatus")
 AddEventHandler("DRP_Death:IsDeadStatus", function(data)
@@ -113,18 +127,11 @@ AddEventHandler("DRP_Core:Revive", function()
     canRespawn = false
     timeLeft = -1
     ResurrectPed(ped)
-    ClearPedTasksImmediately(PlayerPedId())
-    local pedPos = GetEntityCoords(PlayerPedId(), false)
-    SetEntityCoords(PlayerPedId(), pedPos.x, pedPos.y, pedPos.z + 0.3, 0.0, 0.0, 0.0, 0)
+    ClearPedTasksImmediately(GetPlayerPed(PlayerId()))
+    local pedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
+    SetEntityCoords(GetPlayerPed(PlayerId()), pedPos.x, pedPos.y, pedPos.z + 0.3, 0.0, 0.0, 0.0, 0)
     TriggerServerEvent("DRP_Death:Revived", false)
 end)
-    
- ---------------------------------------------------------------------------
--- Function
----------------------------------------------------------------------------   
-  function RespawnTimerNotify()
-  TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn in " .. timeLeft .. " seconds"), 1000, false, "centerTop")
-end  
 ---------------------------------------------------------------------------
 -- Commands
 ---------------------------------------------------------------------------
@@ -140,7 +147,7 @@ end, false)
 RegisterCommand("respawn", function(source, args, raw)
     if playerDied then
         if canRespawn then
-            local ped = PlayerPedId()
+            local ped = GetPlayerPed(PlayerId())
             startAnimation = false
             canRespawn = false
             playerDied = false
