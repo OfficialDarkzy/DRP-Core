@@ -39,7 +39,6 @@ pool.on("connection", (connection) => {
 });
 
 pool.on("acquire", (connection) => {
-	console.log(`Connection Acquired: ${connection.threadId}`);
 	if (devmode){ DisplayConnections() }
 });
 
@@ -48,7 +47,6 @@ pool.on("enqueue", () => {
 })
 
 pool.on("release", (connection) => {
-	console.log(`Connection Released: ${connection.threadId}`);
 	if (devmode){ DisplayConnections() }
 })
 

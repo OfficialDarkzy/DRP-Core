@@ -13,7 +13,6 @@ AddEventHandler("onResourceStart", function(resource)
 end)
 
 function AsyncQueryCallback(queryData, callback)
-    print(json.encode(queryData))
     Citizen.CreateThread(function()
         if authToken ~= nil then
             queryData.data = queryData.data or {}
