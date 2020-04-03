@@ -16,8 +16,8 @@ AddEventHandler("DRP_Death:Revived", function(boolValue)
         deadValue = 0
     end
     ------------------------------------------------------------------------------------
-    exports["externalsql"]:DBAsyncQuery({
-        string = "UPDATE characters SET `isDead` = :deadValue WHERE `id` = :charid",
+    exports["externalsql"]:AsyncQueryCallback({
+        query = "UPDATE characters SET `isDead` = :deadValue WHERE `id` = :charid",
             data = {
                 deadValue = deadValue,
                 charid = character.charid
@@ -30,8 +30,8 @@ RegisterServerEvent("DRP_Death:GetDeathStatus")
 AddEventHandler("DRP_Death:GetDeathStatus", function()
     local src = source
     local character = exports["drp_id"]:GetCharacterData(src)
-    exports["externalsql"]:DBAsyncQuery({
-    string = "SELECT * FROM `characters` WHERE `id` = :charid",
+    exports["externalsql"]:AsyncQueryCallback({
+    query = "SELECT * FROM `characters` WHERE `id` = :charid",
         data = {
             charid = character.charid
         }

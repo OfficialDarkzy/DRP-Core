@@ -91,8 +91,8 @@ end, false)
 --             if groups ~= nil then
 --                 print(groups)
 --                 if DoesRankHavePerms(player.rank, "addgroup") then
---                     exports["externalsql"]:DBAsyncQuery({
---                         string = "UPDATE `users` SET `rank` = :group WHERE `id` = :sid",
+--                     exports["externalsql"]:AsyncQueryCallback({
+--                         query = "UPDATE `users` SET `rank` = :group WHERE `id` = :sid",
 --                         data = {
 --                             sid = adminid,
 --                             group = groups
@@ -132,24 +132,24 @@ RegisterCommand("adminaddcop", function(source, args, raw)
     --Check If This Person Is Even In The Database
     if player ~= false then
         if DoesRankHavePerms(player.rank, "adminaddcop") then
-            exports["externalsql"]:DBAsyncQuery({
-                string = "SELECT * FROM `characters` WHERE `id` = :charid",
+            exports["externalsql"]:AsyncQueryCallback({
+                query = "SELECT * FROM `characters` WHERE `id` = :charid",
                 data = {
                     charid = newCopID
                 }
             }, function(doesPlayerExist)
                     if json.encode(doesPlayerExist["data"]) ~= "[]" then
                 --Check If That Person Is A Cop Already
-                    exports["externalsql"]:DBAsyncQuery({
-                        string = "SELECT * FROM `police` WHERE `char_id` = :charid",
+                    exports["externalsql"]:AsyncQueryCallback({
+                        query = "SELECT * FROM `police` WHERE `char_id` = :charid",
                         data = {
                             charid = newCopID
                         }
                     }, function(isPoliceOfficer)
                         if json.encode(isPoliceOfficer["data"]) == "[]" then
                             -- Add This Person To Be A Cop
-                            exports["externalsql"]:DBAsyncQuery({
-                                string = "INSERT INTO `police` SET `rank` = :rank, `char_id` = :charid",
+                            exports["externalsql"]:AsyncQueryCallback({
+                                query = "INSERT INTO `police` SET `rank` = :rank, `char_id` = :charid",
                                 data = {
                                     rank = 1,
                                     charid = newCopID

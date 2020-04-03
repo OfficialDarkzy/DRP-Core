@@ -7,8 +7,8 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
 	deferrals.defer()
     deferrals.update("Checking Your Information, please wait...")
     SetTimeout(2500, function()
-        exports["externalsql"]:DBAsyncQuery({
-            string = "SELECT * FROM `users` WHERE `identifier` = :identifier",
+        exports["externalsql"]:AsyncQueryCallback({
+            query = "SELECT * FROM `users` WHERE `identifier` = :identifier",
             data = {
                 identifier = PlayerIdentifier("license", src)
             }
@@ -30,10 +30,10 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
                     end
 
                     local timeLeft = isBanned.time - joinTime
-                    local banString = ""
+                    local banquery = ""
                     if math.floor(timeLeft / 60) <= 0 then -- REMOVE BAN
-                        exports["externalsql"]:DBAsyncQuery({
-                            string = "UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier",
+                        exports["externalsql"]:AsyncQueryCallback({
+                            query = "UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier",
                             data = {
                                 bandata = json.encode({banned = false, reason = "", by = "", time = 0, perm = false}),
                                 identifier = PlayerIdentifier("license", src)
@@ -41,17 +41,17 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
                         }, function(removeBan)
                             -- CHECKER
                         end)
-                        banString = tostring("["..DRPCoreConfig.CommunityName.."]: Ban Removed Sucessfully, please reconnect!")
+                        banquery = tostring("["..DRPCoreConfig.CommunityName.."]: Ban Removed Sucessfully, please reconnect!")
                     else
-                        banString = tostring("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - ( " .. math.floor(timeLeft / 60) .. " ) minutes")
+                        banquery = tostring("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - ( " .. math.floor(timeLeft / 60) .. " ) minutes")
                     end
                     deferrals.done(banString)
                     return
                 end
                 deferrals.done()
             else
-                exports["externalsql"]:DBAsyncQuery({
-                    string = "INSERT INTO `users` SET `identifier` = :identifier, `name` = :name, `rank` = :rank, `ban_data` = :bandata, `whitelisted` = :whitelisted",
+                exports["externalsql"]:AsyncQueryCallback({
+                    query = "INSERT INTO `users` SET `identifier` = :identifier, `name` = :name, `rank` = :rank, `ban_data` = :bandata, `whitelisted` = :whitelisted",
                     data = {
                         identifier = PlayerIdentifier("license", src),
                         name = GetPlayerName(src),
@@ -60,6 +60,7 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
                         whitelisted = false
                     }
                 }, function(createdPlayer)
+                    print(json.encode(createdPlayer))
                 ------------------------------------------------------------------------------------
                     if DRPCoreConfig.Whitelisted then
                         deferrals.done("Please reconnect.. Your information has been saved and now ready to be whitelisted")
@@ -155,8 +156,8 @@ end
 RegisterServerEvent("DRP_Core:AddPlayerToTable")
 AddEventHandler("DRP_Core:AddPlayerToTable", function()
     local src = source
-    exports["externalsql"]:DBAsyncQuery({
-        string = "SELECT * FROM `users` WHERE `identifier` = :identifier",
+    exports["externalsql"]:AsyncQueryCallback({
+        query = "SELECT * FROM `users` WHERE `identifier` = :identifier",
         data = {
             identifier = PlayerIdentifier("license", src)
         }

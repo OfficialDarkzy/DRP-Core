@@ -4,8 +4,8 @@ SQLConfig = {}
 SQLConfig.host = "localhost"
 SQLConfig.port = 2000
 SQLConfig.apipath = "/external/api"
-SQLConfig.secret = "drp_password"
-SQLConfig.community = "DRP"
+SQLConfig.secret = "drpsecretkey"
+SQLConfig.community = "drp"
 
 -- Further Configurations
 SQLConfig.CreateTokenOnStart = true

@@ -61,8 +61,8 @@ AddEventHandler("DRP_Core:BanPlayer", function(selectedPlayer, message, time, pe
             new_ban_data = json.encode({time = os.time() + time, banned = true, reason = message, by = GetPlayerName(src), perm = false})
         end
         print(new_ban_data)
-        exports["externalsql"]:DBAsyncQuery({
-            string = "UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier",
+        exports["externalsql"]:AsyncQueryCallback({
+            query = "UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier",
             data = {
                 identifier = PlayerIdentifier("license", player.id),
                 bandata = new_ban_data

@@ -27,19 +27,20 @@ function SendQuery(query, data) {
 
 pool.on("connection", (connection) => {
 	connection.config.queryFormat = function (query, values) {
-		if (!values) return query;
-		return query.replace(/\:(\w+)/g, function (txt, key) {
-			if (values.hasOwnProperty(key)) {
-				return this.escape(values[key]);
-			}
-			return txt;
-		}.bind(this));
-	};
+        if (!values) return query;
+        return query.replace(/\:(\w+)/g, function (txt, key) {
+            if (values.hasOwnProperty(key)) {
+                return this.escape(values[key]);
+            }
+            return txt;
+        }.bind(this));
+    };
+	console.log(`Connection: ${connection.threadId}`);
 });
 
 pool.on("acquire", (connection) => {
-	// console.log(`Connection Acquired: ${connection.threadId}`);
-	if (devmode) { DisplayConnections() }
+	console.log(`Connection Acquired: ${connection.threadId}`);
+	if (devmode){ DisplayConnections() }
 });
 
 pool.on("enqueue", () => {
@@ -47,8 +48,8 @@ pool.on("enqueue", () => {
 })
 
 pool.on("release", (connection) => {
-	// console.log(`Connection Released: ${connection.threadId}`);
-	if (devmode) { DisplayConnections() }
+	console.log(`Connection Released: ${connection.threadId}`);
+	if (devmode){ DisplayConnections() }
 })
 
 function DisplayConnections() {

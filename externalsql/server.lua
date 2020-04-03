@@ -6,38 +6,27 @@ AddEventHandler("onResourceStart", function(resource)
         if SQLConfig.CreateTokenOnStart then
             DBCreateToken(function()
                 print("Resource Start Token Generated")
+                TriggerEvent("ExternalSQL:ExternalSqlReady")
             end)
         end
     end
 end)
 
-function onExternalSqlReady(callback)
-    Citizen.CreateThread(function()
-        while true do
-            Citizen.Wait(250)
-            if authToken ~= nil then
-                callback(true)
-                return
-            end
-        end
-    end)
-end
-
-function DBAsyncQuery(queryData, callback)
+function AsyncQueryCallback(queryData, callback)
+    print(json.encode(queryData))
     Citizen.CreateThread(function()
         if authToken ~= nil then
+            queryData.data = queryData.data or {}
+
             PerformHttpRequest("http://" .. SQLConfig.host .. ":" .. SQLConfig.port .. SQLConfig.apipath .. "/execute", function(code, text, headers)
                 local decode = json.decode(text)
-
                 if decode.status ~= false then
                     callback({status = true, data = decode.results})
                 else
-                    print(text)
                     callback({status = false, data = {}})
                 end
-
             end, "POST", json.encode({
-                query = queryData.string,
+                query = queryData.query,
                 data = queryData.data,
                 secret = SQLConfig.secret
             }), {
@@ -47,6 +36,32 @@ function DBAsyncQuery(queryData, callback)
         end
     end)
 end
+exports("AsyncQueryCallback", AsyncQueryCallback)
+
+function AsyncQuery(queryData)
+    local p = promise.new()
+    if authToken ~= nil then
+        PerformHttpRequest("http://" .. SQLConfig.host .. ":" .. SQLConfig.port .. SQLConfig.apipath .. "/execute", function(code, text, headers)
+            local decode = json.decode(text)
+            if decode.status ~= false then
+                p:resolve({status = true, data = decode.results})
+            else
+                p:resolve({status = false, data = {}})
+            end
+        end, "POST", json.encode({
+            query = queryData.query,
+            data = queryData.data,
+            secret = SQLConfig.secret
+        }), {
+            ["Content-Type"] = "application/json",
+            ["Authentication"] = tostring("Bearer " .. authToken)
+        })
+    else
+        p:reject("[ExternalSQL]: Invalid Authentication Token!")
+    end
+    return Citizen.Await(p)
+end
+exports("AsyncQuery", AsyncQuery)
 
 function DBCreateToken(callback)
     authToken = nil
