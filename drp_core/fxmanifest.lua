@@ -35,7 +35,6 @@ client_script "managers/chat.lua"
 client_script "debug/client.lua"
 client_script "sync/client.lua"
 client_script "admin/client.lua"
-client_script "weaponanimation.lua"
 
 server_script "config.lua"
 server_script "server.lua"
