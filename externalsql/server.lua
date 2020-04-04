@@ -4,6 +4,7 @@ local authToken = nil
 AddEventHandler("onResourceStart", function(resource)
     if resource == GetCurrentResourceName() then
         if SQLConfig.CreateTokenOnStart then
+            Wait(1000)
             DBCreateToken(function()
                 print("Resource Start Token Generated")
                 TriggerEvent("ExternalSQL:ExternalSqlReady")
