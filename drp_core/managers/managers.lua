@@ -43,7 +43,7 @@ function DrawText3Ds(x,y,z, text)
     local scale = scale*fov
     
     if onScreen then
-        SetTextScale(0.0*scale, 1.1*scale)
+        SetTextScale(0.0*scale, 1.0*scale)
         SetTextFont(fontId)
         SetTextProportional(1)
         SetTextColour(255, 255, 255, 255)
@@ -58,17 +58,15 @@ function DrawText3Ds(x,y,z, text)
     end
 end
 ---------------------------------------------------------------------------
-function drawText(text,font,centre,x,y,scale,r,g,b,a)
-    SetTextFont(font)
-	SetTextProportional(0)
-	SetTextScale(scale, scale)
-	SetTextColour(r, g, b, a)
-	SetTextDropShadow(0, 0, 0, 0,255)
+function drawText(text, x, y)
+	SetTextFont(0)
+	SetTextProportional(1)
+	SetTextScale(0.0, 0.70)
+	SetTextDropshadow(1, 0, 0, 0, 255)
 	SetTextEdge(1, 0, 0, 0, 255)
 	SetTextDropShadow()
 	SetTextOutline()
-	SetTextCentre(centre)
 	SetTextEntry("STRING")
 	AddTextComponentString(text)
-    DrawText(x , y)
+	DrawText(x, y)
 end

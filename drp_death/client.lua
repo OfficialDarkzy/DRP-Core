@@ -70,16 +70,23 @@ Citizen.CreateThread(function()
       Citizen.Wait(1000)
       if(timeLeft > 0)then
           timeLeft = timeLeft - 1
-     
     end
   end
 end)
 
 Citizen.CreateThread(function()
   while true do
-      Citizen.Wait(1000)
+    local coords = GetEntityCoords(PlayerPedId(), false)
+      Citizen.Wait(1)
       if startAnimation and timeLeft > 0 then
-        TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn in " .. timeLeft .. " seconds"), 1000, false, "leftCenter")
+        if DRP_Core.Static3DTextMessage then
+            exports["drp_core"]:drawText("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn")
+        end
+        elseif DRP_Core.Dynamic3DTextMessage then
+            exports['drp_core']:DrawText3Ds(coords.x, coords.y, coords.z + 0.5, tostring("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn"))
+        else
+            print("Your server admin needs to set a config for draw text :)")
+        end
     elseif startAnimation and timeLeft == 0 then
       canRespawn = true
       TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn now"), 1000, false, "leftCenter")
@@ -87,8 +94,6 @@ Citizen.CreateThread(function()
      end
   end
 end)
-
-
 ---------------------------------------------------------------------------
 -- Events 
 ---------------------------------------------------------------------------
@@ -105,8 +110,6 @@ AddEventHandler("DRP_Core:InitDeath", function(time)
     startAnimation = true
     timeLeft = time
 end)
-
-
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Death:IsDeadStatus")
 AddEventHandler("DRP_Death:IsDeadStatus", function(data)
@@ -127,9 +130,9 @@ AddEventHandler("DRP_Core:Revive", function()
     canRespawn = false
     timeLeft = -1
     ResurrectPed(ped)
-    ClearPedTasksImmediately(GetPlayerPed(PlayerId()))
-    local pedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
-    SetEntityCoords(GetPlayerPed(PlayerId()), pedPos.x, pedPos.y, pedPos.z + 0.3, 0.0, 0.0, 0.0, 0)
+    ClearPedTasksImmediately(ped)
+    local pedPos = GetEntityCoords(ped, false)
+    SetEntityCoords(ped, pedPos.x, pedPos.y, pedPos.z + 0.3, 0.0, 0.0, 0.0, 0)
     TriggerServerEvent("DRP_Death:Revived", false)
 end)
 ---------------------------------------------------------------------------
@@ -141,6 +144,7 @@ RegisterCommand("adminrevive", function(source, args, raw)
         canRespawn = false
     else
         print("not dead!")
+        ResetPedMovementClipset(PlayerPedId(), 0.0) -- Just in case it gets bugged in the animation:)
     end
 end, false)
 ---------------------------------------------------------------------------
