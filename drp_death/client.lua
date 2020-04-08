@@ -67,21 +67,20 @@ end)
 
 Citizen.CreateThread(function()
   while true do
-      Citizen.Wait(1000)
-      if(timeLeft > 0)then
-          timeLeft = timeLeft - 1
+    Citizen.Wait(1000)
+    if(timeLeft > 0)then
+        timeLeft = timeLeft - 1
     end
   end
 end)
 
 Citizen.CreateThread(function()
   while true do
-    local coords = GetEntityCoords(PlayerPedId(), false)
       Citizen.Wait(1)
       if startAnimation and timeLeft > 0 then
+        local coords = GetEntityCoords(PlayerPedId(), false)
         if DRP_Core.Static3DTextMessage then
             exports["drp_core"]:drawText("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn")
-        end
         elseif DRP_Core.Dynamic3DTextMessage then
             exports['drp_core']:DrawText3Ds(coords.x, coords.y, coords.z + 0.5, tostring("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn"))
         else
@@ -145,6 +144,7 @@ RegisterCommand("adminrevive", function(source, args, raw)
     else
         print("not dead!")
         ResetPedMovementClipset(PlayerPedId(), 0.0) -- Just in case it gets bugged in the animation:)
+        ClearPedTasksImmediately(PlayerPedId())
     end
 end, false)
 ---------------------------------------------------------------------------
