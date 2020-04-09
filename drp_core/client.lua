@@ -1,8 +1,8 @@
 ---------------------------------------------------------------------------
---- DO NOT EDIT
+--- DO NOT EDIT These Three Things Below. They have Magic built into them bro
 ---------------------------------------------------------------------------
 local isPlayerReady = false
-						
+
 Citizen.CreateThread(function()
     SetNuiFocus(false, false)
     TriggerServerEvent("DRP_Core:AddPlayerToTable")
@@ -26,7 +26,9 @@ AddEventHandler("playerSpawned", function()
       SetCanAttackFriendly(playerPed, true, true)
     end)
 end)
-
+---------------------------------------------------------------------------
+--- Core Thread
+---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     if DRPCoreConfig.MapLocations then
         for _, item in pairs(DRPCoreConfig.Locations) do
@@ -43,7 +45,7 @@ Citizen.CreateThread(function()
     while true do
 --------------------Disable Health Regeneration----------------------------
         SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
-------------------------------Remove Police Audio--------------------------	
+----------------------Remove Police Audio----------------------------------	
         DisablePoliceReports()
 ----------------------Hiding Hud Components--------------------------------
       	if IsHudComponentActive(1) then 
@@ -102,12 +104,11 @@ Citizen.CreateThread(function()
 	end
 end)
 ---------------------------------------------------------------------------
---- Core Functions Edit If you know what you are doing
+--- Core Functions Dont EDIT BROOO ITS MY NAME CAMONNNN GIMME CREDIIIIIITTTTTTTTTTTTT
 ---------------------------------------------------------------------------
 function AddTextEntry(key, value)
 	Citizen.InvokeNative(GetHashKey("ADD_TEXT_ENTRY"), key, value)
 end
-
 local config = {
     ["TITLE"] = "DRP Framework",
     ["SUBTITLE"] = "Created by Darkzy",
@@ -118,7 +119,6 @@ local config = {
     ["SETTINGS"] = "Settings",
     ["R*EDITOR"] = "Rockstar Editor"
 }
-
 Citizen.CreateThread(function()
     AddTextEntry('PM_SCR_MAP', config["MAP"])
     AddTextEntry('PM_SCR_STA', config["STATUS"])

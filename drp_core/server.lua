@@ -1,6 +1,10 @@
+---------------------------------------------------------------------------
+-- Do not edit this Table name below or it will break EVERYTHING bro
+---------------------------------------------------------------------------
 local players = {}
-
--- BANDATA -- WHITELISTDATA
+---------------------------------------------------------------------------
+-- Player Connecting Mess. Do Not Edit Unless you are a Magical Person.... or an Attack Heli 
+---------------------------------------------------------------------------
 AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
 	local src = source
 	local joinTime = os.time()
@@ -72,6 +76,8 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
         end)
     end)
 end)
+---------------------------------------------------------------------------
+-- Custom Chat Messages -- Should really be in drp_id bro
 ---------------------------------------------------------------------------
 if DRPCoreConfig.ID then -- ALL CUSTOM CHAT MESSAGES FOR CHARACTER SYSTEM DO NOT REMOVE THIS IF STATEMENT IF YOU ARENT USING CHARACTER SYSTEM IT WILL BREAK IT
     AddEventHandler("chatMessage", function(source, color, message)
@@ -151,7 +157,7 @@ if DRPCoreConfig.ID then -- ALL CUSTOM CHAT MESSAGES FOR CHARACTER SYSTEM DO NOT
     end, false)
 end
 ---------------------------------------------------------------------------
--- ADD ALL PLAYERS DATA TO TABLE ON JOIN
+-- Add all players to table when they join ;)
 ---------------------------------------------------------------------------
 RegisterServerEvent("DRP_Core:AddPlayerToTable")
 AddEventHandler("DRP_Core:AddPlayerToTable", function()
@@ -185,6 +191,8 @@ function PlayerIdentifier(type, id)
     return false
 end
 ---------------------------------------------------------------------------
+-- GetPlayerData Function usage exports["drp_core"]:GetPlayerData(source)
+---------------------------------------------------------------------------
 function GetPlayerData(id) -- USE THIS MORE OFTEN!!!
     for a = 1, #players do
         if players[a].id == id then
@@ -194,7 +202,8 @@ function GetPlayerData(id) -- USE THIS MORE OFTEN!!!
     return false
 end
 ---------------------------------------------------------------------------
--- CUSTOM EXPORT WAY
+-- GetPlayerData Server Handler
+---------------------------------------------------------------------------
 AddEventHandler("DRP_Core:GetPlayerData", function(id, callback)
 	for a = 1, #players do
         if players[a].id == id then
@@ -204,6 +213,8 @@ AddEventHandler("DRP_Core:GetPlayerData", function(id, callback)
     end
     callback(false)
 end)
+---------------------------------------------------------------------------
+-- Who de fok is dis guy?
 ---------------------------------------------------------------------------
 function stringsplit(inputstr, sep)
 	if sep == nil then
