@@ -27,17 +27,24 @@ files {
 client_script "fivem.lua"
 client_script "client.lua"
 client_script "config.lua"
+
 client_script "managers/voip.lua"
 client_script "managers/managers.lua"
 client_script "managers/vehicle_managers.lua"
 client_script "managers/chat.lua"
+
+client_script "sync/config.lua"
 client_script "sync/client.lua"
+
 client_script "admin/client.lua"
 client_script "admin/debugMenu.lua"
 
 server_script "config.lua"
 server_script "server.lua"
+
+server_script "sync/config.lua"
 server_script "sync/server.lua"
+
 server_script "admin/server.lua"
 server_script "admin/commands.lua"
 
