@@ -77,6 +77,11 @@ local function TeleportToMarker()
     SetEntityCoordsNoOffset(targetPed, x,y,z, 0, 0, 1)
 end
 ---------------------------------------------------------------------------
+local function deleteCar(vehicle)
+	SetEntityAsMissionEntity(vehicle, true, true)
+	Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(vehicle))
+end
+---------------------------------------------------------------------------
 --- EVENTS
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Core:HealCharacter")
