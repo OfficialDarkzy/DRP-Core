@@ -114,3 +114,78 @@ AddEventHandler("DRP_Core:PassAdminMessage", function(messageData, isSender)
         isSender = isSender
     })
 end)
+---------------------------------------------------------------------------
+-- Spawn Vehicles
+---------------------------------------------------------------------------
+RegisterNetEvent("DRP_Core:VehicleSpawner")
+AddEventHandler("DRP_Core:VehicleSpawner", function(vehmodel)
+    local ped = PlayerPedId()
+    local pedCoords = GetEntityCoords(ped, false)
+    local veh = vehmodel
+    local fuel = 100
+    if veh == nil then veh = "adder" end
+    vehiclehash = GetHashKey(veh)
+    RequestModel(vehiclehash)
+    
+    Citizen.CreateThread(function() 
+        local waiting = 0
+        while not HasModelLoaded(vehiclehash) do
+            waiting = waiting + 100
+            Citizen.Wait(100)
+            if waiting > 5000 then
+                break
+            end
+        end
+        veh = CreateVehicle(vehiclehash, pedCoords.x, pedCoords.y, pedCoords.z, GetEntityHeading(ped), 1, 0)
+        TaskWarpPedIntoVehicle(ped, veh, -1)
+        exports["drp_LegacyFuel"]:SetFuel(veh, fuel)
+    end)
+end)
+---------------------------------------------------------------------------
+-- Teleport To Coords
+---------------------------------------------------------------------------
+RegisterNetEvent('DRP_Core:teleportCoords')
+AddEventHandler('DRP_Core:teleportCoords', function(pos)
+	pos.x = pos.x + 0.0
+	pos.y = pos.y + 0.0
+	pos.z = pos.z + 0.0
+
+	RequestCollisionAtCoord(pos.x, pos.y, pos.z)
+
+	while not HasCollisionLoadedAroundEntity(PlayerPedId()) do
+		RequestCollisionAtCoord(pos.x, pos.y, pos.z)
+		Citizen.Wait(1)
+	end
+
+	SetEntityCoords(PlayerPedId(), pos.x, pos.y, pos.z)
+end)
+---------------------------------------------------------------------------
+-- Delete Vehicles
+---------------------------------------------------------------------------
+RegisterNetEvent('DRP_Core:DeleteVehicle')
+AddEventHandler('DRP_Core:DeleteVehicle', function()
+    local playerPed = PlayerPedId()
+    local pedcoords = GetEntityCoords(playerPed)
+    local vehicle = GetClosestVehicle(pedcoords.x, pedcoords.y, pedcoords.z, 3.0, 0, 70)
+
+	if IsPedInAnyVehicle(playerPed, true) then
+		vehicle = GetVehiclePedIsIn(playerPed, false)
+	end
+
+	if DoesEntityExist(vehicle) then
+		deleteCar(vehicle)
+	end
+	
+end)
+---------------------------------------------------------------------------
+-- Fix Vehicles
+---------------------------------------------------------------------------
+-- Has to get fuel level else the SetVehicleFixed native will set fuel to 65% well done gta
+RegisterNetEvent('DRP_Core:FixVehicle')
+AddEventHandler('DRP_Core:FixVehicle', function()
+    local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+    local fuel = exports["drp_LegacyFuel"]:GetFuel(vehicle)
+
+    SetVehicleFixed(vehicle)
+    exports["drp_LegacyFuel"]:SetFuel(vehicle, fuel)
+end)
