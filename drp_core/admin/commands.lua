@@ -160,7 +160,7 @@ RegisterCommand("car", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "vehicle") then
             TriggerClientEvent("DRP_Core:VehicleSpawner", src, veh)
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to teleport to waypoint"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to spawn vehicles"), 2500, false, "leftCenter")
         end
     end
 end, false)
@@ -174,7 +174,7 @@ RegisterCommand("fix", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "vehicle") then
             TriggerClientEvent("DRP_Core:FixVehicle", src)
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to delete vehicles"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to fix vehicles"), 2500, false, "leftCenter")
         end
     end
 end, false)
@@ -269,7 +269,7 @@ RegisterCommand("removecash", function(source, args, raw)
                 TriggerEvent("DRP_Bank:RemoveCashMoney", src, tonumber(args[1]))
             end
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to remove cash!"), 2500, false, "leftCenter")
         end
     end
 end, false) 
@@ -301,7 +301,7 @@ RegisterCommand("removebank", function(source, args, raw)
                 TriggerEvent("DRP_Bank:RemoveBankMoney", src, tonumber(args[1]))
             end
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to remove money!"), 2500, false, "leftCenter")
         end
     end
 end, false) 
