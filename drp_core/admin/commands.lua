@@ -120,7 +120,78 @@ RegisterCommand("tpm", function(source, args, raw)
             TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to teleport to waypoint"), 2500, false, "leftCenter")
         end
     end
-end, false) 
+end, false)
+---------------------------------------------------------------------------
+--- Teleport to coords USAGE: /tp x y z 
+---------------------------------------------------------------------------
+RegisterCommand("tp", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "teleport") then
+            local x = tonumber(args[1])
+            local y = tonumber(args[2])
+            local z = tonumber(args[3])
+            
+            if x and y and z then
+                TriggerClientEvent('DRP_Core:teleportCoords', src, {
+                    x = x,
+                    y = y,
+                    z = z
+                })
+                TriggerClientEvent("DRP_Core:Success", src, "Admin System", tostring("You succesfuly teleported"), 2500, false, "leftCenter")
+            else
+                TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("Invalid coordinates!"), 2500, false, "leftCenter")
+            end
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to teleport"), 2500, false, "leftCenter")
+        end
+    end
+end, false)
+---------------------------------------------------------------------------
+--- Spawn Vehicles USAGE: /car modelname
+---------------------------------------------------------------------------
+RegisterCommand("car", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    local veh = args[1]
+
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "vehicle") then
+            TriggerClientEvent("DRP_Core:VehicleSpawner", src, veh)
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to teleport to waypoint"), 2500, false, "leftCenter")
+        end
+    end
+end, false)
+---------------------------------------------------------------------------
+--- Fix Vehicle USAGE: /fix
+---------------------------------------------------------------------------
+RegisterCommand("fix", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "vehicle") then
+            TriggerClientEvent("DRP_Core:FixVehicle", src)
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to delete vehicles"), 2500, false, "leftCenter")
+        end
+    end
+end, false)
+---------------------------------------------------------------------------
+--- Delete Vehicle USAGE: /dv
+---------------------------------------------------------------------------
+RegisterCommand("dv", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "vehicle") then
+            TriggerClientEvent("DRP_Core:DeleteVehicle", src)
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to delete vehicles"), 2500, false, "leftCenter")
+        end
+    end
+end, false)
 ---------------------------------------------------------------------------
 --- Set Yourself Or Others In Police Force USAGE: /adminaddcop id
 ---------------------------------------------------------------------------

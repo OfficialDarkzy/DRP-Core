@@ -36,7 +36,7 @@ DRPCoreConfig.StaffRanks.ranks = {"user", "admin", "superadmin"}
 DRPCoreConfig.StaffRanks.perms = { -- This is what you need to reference too in the database for your rank :)
     ["User"] = {},
     ["admin"] = {"time", "weather", "adminaddcop", "heal"},
-    ["superadmin"] = {"time", "weather", "adminaddcop", "heal", "addgroup", "teleport", "economy", "adminmenu", "kick", "ban"}
+    ["superadmin"] = {"time", "weather", "adminaddcop", "heal", "addgroup", "teleport", "economy", "adminmenu", "kick", "ban", "vehicle"}
 }
 -- Edit these to your needs
 DRPCoreConfig.Locations = {
