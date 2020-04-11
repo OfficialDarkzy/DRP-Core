@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
                 while not HasAnimDictLoaded(dict) do
                     Citizen.Wait(1)
                 end
-                TaskPlayAnim(ped, dict, anim, 8.0, -8.0, -1, 14, 1.0, 0, 0, 0)
+                TaskPlayAnim(ped, dict, anim, 4.0, -1.0, -1, 14, 1.0, 0, 0, 0)
                 Citizen.Wait(0)
             end
         else
@@ -75,23 +75,27 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-  while true do
-      Citizen.Wait(1)
-      if startAnimation and timeLeft > 0 then
-        local coords = GetEntityCoords(PlayerPedId(), false)
-        if DRP_Core.Static3DTextMessage then
-            exports["drp_core"]:drawText("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn")
-        elseif DRP_Core.Dynamic3DTextMessage then
-            exports['drp_core']:DrawText3Ds(coords.x, coords.y, coords.z + 0.5, tostring("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn"))
+    local sleepTimer = 500
+    while true do
+        if startAnimation and timeLeft > 0 then
+            sleepTimer = 1
+            local coords = GetEntityCoords(PlayerPedId(), false)
+            if DRP_Core.Static3DTextMessage then
+                exports["drp_core"]:drawText("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn")
+            elseif DRP_Core.Dynamic3DTextMessage then
+                exports['drp_core']:DrawText3Ds(coords.x, coords.y, coords.z + 0.5, tostring("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn"))
+            else
+                print("Your server admin needs to set a config for draw text :)")
+            end
+        elseif startAnimation and timeLeft == 0 then
+            canRespawn = true
+            TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn now"), 1000, false, "leftCenter")
+            Citizen.Wait(5000)
         else
-            print("Your server admin needs to set a config for draw text :)")
+            sleepTimer = 500
         end
-    elseif startAnimation and timeLeft == 0 then
-      canRespawn = true
-      TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn now"), 1000, false, "leftCenter")
-      Citizen.Wait(5000)
-     end
-  end
+        Citizen.Wait(sleepTimer)
+    end
 end)
 ---------------------------------------------------------------------------
 -- Events 
@@ -99,13 +103,13 @@ end)
 RegisterNetEvent("DRP_Core:InitDeath")
 AddEventHandler("DRP_Core:InitDeath", function(time)
     local ped = PlayerPedId()
-    while GetEntitySpeed(ped) >= 0.35 do
+    while GetEntitySpeed(ped) >= 0.25 do
         Citizen.Wait(1000)
     end
     local pedPos = GetEntityCoords(ped, false)
     ResurrectPed(ped)
     SetEntityCoords(ped, pedPos.x, pedPos.y, pedPos.z, 0.0, 0.0, 0.0, 0)
-    Citizen.Wait(1000)
+    Citizen.Wait(250)
     startAnimation = true
     timeLeft = time
 end)
