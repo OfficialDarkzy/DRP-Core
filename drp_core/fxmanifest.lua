@@ -51,7 +51,8 @@ server_script "sync/server.lua"
 server_script "admin/server.lua"
 server_script "admin/commands.lua"
 
-export "DrawText3Ds"
 export "drawText"
+
+
 server_export "GetPlayerData"
 server_export "DoesRankHavePerms"

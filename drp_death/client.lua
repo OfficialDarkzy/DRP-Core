@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
                 while not HasAnimDictLoaded(dict) do
                     Citizen.Wait(1)
                 end
-                TaskPlayAnim(ped, dict, anim, 4.0, -1.0, -1, 14, 1.0, 0, 0, 0)
+                TaskPlayAnim(ped, dict, anim, 1.0, 1.0, -1, 14, 1.0, 0, 0, 0)
                 Citizen.Wait(0)
             end
         else
@@ -104,7 +104,7 @@ RegisterNetEvent("DRP_Core:InitDeath")
 AddEventHandler("DRP_Core:InitDeath", function(time)
     local ped = PlayerPedId()
     while GetEntitySpeed(ped) >= 0.25 do
-        Citizen.Wait(1000)
+        Citizen.Wait(500)
     end
     local pedPos = GetEntityCoords(ped, false)
     ResurrectPed(ped)

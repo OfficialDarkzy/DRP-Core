@@ -61,6 +61,7 @@ function DrawText3Ds(x,y,z, text)
         DrawText(_x,_y)
     end
 end
+exports("DrawText3Ds", DrawText3Ds)
 ---------------------------------------------------------------------------
 --- On Screen Draw Text
 ---------------------------------------------------------------------------
