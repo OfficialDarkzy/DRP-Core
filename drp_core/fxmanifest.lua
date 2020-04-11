@@ -39,6 +39,9 @@ client_script "sync/client.lua"
 client_script "admin/client.lua"
 client_script "admin/debugMenu.lua"
 
+
+server_script "managers/server_managers.lua"
+
 server_script "config.lua"
 server_script "server.lua"
 
