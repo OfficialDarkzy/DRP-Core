@@ -61,9 +61,20 @@ Citizen.CreateThread(function()
                 isInvincible = false
             end
         end
+        if health <= 150 then
+            RequestAnimSet("move_heist_lester")
+            while not HasAnimSetLoaded("move_heist_lester") do 
+                Citizen.Wait(0)    
+            end
+            SetPedMovementClipset(ped, "move_heist_lester", true)
+        else
+            ResetPedMovementClipset(ped, 0.0)
+        end
         Citizen.Wait(0)
     end
 end)
+
+
 
 Citizen.CreateThread(function()
   while true do
