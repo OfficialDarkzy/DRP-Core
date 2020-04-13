@@ -1,3 +1,4 @@
+local messageDisplaying = 0.5
 if DRPCoreConfig.ID then
     function meMessage(pid, message, offset)
         meTimer = true
@@ -48,7 +49,7 @@ if DRPCoreConfig.ID then
         local playerCoords = GetEntityCoords(playerPed)
         local pid = GetPlayerFromServerId(id)
         local pidCoords = GetEntityCoords(GetPlayerPed(pid))
-        local offset = 1 + (messageDisplaying*0.10)
+        local offset = 1 + (messageDisplaying*0.05)
         if pid == PlayerId() then
             meMessage(pid, message, offset)
         elseif #(playerCoords - pidCoords) < 20.0 then
