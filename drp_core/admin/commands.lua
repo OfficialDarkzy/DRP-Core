@@ -109,16 +109,19 @@ end, false)
 --     end
 -- end, false)
 
-RegisterCommand("tpm", function(source, args, raw)
+RegisterCommand("tpm", function(source, args, raw) 
     local src = source
     local player = GetPlayerData(src)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "teleport") then
-            TriggerClientEvent("DRP_Core:Success", src, "Admin System", tostring("You succesfuly teleported to waypoint"), 2500, false, "leftCenter")
-            TriggerClientEvent("DRP_Core:TeleportToMarker", src)
-        else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to teleport to waypoint"), 2500, false, "leftCenter")
+            if src then
+                coords = { ['x'] = false, ['y'] = false, ['z'] = false }
+            end
+            TriggerClientEvent('DRP_Core:Teleport', src, coords)
+            TriggerClientEvent("DRP_Core:Success", src, "Admin System", tostring("You succesfuly teleported"), 2500, false, "leftCenter")
         end
+    else
+        TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to teleport"), 2500, false, "leftCenter")
     end
 end, false)
 ---------------------------------------------------------------------------
