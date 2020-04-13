@@ -113,7 +113,7 @@ RegisterCommand("tpm", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
     if player ~= false then
-        if DoesRankHavePerms(player.rank, "vehicle") then
+        if DoesRankHavePerms(player.rank, "teleport") then
             if src then
                 coords = { ['x'] = false, ['y'] = false, ['z'] = false }
             end
