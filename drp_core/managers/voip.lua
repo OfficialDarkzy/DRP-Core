@@ -17,8 +17,12 @@ if DRPCoreConfig.Voip then
     SetTextOutline()
     SetTextEntry("STRING")
     AddTextComponentString("Range: "..voice.level)
-    DrawText(0.175, 0.90)
-  end
+    if IsPedInAnyVehicle(PlayerPedId(), false) then
+      DrawText(0.667 - 1.0/2, 1.435 - 1.0/2 + 0.005)
+    else
+        DrawText(0.517 - 1.0/2, 1.425 - 1.0/2 + 0.005)
+    end
+end
         
   Citizen.CreateThread(function()
     while true do
