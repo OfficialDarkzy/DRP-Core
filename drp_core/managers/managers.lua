@@ -27,9 +27,10 @@ end
 ---------------------------------------------------------------------------
 function GetPlayers()
     local players = {}
-    for a = 0, 40 do
-        if NetworkIsPlayerActive(a) then
-            table.insert(players, a)
+    for _, player in ipairs(GetActivePlayers()) do
+        local ped = GetPlayerPed(player)
+        if DoesEntityExist(ped) then
+            table.insert(players, player)
         end
     end
     return players
