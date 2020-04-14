@@ -32,8 +32,9 @@ end, false)
 RegisterCommand("time", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
+    local perm = "time"
     if player ~= false then
-        if DoesRankHavePerms(player.rank, "time") then
+        if DoesRankHavePerms(player.rank, perm) then
             local hours = tonumber(args[1])
             local minutes = tonumber(args[2])
             if hours ~= nil and minutes ~= nil then
@@ -53,8 +54,9 @@ end, false)
 RegisterCommand("weather", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
+    local perm = "weather"
     if player ~= false then
-        if DoesRankHavePerms(player.rank, "weather") then
+        if DoesRankHavePerms(player.rank, perm) then
             local newWeather = string.upper(args[1])
             if newWeather ~= nil then
                 ManualWeatherSet(newWeather)
@@ -71,9 +73,12 @@ end, false)
 RegisterCommand("heal", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
+    local perm = "heal"
     if player ~= nil then 
-        if DoesRankHavePerms(player.rank, "heal") then
+        if DoesRankHavePerms(player.rank, perm) then
             TriggerClientEvent("DRP_Core:HealCharacter", src)
+        else
+            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions for this"))
         end
     end
 end, false)
