@@ -11,4 +11,4 @@ app.listen(config.port, (req, res) => {
     console.log("API Server Listening On Port: " + config.port)
 });
 
-console.log("[DatabaseAPI Message] : Loaded 'server.js'");
+console.log("^1[DatabaseAPI Message] : ^4Loaded 'server.js'");

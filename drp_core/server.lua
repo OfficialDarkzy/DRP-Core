@@ -80,28 +80,28 @@ end)
 -- Custom Chat Messages -- Should really be in drp_id bro
 ---------------------------------------------------------------------------
 if DRPCoreConfig.ID then -- ALL CUSTOM CHAT MESSAGES FOR CHARACTER SYSTEM DO NOT REMOVE THIS IF STATEMENT IF YOU ARENT USING CHARACTER SYSTEM IT WILL BREAK IT
-    AddEventHandler("chatMessage", function(source, color, message)
-        local src = source
-        args = stringsplit(message, " ")
-        CancelEvent()
-        if type(args) ~= "table" then
-            if string.find(args[1], "/") then
-                local cmd = args[1]
-                table.remove(args, 1)
-            else
-                local player = GetPlayerData(src)
-                local msg = message:sub(0)
-                local character = exports["drp_id"]:GetCharacterData(src)
-                if player ~= false then
-                    local stuff = "["..player.id.."] "..character.name..""
-                        TriggerClientEvent('chat:addMessage', -1, {
-                        template = '<div style="padding: 0.5vw; margin: 0.5vw; background-color: rgba(41, 41, 41, 0.6); border-radius: 3px;"><i class="fas fa-globe"></i> {0}:<br> {1}</div>',
-                        args = { stuff, msg }
-                    })
-                end
+AddEventHandler("chatMessage", function(source, color, message)
+    local src = source
+    args = stringsplit(message, " ")
+    CancelEvent()
+    if type(args) ~= "table" then
+        if string.find(args[1], "/") then
+            local cmd = args[1]
+            table.remove(args, 1)
+        else
+            local player = GetPlayerData(src)
+            local msg = message:sub(0)
+            local character = exports["drp_id"]:GetCharacterData(src)
+            if player ~= false then
+                local stuff = "["..player.id.."] "..character.name..""
+                    TriggerClientEvent('chat:addMessage', -1, {
+                    template = '<div style="padding: 0.5vw; margin: 0.5vw; background-color: rgba(41, 41, 41, 0.6); border-radius: 3px;"><i class="fas fa-globe"></i> {0}:<br> {1}</div>',
+                    args = { stuff, msg }
+                })
             end
         end
-    end)
+    end
+end)
 
 ---------------------------------------------------------------------------
     RegisterCommand('tweet', function(source, args, rawCommand)
@@ -230,3 +230,5 @@ function stringsplit(inputstr, sep)
 	end
 	return t
 end
+
+print("^1[DRP] Core: ^4Core Loaded Successfully")
