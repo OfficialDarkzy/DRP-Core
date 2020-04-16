@@ -1,5 +1,8 @@
 
-DRPWeatherConfig = {
+DRPSync = {}
+DRPSync.DRPWeatherConfig = {}
+
+DRPSync.DRPWeatherConfig = {
 
     -- Least time for the weather to change
     leastTime = 10,
@@ -27,7 +30,7 @@ DRPWeatherConfig = {
     winterWeatherTypes = {"XMAS"}
 }
 
-DRPTimeConfig = {
+DRPSync.DRPTimeConfig = {
     -- Time it takes for one minute to pass
     SecPerMin = 10,
 

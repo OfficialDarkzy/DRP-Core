@@ -32,14 +32,6 @@ Citizen.CreateThread(function()
                 RemoveWeaponFromPed(PlayerPedId(), GetHashKey(theWeapon))
             end
         end
-
-        local weaponsList = DRPCoreConfig.AllWeapons
-        for i = 1, #weaponsList, 1 do
-            local weaponHash = GetHashKey(weaponsList[i].name)
-            if HasPedGotWeapon(ped, weaponHash, false) and weaponsList[i].name ~= 'WEAPON_UNARMED' then
-                print(weaponsList[i].name)
-            end
-        end
         Citizen.Wait(1000)
     end
 end)
