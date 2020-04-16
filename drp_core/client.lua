@@ -19,9 +19,7 @@ end)
 ---------------------------------------------------------------------------
 AddEventHandler("playerSpawned", function()
     Citizen.CreateThread(function()
-
       local playerPed = PlayerPedId()
-
       NetworkSetFriendlyFireOption(true)
       SetCanAttackFriendly(playerPed, true, true)
     end)
@@ -94,7 +92,7 @@ local hashes = {
     0xDF711959, -- CARBINE RIFLE
     0xF9AFB48F -- PISTOL
 }
-
+---------------------------------------------------------------------------
 Citizen.CreateThread(function()
 	while true do
       Citizen.Wait(1)
@@ -109,32 +107,23 @@ end)
 function AddTextEntry(key, value)
 	Citizen.InvokeNative(GetHashKey("ADD_TEXT_ENTRY"), key, value)
 end
-local config = {
-    ["TITLE"] = "DRP Framework",
-    ["SUBTITLE"] = "Created by Darkzy",
-    ["MAP"] = "Map",
-    ["STATUS"] = "Status",
-    ["GAME"] = "Game",
-    ["INFO"] = "Info",
-    ["SETTINGS"] = "Settings",
-    ["R*EDITOR"] = "Rockstar Editor"
-}
+---------------------------------------------------------------------------
 Citizen.CreateThread(function()
-    AddTextEntry('PM_SCR_MAP', config["MAP"])
-    AddTextEntry('PM_SCR_STA', config["STATUS"])
-    AddTextEntry('PM_SCR_GAM', config["GAME"])
-    AddTextEntry('PM_SCR_INF', config["INFO"])
-    AddTextEntry('PM_SCR_SET', config["SETTINGS"])
-    AddTextEntry('PM_SCR_RPL', config["R*EDITOR"])
+    AddTextEntry('PM_SCR_MAP', DRPCoreConfig.ESCMenu["MAP"])
+    AddTextEntry('PM_SCR_STA', DRPCoreConfig.ESCMenu["STATUS"])
+    AddTextEntry('PM_SCR_GAM', DRPCoreConfig.ESCMenu["GAME"])
+    AddTextEntry('PM_SCR_INF', DRPCoreConfig.ESCMenu["INFO"])
+    AddTextEntry('PM_SCR_SET', DRPCoreConfig.ESCMenu["SETTINGS"])
+    AddTextEntry('PM_SCR_RPL', DRPCoreConfig.ESCMenu["R*EDITOR"])
     while true do
     Citizen.Wait(1)
         N_0xb9449845f73f5e9c("SHIFT_CORONA_DESC")
         PushScaleformMovieFunctionParameterBool(true)
         PopScaleformMovieFunction()
         N_0xb9449845f73f5e9c("SET_HEADER_TITLE")
-        PushScaleformMovieFunctionParameterString(config["TITLE"])
+        PushScaleformMovieFunctionParameterString(DRPCoreConfig.ESCMenu["TITLE"])
         PushScaleformMovieFunctionParameterBool(true)
-        PushScaleformMovieFunctionParameterString(config["SUBTITLE"])
+        PushScaleformMovieFunctionParameterString(DRPCoreConfig.ESCMenu["SUBTITLE"])
         PushScaleformMovieFunctionParameterBool(true)
         PopScaleformMovieFunctionVoid()
     end
