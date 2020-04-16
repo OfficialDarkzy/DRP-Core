@@ -321,7 +321,7 @@ RegisterCommand("clearchat", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
     if player ~= false then
-        if DoesRankHavePerms(player.rank, "time") then
+        if DoesRankHavePerms(player.rank, "clearchat") then
             TriggerClientEvent('chat:clear', -1)
             TriggerClientEvent("DRP_Core:Error", -1, "Admin System", tostring("Chat has been cleared by staff."), 2500, false, "leftCenter")
         else
