@@ -1,3 +1,8 @@
+RegisterNetEvent("DRP_Core:AddWeaponToPed")
+AddEventHandler("DRP_Core:AddWeaponToPed", function(weapon)
+    local ped = PlayerPedId()
+    GiveWeaponToPed(ped, weapon, 100, false, true)
+end)
 ---------------------------------------------------------------------------
 --- Functions
 ---------------------------------------------------------------------------
