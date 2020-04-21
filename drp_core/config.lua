@@ -26,8 +26,8 @@ DRPCoreConfig.StaffRanks.ranks = {"user", "admin", "superadmin"} -- All the Defi
 ---------------------------------------------------------------------------
 DRPCoreConfig.StaffRanks.perms = { -- This is what you need to reference too in the database for your rank :)
     ["user"] = {}, -- This means User does not have any rank, also a typo :()
-    ["admin"] = {"time", "weather", "adminaddcop", "heal", "teleport", "vehicle", "clearchat", "noclip}, -- The Perms Admins Have
-    ["superadmin"] = {"time", "weather", "adminaddcop", "heal", "addgroup", "teleport", "economy", "adminmenu", "kick", "ban", "vehicle", "clearchat", "noclip} -- The Perms Superadmins have
+    ["admin"] = {"time", "weather", "adminaddcop", "heal", "teleport", "vehicle", "clearchat", "noclip"}, -- The Perms Admins Have
+    ["superadmin"] = {"time", "weather", "adminaddcop", "heal", "addgroup", "teleport", "economy", "adminmenu", "kick", "ban", "vehicle", "clearchat", "noclip"} -- The Perms Superadmins have
 }
 ---------------------------------------------------------------------------
 -- ESC Menu Config (ESC Menu AKA When you see "map", "settings" etc etc)
