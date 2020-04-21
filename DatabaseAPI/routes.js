@@ -50,4 +50,4 @@ function CheckSecretKey(key, secret) {
     }
 }
 
-console.log("^1[DatabaseAPI Message] : ^4Loaded 'routes.js'");
+console.log("^1[DatabaseAPI Message] ^0: ^4Loaded 'routes.js'^0");
