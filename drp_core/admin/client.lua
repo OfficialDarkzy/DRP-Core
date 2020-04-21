@@ -211,3 +211,214 @@ AddEventHandler('DRP_Core:FixVehicle', function()
     SetVehicleFixed(vehicle)
     exports["drp_LegacyFuel"]:SetFuel(vehicle, fuel)
 end)
+
+---------------------------------------------------------------------------
+-- Admin noclip
+---------------------------------------------------------------------------
+
+local loadedAnims = false
+local noclip_ANIM_A = "amb@world_human_stand_impatient@male@no_sign@base"
+local noclip_ANIM_B = "base"
+local in_noclip_mode = false
+local travelSpeed = 4
+local curLocation
+local curRotation
+local curHeading
+local target
+
+RegisterNetEvent('DRP_Core:NoClip')
+AddEventHandler('DRP_Core:NoClip', function()
+	toggleNoClipMode()
+end)
+
+function toggleNoClipMode()
+    if(in_noclip_mode)then
+        turnNoClipOff()
+    else
+        turnNoClipOn()
+    end
+end
+
+function turnNoClipOff()
+	TriggerEvent("DRP_Core:Error", "Admin System", tostring("Nocliped untoggled."), 2500, false, "leftCenter")
+    local playerPed = PlayerPedId()
+    local inVehicle = IsPedInAnyVehicle( playerPed, false )
+
+    if ( inVehicle ) then
+        local veh = GetVehiclePedIsUsing( playerPed )
+        SetPlayerInvisibleLocally( veh, false )
+    else
+        ClearPedTasksImmediately( playerPed )
+    end
+
+	SetUserRadioControlEnabled( true )
+    SetPlayerInvincible( PlayerId(), false )
+    SetPlayerInvisibleLocally( target, false )
+
+    in_noclip_mode = false
+
+end
+
+function turnNoClipOn()
+	TriggerEvent("DRP_Core:Info", "Admin System", tostring("Noclip toggled."), 2500, false, "leftCenter")
+    blockinput = true
+    local playerPed = PlayerPedId()
+	local inVehicle = IsPedInAnyVehicle( playerPed, false ) 
+
+	if ( not inVehicle ) then
+        _LoadAnimDict( noclip_ANIM_A )
+        loadedAnims = true
+    end
+
+    local x, y, z = table.unpack( GetEntityCoords( playerPed, false ) )
+    curLocation = { x = x, y = y, z = z }
+    curRotation = GetEntityRotation( playerPed, false )
+    curHeading = GetEntityHeading( playerPed )
+    in_noclip_mode = true
+end
+
+function degToRad( degs )
+    return degs * 3.141592653589793 / 180 
+end
+
+function _LoadAnimDict( dict )
+    while ( not HasAnimDictLoaded( dict ) ) do 
+        RequestAnimDict( dict )
+        Citizen.Wait( 5 )
+    end 
+end 
+
+function getTableLength(T)
+    local count = 0
+    for _ in pairs(T) do 
+        count = count + 1
+    end
+    return count
+end
+
+Citizen.CreateThread( function()
+    local rotationSpeed = 2.5
+    local forwardPush = 1.8
+	local speeds = {0.05, 0.2, 0.8, 1.8, 3.6, 5.4, 15.0}
+
+    function updateForwardPush()
+        forwardPush = speeds[ travelSpeed ]
+
+    end
+
+    function handleMovement(xVect,yVect)
+        if ( IsControlJustPressed(1,21) or IsDisabledControlJustPressed(1,21)) then
+            travelSpeed = travelSpeed + 1 
+
+            if ( travelSpeed > getTableLength(speeds) ) then 
+                travelSpeed = 1
+            end
+
+            updateForwardPush();
+		end 
+
+        local NoClipSpeedsWords = { "Slowest", "Slower", "Slow", "Normal", "Fast", "Faster", "Fastest" }
+
+        ------ start draw text ------
+		SetTextColour(255, 0, 0, 255)
+		SetTextFont(4)
+		SetTextScale(0.4, 0.4)
+		SetTextWrap(0.0, 1.0)
+		SetTextCentre(false)
+		SetTextDropshadow(2, 2, 0, 0, 0)
+		SetTextEdge(1, 0, 0, 0, 205)
+		SetTextEntry("STRING")
+		AddTextComponentString("Current Speed = ".. NoClipSpeedsWords[travelSpeed])
+        DrawText(0.830, 0.027)
+        ------ end draw text ------
+
+        if ( IsControlPressed(1,44) or IsDisabledControlPressed(1,44)) then
+            curLocation.z = curLocation.z + forwardPush / 2
+        elseif ( IsControlPressed(1,20) or IsDisabledControlPressed(1,20)) then
+            curLocation.z = curLocation.z - forwardPush / 2
+        end
+
+        if ( IsControlPressed( 1, 32 ) or IsDisabledControlPressed(1,32) ) then
+            curLocation.x = curLocation.x + xVect
+            curLocation.y = curLocation.y + yVect
+        elseif ( IsControlPressed( 1, 33 ) or IsDisabledControlPressed(1,33) ) then
+            curLocation.x = curLocation.x - xVect
+            curLocation.y = curLocation.y - yVect
+        end
+
+        if ( IsControlPressed(1,34) or IsDisabledControlPressed(1,34)) then
+            curHeading = curHeading + rotationSpeed
+        elseif ( IsControlPressed(1,35) or IsDisabledControlPressed(1,35)) then
+            curHeading = curHeading - rotationSpeed
+        end 
+    end
+
+     while true do
+        Citizen.Wait(0)
+
+        if (in_noclip_mode) then
+            local playerPed = PlayerPedId()
+
+            if (IsEntityDead(playerPed)) then
+                turnNoClipOff()
+                Citizen.Wait(100)
+            else 
+                target = playerPed 
+                local inVehicle = IsPedInAnyVehicle(playerPed, true)
+                if (inVehicle) then
+                    target = GetVehiclePedIsUsing(playerPed)
+                end
+                SetEntityVelocity(playerPed, 0.0, 0.0, 0.0)
+                SetEntityRotation(playerPed, 0, 0, 0, 0, false)
+                ------ start draw text
+                SetTextColour(255, 0, 0, 255)
+                SetTextFont(4)
+                SetTextScale(0.4, 0.4)
+                SetTextWrap(0.0, 1.0)
+                SetTextCentre(false)
+                SetTextDropshadow(2, 2, 0, 0, 0)
+                SetTextEdge(1, 0, 0, 0, 205)
+                SetTextEntry("STRING")
+                AddTextComponentString("NoClip Enabled.")
+                DrawText(0.830, 0.007)
+                ------ end draw text ------
+                SetUserRadioControlEnabled(false)
+                SetPlayerInvincible(PlayerId(), true)
+                SetPlayerInvisibleLocally(target, true)
+
+                if (not inVehicle) then
+                    TaskPlayAnim(playerPed, noclip_ANIM_A, noclip_ANIM_B, 8.0, 0.0, -1, 9, 0, 0, 0, 0 ) 
+                end
+
+                local xVect = forwardPush * math.sin(degToRad(curHeading)) * -1.0
+                local yVect = forwardPush * math.cos(degToRad(curHeading))
+
+                handleMovement(xVect,yVect)
+
+                -- Update player postion.
+                SetEntityCoordsNoOffset(target, curLocation.x, curLocation.y, curLocation.z, true, true, true)
+                SetEntityHeading(target, curHeading - rotationSpeed)
+            end
+        end
+     end
+end ) 
+ 16  drp_core/admin/commands.lua 
+@@ -178,6 +178,22 @@ RegisterCommand("fix", function(source, args, raw)
+        end
+    end
+end, false)
+
+---------------------------------------------------------------------------
+--- Noclip USAGE: /noclip
+---------------------------------------------------------------------------
+RegisterCommand("noclip", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "noclip") then
+            TriggerClientEvent("DRP_Core:NoClip", src)
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to noclip"), 2500, false, "leftCenter")
+        end
+    end
+end, false)
