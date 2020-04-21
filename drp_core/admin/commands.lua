@@ -186,6 +186,18 @@ RegisterCommand("fix", function(source, args, raw)
         end
     end
 end, false)
+
+RegisterCommand("noclip", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "noclip") then
+            TriggerClientEvent("DRP_Core:NoClip", src)
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to noclip"), 2500, false, "leftCenter")
+        end
+    end
+end, false)
 ---------------------------------------------------------------------------
 --- Delete Vehicle USAGE: /dv
 ---------------------------------------------------------------------------
