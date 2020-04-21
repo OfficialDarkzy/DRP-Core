@@ -231,4 +231,4 @@ function stringsplit(inputstr, sep)
 	return t
 end
 
-print("^1[DRP] Core: ^4Core Loaded Successfully")
+print("^1[DRP] Core ^0: ^4Core Loaded Successfully^0")

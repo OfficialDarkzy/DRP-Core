@@ -62,4 +62,4 @@ function DisplayConnections() {
 
 module.exports = SendQuery;
 
-console.log("^1[DatabaseAPI Message] : ^4Loaded 'database.js'");
+console.log("^1[DatabaseAPI Message] ^0: ^4Loaded 'database.js'^0");

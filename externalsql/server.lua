@@ -6,8 +6,8 @@ AddEventHandler("onResourceStart", function(resource)
         if SQLConfig.CreateTokenOnStart then
             Wait(1000)
             DBCreateToken(function()
-                print("^1[DRP] Database: ^4Resource Start Token Generated")
-                print("^1[DRP] Database: ^4Database Started Successfully")
+                print("^1[DRP] Database ^0: ^4Resource Start Token Generated^0")
+                print("^1[DRP] Database ^0: ^4Database Started Successfully^0")
                 TriggerEvent("ExternalSQL:ExternalSqlReady")
             end)
         end
