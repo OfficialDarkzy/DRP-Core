@@ -6,40 +6,27 @@ end)
 ---------------------------------------------------------------------------
 --- Functions
 ---------------------------------------------------------------------------
-function GetClosestPlayer()
-	local players = GetPlayers()
-	local closestDistance = -1
-	local closestPlayer = -1
-	local ply = PlayerPedId()
-	local plyCoords = GetEntityCoords(ply, 0)
-	
-	for index,value in ipairs(players) do
-		local target = GetPlayerPed(value)
-		if(target ~= ply) then
-			local targetCoords = GetEntityCoords(GetPlayerPed(value), 0)
-			local distance = #(plyCoords - targetCoords)
-			if(closestDistance == -1 or closestDistance > distance) then
-				closestPlayer = value
-				closestDistance = distance
-			end
+function GetClosestPlayer(srcCoords)
+    local players = {}
+    local playersNear = {}
+	for k,v in ipairs(GetActivePlayers()) do
+		local pPed = GetPlayerPed(v)
+        if DoesEntityExist(pPed) then
+            print('All Player: '..v)
+			table.insert(players, v)
+		end
+    end
+	for i=1, #players, 1 do
+		local pPeds = GetPlayerPed(players[i])
+		local pPedsCoord = GetEntityCoords(pPeds)
+        if #(srcCoords - pPedsCoord) <= 3 then
+            print('near player: '..pPeds)
+			table.insert(playersNear, players[i])
 		end
 	end
-	
-	return closestPlayer, closestDistance
+	return playersNear
 end
----------------------------------------------------------------------------
---- Get Players
----------------------------------------------------------------------------
-function GetPlayers()
-    local players = {}
-    for _, player in ipairs(GetActivePlayers()) do
-        local ped = GetPlayerPed(player)
-        if DoesEntityExist(ped) then
-            table.insert(players, player)
-        end
-    end
-    return players
-end
+exports("GetClosestPlayer", GetClosestPlayer)
 ---------------------------------------------------------------------------
 --- 3D Text
 ---------------------------------------------------------------------------
@@ -83,3 +70,85 @@ function drawText(text, x, y)
 	AddTextComponentString(text)
 	DrawText(x, y)
 end
+---------------------------------------------------------------------------
+--- Print Table Functionality (I did not create this, it was found online if the owner wants to contact me please do so, to enable me to credit. BUT AMAZINGNESS BRO)
+---------------------------------------------------------------------------
+function print_table(node)
+    local cache, stack, output = {},{},{}
+    local depth = 1
+    local output_str = "{\n"
+
+    while true do
+        local size = 0
+        for k,v in pairs(node) do
+            size = size + 1
+        end
+
+        local cur_index = 1
+        for k,v in pairs(node) do
+            if (cache[node] == nil) or (cur_index >= cache[node]) then
+
+                if (string.find(output_str,"}",output_str:len())) then
+                    output_str = output_str .. ",\n"
+                elseif not (string.find(output_str,"\n",output_str:len())) then
+                    output_str = output_str .. "\n"
+                end
+
+                -- This is necessary for working with HUGE tables otherwise we run out of memory using concat on huge strings
+                table.insert(output,output_str)
+                output_str = ""
+
+                local key
+                if (type(k) == "number" or type(k) == "boolean") then
+                    key = "["..tostring(k).."]"
+                else
+                    key = "['"..tostring(k).."']"
+                end
+
+                if (type(v) == "number" or type(v) == "boolean") then
+                    output_str = output_str .. string.rep('\t',depth) .. key .. " = "..tostring(v)
+                elseif (type(v) == "table") then
+                    output_str = output_str .. string.rep('\t',depth) .. key .. " = {\n"
+                    table.insert(stack,node)
+                    table.insert(stack,v)
+                    cache[node] = cur_index+1
+                    break
+                else
+                    output_str = output_str .. string.rep('\t',depth) .. key .. " = '"..tostring(v).."'"
+                end
+
+                if (cur_index == size) then
+                    output_str = output_str .. "\n" .. string.rep('\t',depth-1) .. "}"
+                else
+                    output_str = output_str .. ","
+                end
+            else
+                -- close the table
+                if (cur_index == size) then
+                    output_str = output_str .. "\n" .. string.rep('\t',depth-1) .. "}"
+                end
+            end
+
+            cur_index = cur_index + 1
+        end
+
+        if (size == 0) then
+            output_str = output_str .. "\n" .. string.rep('\t',depth-1) .. "}"
+        end
+
+        if (#stack > 0) then
+            node = stack[#stack]
+            stack[#stack] = nil
+            depth = cache[node] == nil and depth + 1 or depth - 1
+        else
+            break
+        end
+    end
+
+    -- This is necessary for working with HUGE tables otherwise we run out of memory using concat on huge strings
+    table.insert(output,output_str)
+    output_str = table.concat(output)
+
+    print(output_str)
+end
+exports("print_table", print_table)

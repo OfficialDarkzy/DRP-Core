@@ -53,7 +53,6 @@ server_script "admin/commands.lua"
 
 export "drawText"
 export "GetPlayers"
-export "GetClosestPlayer"
 
 server_export "GetPlayerData"
 server_export "DoesRankHavePerms"

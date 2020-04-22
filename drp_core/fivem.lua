@@ -3,15 +3,21 @@ local firstSpawn = true
 -- Spawning player into server.. Setup char menu etc..
 ---------------------------------------------------------------------------
 AddEventHandler('playerSpawned', function()
+    DoScreenFadeOut(1)
     if DRPCoreConfig.ID then
-        if firstSpawn then
-            TriggerEvent("DRP_ID:StartSkyCamera")
-            Citizen.Wait(1500)
-            TriggerServerEvent("DRP_ID:RequestOpenMenu")
-            firstSpawn = false
-        end
-    else
-        print("Character Creator Not Active... Loading Basic DRP Core.")
+        Citizen.CreateThread(function()
+            while not IsScreenFadedOut() do
+                Citizen.Wait(500)
+            end
+            if firstSpawn then
+                Citizen.Wait(2500)
+                TriggerEvent("DRP_ID:StartSkyCamera")
+                TriggerServerEvent("DRP_ID:RequestOpenMenu")
+                firstSpawn = false
+            end
+            Citizen.Wait(100)
+            DoScreenFadeIn(4500)
+        end)
     end
 end)
 ---------------------------------------------------------------------------
