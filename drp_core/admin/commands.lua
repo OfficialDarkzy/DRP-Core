@@ -83,37 +83,8 @@ RegisterCommand("heal", function(source, args, raw)
     end
 end, false)
 ---------------------------------------------------------------------------
---- Add Yourself To A Group
+--- Teleport to Marker
 ---------------------------------------------------------------------------
--- RegisterCommand("addgroup", function(source, args, raw)
---     local src = source
---     local player = GetPlayerData(src)
---     local adminid = args[1]
---     local groups = args[2]
---     if player ~= false then
---         if adminid ~= nil then
---             print(adminid)
---             if groups ~= nil then
---                 print(groups)
---                 if DoesRankHavePerms(player.rank, "addgroup") then
---                     exports["externalsql"]:AsyncQueryCallback({
---                         query = "UPDATE `users` SET `rank` = :group WHERE `id` = :sid",
---                         data = {
---                             sid = adminid,
---                             group = groups
---                         }
---                     }, function(esteadmin)
---                         TriggerClientEvent("DRP_Core:Info", src, "Admin System", tostring("I-ai dat gradul de : '"..groups.."' lui : "..adminid), 2500, false, "leftCenter")
---                         TriggerClientEvent("DRP_Core:Info", src, "Admin System", tostring("Ai primit gradul de : '"..groups.."' de la : "..src), 2500, false, "leftCenter")
---                     end)
---                 else
---                     TriggerClientEvent("DRP_Core:Info", src, "Admin System", tostring("Nah you can't do this"), 2500, false, "leftCenter")
---                 end
---             end
---         end
---     end
--- end, false)
-
 RegisterCommand("tpm", function(source, args, raw) 
     local src = source
     local player = GetPlayerData(src)
@@ -186,7 +157,9 @@ RegisterCommand("fix", function(source, args, raw)
         end
     end
 end, false)
-
+---------------------------------------------------------------------------
+-- No Clip
+---------------------------------------------------------------------------
 RegisterCommand("noclip", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
@@ -260,7 +233,9 @@ RegisterCommand("adminaddcop", function(source, args, raw)
         end
     end
 end, false)
-
+---------------------------------------------------------------------------
+-- Add Cash
+---------------------------------------------------------------------------
 RegisterCommand("addcash", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
@@ -277,7 +252,9 @@ RegisterCommand("addcash", function(source, args, raw)
         end
     end
 end, false) 
-
+---------------------------------------------------------------------------
+-- Remove Cash
+---------------------------------------------------------------------------
 RegisterCommand("removecash", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
@@ -293,7 +270,9 @@ RegisterCommand("removecash", function(source, args, raw)
         end
     end
 end, false) 
-
+---------------------------------------------------------------------------
+-- Add Bank
+---------------------------------------------------------------------------
 RegisterCommand("addbank", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
@@ -309,7 +288,9 @@ RegisterCommand("addbank", function(source, args, raw)
         end
     end
 end, false) 
-
+---------------------------------------------------------------------------
+-- Remove Bank
+---------------------------------------------------------------------------
 RegisterCommand("removebank", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
@@ -325,9 +306,20 @@ RegisterCommand("removebank", function(source, args, raw)
         end
     end
 end, false) 
-
 ---------------------------------------------------------------------------
---Clear chat (using time perms)
+--- Give Keys of car in front, you need to have DRP Garages Installed
+---------------------------------------------------------------------------
+RegisterCommand("givekeys", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "givekeys") then
+            TriggerClientEvent("DRP_Garages:GiveKeysToVehicleInfront", src)
+        end
+    end
+end, false)
+---------------------------------------------------------------------------
+-- Clear chat (using time perms)
 ---------------------------------------------------------------------------
 RegisterCommand("clearchat", function(source, args, raw)
     local src = source
