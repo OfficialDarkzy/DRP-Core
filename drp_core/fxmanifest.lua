@@ -31,7 +31,6 @@ client_script "config.lua"
 client_script "managers/voip.lua"
 client_script "managers/managers.lua"
 client_script "managers/vehicle_managers.lua"
-client_script "managers/chat.lua"
 
 client_script "sync/config.lua"
 client_script "sync/client.lua"
