@@ -61,7 +61,7 @@ Citizen.CreateThread(function()
                 isInvincible = false
             end
         end
-        if health <= 150 then
+        if health <= 150.00 then
             RequestAnimSet("move_heist_lester")
             while not HasAnimSetLoaded("move_heist_lester") do 
                 Citizen.Wait(0)    
@@ -73,16 +73,30 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
     end
 end)
-
-
+-- Add Blood To Ped, cuz I like to make random shit :)
+if DRP_Core.BloodAffects then
+    Citizen.CreateThread(function()
+        while true do
+            local ped = PlayerPedId()
+            if HasEntityBeenDamagedByAnyPed(ped) then
+                ClearEntityLastDamageEntity(ped)
+                local bloodEffect = DRP_Core.BloodEffects[math.random(#DRP_Core.BloodEffects)]
+                ApplyPedDamagePack(ped, bloodEffect, 0, 0)
+            -- HasEntityBeenDamagedByAnyObject(ped)
+            -- HasEntityBeenDamagedByAnyVehicle(ped)
+            end
+            Citizen.Wait(1)
+        end
+    end)
+end
 
 Citizen.CreateThread(function()
-  while true do
+    while true do
     Citizen.Wait(1000)
-    if(timeLeft > 0)then
-        timeLeft = timeLeft - 1
+        if(timeLeft > 0)then
+            timeLeft = timeLeft - 1
+        end
     end
-  end
 end)
 
 Citizen.CreateThread(function()
@@ -187,7 +201,9 @@ RegisterCommand("respawn", function(source, args, raw)
         TriggerEvent("DRP_Core:Error", "Death", tostring("You are not dead!"), 5000, false, "leftCenter")
     end
 end, false)
-
+---------------------------------------------------------------------------
+-- EXPORTS DO NOT EDIT THIS
+---------------------------------------------------------------------------
 function isPedDead()
     return playerDied
 end

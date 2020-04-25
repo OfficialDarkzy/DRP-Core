@@ -2,16 +2,22 @@
 --- DO NOT EDIT These Three Things Below. They have Magic built into them bro
 ---------------------------------------------------------------------------
 local isPlayerReady = false
-
+---------------------------------------------------------------------------
+--- Core Functions Dont EDIT BROOO ITS MY NAME CAMONNNN GIMME CREDIIIIIITTTTTTTTTTTTT
+---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     SetNuiFocus(false, false)
     TriggerServerEvent("DRP_Core:AddPlayerToTable")
 end)
-
+---------------------------------------------------------------------------
 AddEventHandler('onClientMapStart', function()
 	TriggerServerEvent("DRP_Core:ConnectionSetWeather")
 	TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
 end)
+---------------------------------------------------------------------------
+function AddTextEntry(key, value)
+	Citizen.InvokeNative(GetHashKey("ADD_TEXT_ENTRY"), key, value)
+end
 ---------------------------------------------------------------------------
 --- You Can Edit The Below To Your Requirements, 
 --  only touch if you know what you are doing,
@@ -40,6 +46,12 @@ Citizen.CreateThread(function()
             EndTextCommandSetBlipName(item.blip)
         end
     end
+    AddTextEntry('PM_SCR_MAP', DRPCoreConfig.ESCMenu["MAP"])
+    AddTextEntry('PM_SCR_STA', DRPCoreConfig.ESCMenu["STATUS"])
+    AddTextEntry('PM_SCR_GAM', DRPCoreConfig.ESCMenu["GAME"])
+    AddTextEntry('PM_SCR_INF', DRPCoreConfig.ESCMenu["INFO"])
+    AddTextEntry('PM_SCR_SET', DRPCoreConfig.ESCMenu["SETTINGS"])
+    AddTextEntry('PM_SCR_RPL', DRPCoreConfig.ESCMenu["R*EDITOR"])
     while true do
 --------------------Disable Health Regeneration----------------------------
         SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
@@ -80,43 +92,7 @@ Citizen.CreateThread(function()
         DisablePlayerVehicleRewards(PlayerId())
 --------------Stop Pistol/Gun Whipping--------------------------------------
         DisableControlAction(0, 140, true)
----------------------------------------------------------------------------       
-        Citizen.Wait(1)
-    end
-end)
 ---------------------------------------------------------------------------
---- Prevent NPCs from dropping weapons when dead
----------------------------------------------------------------------------
-local hashes = {
-    0xA9355DCD, -- PUMP SHOTGUN
-    0xDF711959, -- CARBINE RIFLE
-    0xF9AFB48F -- PISTOL
-}
----------------------------------------------------------------------------
-Citizen.CreateThread(function()
-	while true do
-      Citizen.Wait(1)
-        for k,v in pairs(hashes) do
-            RemoveAllPickupsOfType(v)
-        end
-	end
-end)
----------------------------------------------------------------------------
---- Core Functions Dont EDIT BROOO ITS MY NAME CAMONNNN GIMME CREDIIIIIITTTTTTTTTTTTT
----------------------------------------------------------------------------
-function AddTextEntry(key, value)
-	Citizen.InvokeNative(GetHashKey("ADD_TEXT_ENTRY"), key, value)
-end
----------------------------------------------------------------------------
-Citizen.CreateThread(function()
-    AddTextEntry('PM_SCR_MAP', DRPCoreConfig.ESCMenu["MAP"])
-    AddTextEntry('PM_SCR_STA', DRPCoreConfig.ESCMenu["STATUS"])
-    AddTextEntry('PM_SCR_GAM', DRPCoreConfig.ESCMenu["GAME"])
-    AddTextEntry('PM_SCR_INF', DRPCoreConfig.ESCMenu["INFO"])
-    AddTextEntry('PM_SCR_SET', DRPCoreConfig.ESCMenu["SETTINGS"])
-    AddTextEntry('PM_SCR_RPL', DRPCoreConfig.ESCMenu["R*EDITOR"])
-    while true do
-    Citizen.Wait(1)
         N_0xb9449845f73f5e9c("SHIFT_CORONA_DESC")
         PushScaleformMovieFunctionParameterBool(true)
         PopScaleformMovieFunction()
@@ -125,6 +101,26 @@ Citizen.CreateThread(function()
         PushScaleformMovieFunctionParameterBool(true)
         PushScaleformMovieFunctionParameterString(DRPCoreConfig.ESCMenu["SUBTITLE"])
         PushScaleformMovieFunctionParameterBool(true)
-        PopScaleformMovieFunctionVoid()
+        PopScaleformMovieFunctionVoid()    
+        Citizen.Wait(1)
     end
 end)
+---------------------------------------------------------------------------
+--- Prevent NPCs from dropping weapons when dead
+---------------------------------------------------------------------------
+if DRPCoreConfig.RemovePedWeaponDrops then
+    local hashes = {
+        0xA9355DCD, -- PUMP SHOTGUN
+        0xDF711959, -- CARBINE RIFLE
+        0xF9AFB48F -- PISTOL
+    }
+----------------------------------------------------------------------------
+    Citizen.CreateThread(function()
+        while true do
+        Citizen.Wait(1)
+            for k,v in pairs(hashes) do
+                RemoveAllPickupsOfType(v)
+            end
+        end
+    end)
+end

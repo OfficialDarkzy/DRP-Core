@@ -18,6 +18,7 @@ DRPCoreConfig.CommunityName = "DRP" -- This will show when you load into the ser
 DRPCoreConfig.MapLocations = false -- This will display all the locations below on the map
 DRPCoreConfig.Crosshair = false -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
 DRPCoreConfig.Voip = true -- TOGGLE IF YOU WANT THE BUILT IN VOIP OR NOT
+DRPCoreConfig.RemovePedWeaponDrops = true -- TOGGLE IF you want to remove all weapons dropped from PEDS that are killed
 ---------------------------------------------------------------------------
 -- Admin/User Ranks & Permissions EDIT if you know what you're doing, pleas read the Github WIKI if unsure
 ---------------------------------------------------------------------------
