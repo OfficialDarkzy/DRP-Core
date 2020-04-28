@@ -6,25 +6,43 @@ end)
 ---------------------------------------------------------------------------
 --- Functions
 ---------------------------------------------------------------------------
-function GetClosestPlayer(srcCoords)
-    local players = {}
-    local playersNear = {}
-	for k,v in ipairs(GetActivePlayers()) do
-		local pPed = GetPlayerPed(v)
-        if DoesEntityExist(pPed) then
-            print('All Player: '..v)
-			table.insert(players, v)
-		end
-    end
-	for i=1, #players, 1 do
-		local pPeds = GetPlayerPed(players[i])
-		local pPedsCoord = GetEntityCoords(pPeds)
-        if #(srcCoords - pPedsCoord) <= 3 then
-            print('near player: '..pPeds)
-			table.insert(playersNear, players[i])
+function GetPlayers()
+	local players    = {}
+
+	for i=0, 64, 1 do
+
+		local ped = GetPlayerPed(i)
+
+		if DoesEntityExist(ped) then
+			table.insert(players, i)
 		end
 	end
-	return playersNear
+
+	return players
+end
+---------------------------------------------------------------------------
+function GetClosestPlayer()
+	local players = GetPlayers()
+	local closestDistance = -1
+	local closestPlayer = -1
+    local ped = PlayerPedId()
+    local playerId = PlayerId()
+	local plyCoords = GetEntityCoords(ply, 0)
+	
+	for i=1, #players, 255 do
+		local target = GetPlayerPed(players[i])
+
+		if usePlayerPed and players[i] ~= playerId then
+			local targetCoords = GetEntityCoords(target)
+			local dist = GetDistanceBetweenCoords(targetCoords, coords.x, coords.y, coords.z, true)
+
+			if closestDistance == -1 or closestDistance > dist then
+				closestPlayer   = players[i]
+				closestDistance = dist
+			end
+		end
+	end
+	return closestPlayer, closestDistance
 end
 exports("GetClosestPlayer", GetClosestPlayer)
 ---------------------------------------------------------------------------
