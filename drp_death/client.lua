@@ -74,21 +74,17 @@ Citizen.CreateThread(function()
     end
 end)
 -- Add Blood To Ped, cuz I like to make random shit :)
-if DRP_Core.BloodAffects then
-    Citizen.CreateThread(function()
-        while true do
-            local ped = PlayerPedId()
-            if HasEntityBeenDamagedByAnyPed(ped) then
-                ClearEntityLastDamageEntity(ped)
-                local bloodEffect = DRP_Core.BloodEffects[math.random(#DRP_Core.BloodEffects)]
-                ApplyPedDamagePack(ped, bloodEffect, 0, 0)
-            -- HasEntityBeenDamagedByAnyObject(ped)
-            -- HasEntityBeenDamagedByAnyVehicle(ped)
-            end
-            Citizen.Wait(1)
+Citizen.CreateThread(function()
+    while true do
+        local ped = PlayerPedId()
+        if HasEntityBeenDamagedByAnyPed(ped) or HasEntityBeenDamagedByAnyVehicle(ped) or HasEntityBeenDamagedByAnyObject(ped) then
+            ClearEntityLastDamageEntity(ped)
+            local bloodEffect = DRP_Core.BloodEffects[math.random(#DRP_Core.BloodEffects)]
+            ApplyPedDamagePack(ped, bloodEffect, 0, 0)
         end
-    end)
-end
+        Citizen.Wait(1)
+    end
+end)
 
 Citizen.CreateThread(function()
     while true do

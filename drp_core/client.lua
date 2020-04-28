@@ -108,19 +108,17 @@ end)
 ---------------------------------------------------------------------------
 --- Prevent NPCs from dropping weapons when dead
 ---------------------------------------------------------------------------
-if DRPCoreConfig.RemovePedWeaponDrops then
-    local hashes = {
-        0xA9355DCD, -- PUMP SHOTGUN
-        0xDF711959, -- CARBINE RIFLE
-        0xF9AFB48F -- PISTOL
-    }
+local hashes = {
+    0xA9355DCD, -- PUMP SHOTGUN
+    0xDF711959, -- CARBINE RIFLE
+    0xF9AFB48F -- PISTOL
+}
 ----------------------------------------------------------------------------
-    Citizen.CreateThread(function()
-        while true do
-        Citizen.Wait(1)
-            for k,v in pairs(hashes) do
-                RemoveAllPickupsOfType(v)
-            end
+Citizen.CreateThread(function()
+    while true do
+    Citizen.Wait(1)
+        for k,v in pairs(hashes) do
+            RemoveAllPickupsOfType(v)
         end
-    end)
-end
+    end
+end)

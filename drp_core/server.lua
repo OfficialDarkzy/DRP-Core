@@ -147,5 +147,6 @@ function stringsplit(inputstr, sep)
 	end
 	return t
 end
+exports("stringsplit", stringsplit)
 
 print("^1[DRP] Core ^0: ^4Core Loaded Successfully^0")
