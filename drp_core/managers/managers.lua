@@ -1,11 +1,12 @@
 RegisterNetEvent("DRP_Core:AddWeaponToPed")
-AddEventHandler("DRP_Core:AddWeaponToPed", function(weapon)
+AddEventHandler("DRP_Core:AddWeaponToPed", function(weapon, ammo)
     local ped = PlayerPedId()
-    local ammo = 100
-    if weapon.amount ~= nil then
-        ammo = weapon.amount
+    local weapon = weapon
+    local ammo = ammo
+    if not ammo then
+        ammo = 100
     end
-    GiveWeaponToPed(ped, weapon.item, ammo, false, false)
+    GiveWeaponToPed(ped, weapon, ammo, false, false)
 end)
 ---------------------------------------------------------------------------
 --- Functions
