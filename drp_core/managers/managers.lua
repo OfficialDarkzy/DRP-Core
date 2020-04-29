@@ -1,23 +1,23 @@
 RegisterNetEvent("DRP_Core:AddWeaponToPed")
 AddEventHandler("DRP_Core:AddWeaponToPed", function(weapon)
     local ped = PlayerPedId()
-    GiveWeaponToPed(ped, weapon, 100, false, true)
+    local ammo = 100
+    if weapon.amount ~= nil then
+        ammo = weapon.amount
+    end
+    GiveWeaponToPed(ped, weapon.item, ammo, false, false)
 end)
 ---------------------------------------------------------------------------
 --- Functions
 ---------------------------------------------------------------------------
 function GetPlayers()
-	local players    = {}
-
-	for i=0, 64, 1 do
-
+	local players = {}
+	for i=0, DRPCoreConfig.TotalPlayersAllowed, 1 do
 		local ped = GetPlayerPed(i)
-
 		if DoesEntityExist(ped) then
 			table.insert(players, i)
 		end
 	end
-
 	return players
 end
 ---------------------------------------------------------------------------

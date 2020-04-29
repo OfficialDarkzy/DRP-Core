@@ -1,25 +1,25 @@
 ---------------------------------------------------------------------------
 --- Add Weapon to player with a money checker :0 Usage TriggerServerEvent("DRP_Core:WeaponAdd", price(this can also be FALSE to ignore banking if you want it free), weaponName(NOT HASH))
 ---------------------------------------------------------------------------
-RegisterServerEvent("DRP_Core:WeaponAdd")
-AddEventHandler("DRP_Core:WeaponAdd", function(price, weapon)
-  local src = source
-  local weapon = GetHashKey(weapon)
-    if price ~= false then
-      local character = exports["drp_id"]:GetCharacterData(src)
-      TriggerEvent("DRP_Bank:GetCharacterMoney", character.charid, function(characterMoney)
-        local weaponPrice = price
-        if tonumber(characterMoney.data[1].cash) >= tonumber(weaponPrice) then
-          print("Chicken Nuggets 4Head")
-          TriggerEvent("DRP_Bank:RemoveBankMoney", src, weaponPrice)
-        else
-          print("dont have enough money")
-        end
-      end)
-    else
-      TriggerClientEvent("DRP_Core:AddWeaponToPed", src, weapon)
-    end
-end)
+-- RegisterServerEvent("DRP_Core:WeaponAdd")
+-- AddEventHandler("DRP_Core:WeaponAdd", function(price, weapon)
+--   local src = source
+--   local weapon = GetHashKey(weapon)
+--     if price ~= false then
+--       local character = exports["drp_id"]:GetCharacterData(src)
+--       TriggerEvent("DRP_Bank:GetCharacterMoney", character.charid, function(characterMoney)
+--         local weaponPrice = price
+--         if tonumber(characterMoney.data[1].cash) >= tonumber(weaponPrice) then
+--           print("Chicken Nuggets 4Head")
+--           TriggerEvent("DRP_Bank:RemoveBankMoney", src, weaponPrice)
+--         else
+--           print("dont have enough money")
+--         end
+--       end)
+--     else
+--       TriggerClientEvent("DRP_Core:AddWeaponToPed", src, weapon)
+--     end
+-- end)
 ---------------------------------------------------------------------------
 --- Seconds Calculator for Banning
 ---------------------------------------------------------------------------
