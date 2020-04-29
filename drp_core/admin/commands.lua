@@ -297,8 +297,10 @@ RegisterCommand("removebank", function(source, args, raw)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "economy") then
             if args[2] ~= nil then
+                AlertDiscord("Remove Bank Command", player, false, "Removed Money From "..args[1].. " for the amount of: "..args[2])
                 TriggerEvent("DRP_Bank:RemoveBankMoney", tonumber(args[1]), tonumber(args[2])) 
             else
+                AlertDiscord("Remove Bank Command", player, false, "Removed Money From Himself for the amount of: "..args[1])
                 TriggerEvent("DRP_Bank:RemoveBankMoney", src, tonumber(args[1]))
             end
         else
@@ -314,6 +316,7 @@ RegisterCommand("givekeys", function(source, args, raw)
     local player = GetPlayerData(src)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "givekeys") then
+            AlertDiscord("Given Keys", player, false, "Triggered Get Keys Command for a vehicle infront of them")
             TriggerClientEvent("DRP_Garages:GiveKeysToVehicleInfront", src)
         end
     end

@@ -20,8 +20,10 @@ DRPCoreConfig.Crosshair = false -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
 DRPCoreConfig.Voip = true -- TOGGLE IF YOU WANT THE BUILT IN VOIP OR NOT
 DRPCoreConfig.RemovePedWeaponDrops = true -- TOGGLE IF you want to remove all weapons dropped from PEDS that are killed THIS IS WIP
 ---------------------------------------------------------------------------
--- Admin/User Ranks & Permissions EDIT if you know what you're doing, pleas read the Github WIKI if unsure
+-- Admin/User Ranks & Permissions EDIT if you know what you're doing, please read the Github WIKI if unsure
 ---------------------------------------------------------------------------
+DRPCoreConfig.DiscordAdminCommandWebHook = false -- If you want your discord channel to ping when someone uses an admin command WIP
+DRPCoreConfig.DiscordWebHook = ""
 -- NOTE: RANK NAMES SHOULD BE LOWERCASE IN HERE
 DRPCoreConfig.StaffRanks.ranks = {"user", "admin", "superadmin"} -- All the Defined ranks, you can add or remove to your liking
 ---------------------------------------------------------------------------

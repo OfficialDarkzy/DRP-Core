@@ -115,10 +115,12 @@ local hashes = {
 }
 ----------------------------------------------------------------------------
 Citizen.CreateThread(function()
-    while true do
-    Citizen.Wait(1)
-        for k,v in pairs(hashes) do
-            RemoveAllPickupsOfType(v)
+    if DRPCoreConfig.RemovePedWeaponDrops then
+        while true do
+        Citizen.Wait(1)
+            for k,v in pairs(hashes) do
+                RemoveAllPickupsOfType(v)
+            end
         end
     end
 end)

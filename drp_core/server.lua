@@ -134,6 +134,26 @@ AddEventHandler("DRP_Core:GetPlayerData", function(id, callback)
     callback(false)
 end)
 ---------------------------------------------------------------------------
+-- Send to Discord BRAOOOO
+---------------------------------------------------------------------------
+function AlertDiscord(messagetitle, givenName, colour, message)
+    -- Character name can be False :)
+    -- Same As Colour
+    if DRPCoreConfig.DiscordAdminCommandWebHook then
+        if not colour then
+            colour = 16007897
+        end
+        local data = {
+            {
+                ["colour"] = colour,
+                ["title"] = "**".. messagetitle .. "**",
+                ["description"] = "**"..givenName.."** "..message,
+            }
+        }
+        PerformHttpRequest(DRPCoreConfig.DiscordWebHook, function(err, text, headers) end, 'POST', json.encode({username = "Little Nonce", embeds = data}), { ['Content-Type'] = 'application/json' })
+    end
+end
+---------------------------------------------------------------------------
 -- Who de fok is dis guy?
 ---------------------------------------------------------------------------
 function stringsplit(inputstr, sep)
