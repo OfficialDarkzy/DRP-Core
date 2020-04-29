@@ -70,19 +70,12 @@ Citizen.CreateThread(function()
         else
             ResetPedMovementClipset(ped, 0.0)
         end
-        Citizen.Wait(0)
-    end
-end)
--- Add Blood To Ped, cuz I like to make random shit :)
-Citizen.CreateThread(function()
-    while true do
-        local ped = PlayerPedId()
         if HasEntityBeenDamagedByAnyPed(ped) or HasEntityBeenDamagedByAnyVehicle(ped) or HasEntityBeenDamagedByAnyObject(ped) then
             ClearEntityLastDamageEntity(ped)
             local bloodEffect = DRP_Core.BloodEffects[math.random(#DRP_Core.BloodEffects)]
             ApplyPedDamagePack(ped, bloodEffect, 0, 0)
         end
-        Citizen.Wait(1)
+        Citizen.Wait(0)
     end
 end)
 
@@ -131,8 +124,10 @@ AddEventHandler("DRP_Core:InitDeath", function(time)
     ResurrectPed(ped)
     SetEntityCoords(ped, pedPos.x, pedPos.y, pedPos.z, 0.0, 0.0, 0.0, 0)
     Citizen.Wait(250)
-    startAnimation = true
-    timeLeft = time
+    if not IsPedRunningRagdollTask(ped) then
+        startAnimation = true
+        timeLeft = time
+    end
 end)
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Death:IsDeadStatus")
