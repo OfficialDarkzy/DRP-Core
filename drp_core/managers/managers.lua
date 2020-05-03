@@ -12,15 +12,7 @@ end)
 --- Functions
 ---------------------------------------------------------------------------
 function GetPlayers()
-    local players = {}
-
-    for i = 0, 31 do
-        if NetworkIsPlayerActive(i) then
-            table.insert(players, i)
-        end
-    end
-
-    return players
+  return GetActivePlayers()
 end
 ---------------------------------------------------------------------------
 function GetClosestPlayer()
