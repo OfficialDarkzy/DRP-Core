@@ -49,7 +49,7 @@ AddEventHandler("DRP_Bank:DropOnDeath", function()
         TriggerEvent("DRP_Bank:GetCharacterMoney", character.charid, function(characterMoney)
             local cash = characterMoney.data[1].cash
             if cash > 0 then
-                TriggerEvent("DRP_Bank:RemoveCashMoney", character.charid, cash)
+                TriggerEvent("DRP_Bank:RemoveCashMoney", src, character.charid, cash)
                 TriggerClientEvent("DRP_Bank:DropCashOnDeath", src, cash)
                 print("dropping "..cash.." on the floor")
             end
@@ -63,6 +63,6 @@ RegisterServerEvent("DRP_Bank:PickupDroppedCash")
 AddEventHandler("DRP_Bank:PickupDroppedCash", function(amount)
     local src = source
     local character = exports["drp_id"]:GetCharacterData(src)
-    TriggerEvent("DRP_Bank:AddCashMoney", character.charid, amount)
+    TriggerEvent("DRP_Bank:AddCashMoney", src, character.charid, amount)
     TriggerClientEvent("DRP_Death:PickedUpDroppedCash", src)
 end)
