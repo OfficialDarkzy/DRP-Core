@@ -11,7 +11,6 @@ DRPCoreConfig.ESCMenu = {}
 -- Addon SETTINGS
 DRPCoreConfig.ID = false -- Have you got CHARACTER CREATION ADDON ADDED?
 -- CORE SETTINGS
-DRPCoreConfig.TotalPlayersAllowed = 32 -- Edit this to the amount of slots you have allocated for your server for full Onesync support
 DRPCoreConfig.AutoRespawn = false -- Turn this True if DO NOT HAVE A CUSTOM DEATH SYSTEM I.E. drp_death
 DRPCoreConfig.Whitelisted = true -- true or false if you want to add the whitelist system (REQUIRES EXTERNALSQL)
 DRPCoreConfig.Debug = false -- Developer Mode, this will be seen by all the players in game (not recommended)
