@@ -21,19 +21,22 @@ end)
 function TriggerWeatherChange()
     math.randomseed(os.time())
     local time = math.random(DRPSync.DRPWeatherConfig.leastTime, DRPSync.DRPWeatherConfig.maxTime)
-    SetTimeout(time * 60000, function()
-        math.randomseed(os.time())
-        if DRPSync.DRPWeatherConfig.isWinter then
-            local random = math.random(1, #weatherWinterTypes)
-            currentWeather = weatherWinterTypes[random]
-        else
-            local random = math.random(1, #weatherTypes)
-            currentWeather = weatherTypes[random]
+        Citizen.CreateThread(function()
+            while true do
+            math.randomseed(os.time())
+            if DRPSync.DRPWeatherConfig.isWinter then
+                local random = math.random(1, #weatherWinterTypes)
+                currentWeather = weatherWinterTypes[random]
+            else
+                local random = math.random(1, #weatherTypes)
+                currentWeather = weatherTypes[random]
+            end
+
+            TriggerClientEvent("DRP_Core:SetWeather", -1, currentWeather)
+
+            TriggerWeatherChange()
+            Citizen.Wait(time * 60000)
         end
-
-        TriggerClientEvent("DRP_Core:SetWeather", -1, currentWeather)
-
-        TriggerWeatherChange()
     end)
 end
 
