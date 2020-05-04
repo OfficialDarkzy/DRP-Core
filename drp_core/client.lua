@@ -10,26 +10,24 @@ Citizen.CreateThread(function()
     TriggerServerEvent("DRP_Core:AddPlayerToTable")
 end)
 ---------------------------------------------------------------------------
-AddEventHandler('onClientMapStart', function()
-	TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
-	TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
-end)
----------------------------------------------------------------------------
-function AddTextEntry(key, value)
-	Citizen.InvokeNative(GetHashKey("ADD_TEXT_ENTRY"), key, value)
-end
----------------------------------------------------------------------------
 --- You Can Edit The Below To Your Requirements, 
 --  only touch if you know what you are doing,
 --  Darkzy will not help you if you break it
 ---------------------------------------------------------------------------
 AddEventHandler("playerSpawned", function()
+    Citizen.Wait(1000)
+    TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
+    TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
     Citizen.CreateThread(function()
       local playerPed = PlayerPedId()
       NetworkSetFriendlyFireOption(true)
       SetCanAttackFriendly(playerPed, true, true)
     end)
 end)
+---------------------------------------------------------------------------
+function AddTextEntry(key, value)
+	Citizen.InvokeNative(GetHashKey("ADD_TEXT_ENTRY"), key, value)
+end
 ---------------------------------------------------------------------------
 --- Core Thread
 ---------------------------------------------------------------------------

@@ -5,11 +5,8 @@ DRPSync.DRPTimeConfig = {}
 
 DRPSync.DRPWeatherConfig = {
 
-    -- Least time for the weather to change
-    leastTime = 10,
-
-    -- Max time for the weather to change
-    maxTime = 25,
+    -- Weather Change Time in (MS)
+    weatherChangeTime = 48000,
 
     -- Would you like the weather to be snowing???
     isWinter = false,

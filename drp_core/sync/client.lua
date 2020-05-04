@@ -53,8 +53,8 @@ end)
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     while true do
+        Citizen.Wait(1)
         NetworkOverrideClockTime(setHours, setMinutes, 0)
-        Citizen.Wait(0)
     end
 end)
 ---------------------------------------------------------------------------
