@@ -42,10 +42,10 @@ function ManualWeatherSet(newWeather)
     TriggerClientEvent("DRP_Core:SetWeather", -1, currentWeather)
 end
 ---------------------------------------------------------------------------
-RegisterServerEvent("DRP_Core:ConnectionSetWeather")
-AddEventHandler("DRP_Core:ConnectionSetWeather", function()
+RegisterServerEvent("DRP_WeatherSync:ConnectionSetWeather")
+AddEventHandler("DRP_WeatherSync:ConnectionSetWeather", function()
     local src = source
-    TriggerClientEvent("DRP_Core:SetWeather", src, currentWeather)
+    TriggerClientEvent("DRP_WeatherSync:SetWeather", src, currentWeather)
 end)
 ---------------------------------------------------------------------------
 -- Time Sync
@@ -53,37 +53,40 @@ end)
 local hours = 0
 local minutes = 0
 
--- Citizen.CreateThread(function()
---     math.randomseed(os.time())
---     local randomHour = math.random(1, 24)
---     local randomMinute = math.random(1, 59)
---     hours = randomHour
---     minutes = randomMinute
---     StartTimeChanging()
--- end)
+Citizen.CreateThread(function()
+    math.randomseed(os.time())
+    local randomHour = math.random(1, 24)
+    local randomMinute = math.random(1, 59)
+    hours = randomHour
+    minutes = randomMinute
+    StartTimeChanging()
+end)
 
--- function StartTimeChanging()
---     SetTimeout(DRPTimeConfig.SecPerMin * 1000, function()
---         if not DRPTimeConfig.FreezeTime then
---             minutes = minutes + 1
---             if minutes >= 60 then
---                 hours = hours + 1
---                 minutes = 0
---                 if hours >= 24 then
---                     hours = 0
---                 end
---             end
---             TriggerClientEvent("DRP_TimeSync:SetTime", -1, hours, minutes)
---         end
---         StartTimeChanging()
---     end)
--- end
+function StartTimeChanging()
+    Citizen.CreateThread(function()
+        while true do
+            if not DRPSync.DRPTimeConfig.FreezeTime then
+                minutes = minutes + 1
+                if minutes >= 60 then
+                    hours = hours + 1
+                    minutes = 0
+                    if hours >= 24 then
+                        hours = 0
+                    end
+                end
+                TriggerClientEvent("DRP_TimeSync:SetTime", -1, hours, minutes)
+            end
+            Citizen.Wait(1000)
+        end
+        StartTimeChanging()
+    end)
+end
 
--- RegisterServerEvent("DRP_TimeSync:ConnectionSetTime")
--- AddEventHandler("DRP_TimeSync:ConnectionSetTime", function()
---     local src = source
---     TriggerClientEvent("DRP_TimeSync:SetTime", src, hours, minutes)
--- end)
+RegisterServerEvent("DRP_TimeSync:ConnectionSetTime")
+AddEventHandler("DRP_TimeSync:ConnectionSetTime", function()
+    local src = source
+    TriggerClientEvent("DRP_TimeSync:SetTime", src, hours, minutes)
+end)
 
 ---------------------------------------------------------------------------
 -- EXPORT FUNCTIONS

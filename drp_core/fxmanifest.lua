@@ -54,4 +54,3 @@ export "drawText"
 export "GetPlayers"
 
 server_export "GetPlayerData"
-server_export "DoesRankHavePerms"

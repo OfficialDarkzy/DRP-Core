@@ -6,8 +6,8 @@ local weatherChanging = false
 ---------------------------------------------------------------------------
 ---- Client Event To Set Weather
 ---------------------------------------------------------------------------
-RegisterNetEvent("DRP_Core:SetWeather")
-AddEventHandler("DRP_Core:SetWeather", function(weatherType)
+RegisterNetEvent("DRP_WeatherSync:SetWeather")
+AddEventHandler("DRP_WeatherSync:SetWeather", function(weatherType)
     if currentWeather ~= weatherType and not weatherChanging then
         weatherChanging = true
         SetWeatherTypeOverTime(weatherType, 15.0)
@@ -29,7 +29,7 @@ end)
 ---------------------------------------------------------------------------
 ---- Client Handler To Get Player Weather
 ---------------------------------------------------------------------------
-AddEventHandler("DRP_Core:GetPlayerWeather", function(callback)
+AddEventHandler("DRP_WeatherSync:GetPlayerWeather", function(callback)
     Citizen.Wait(3500)
     callback(currentWeather)
 end)
@@ -54,7 +54,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         NetworkOverrideClockTime(setHours, setMinutes, 0)
-        Citizen.Wait(100)
+        Citizen.Wait(0)
     end
 end)
 ---------------------------------------------------------------------------

@@ -11,7 +11,7 @@ Citizen.CreateThread(function()
 end)
 ---------------------------------------------------------------------------
 AddEventHandler('onClientMapStart', function()
-	TriggerServerEvent("DRP_Core:ConnectionSetWeather")
+	TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
 	TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
 end)
 ---------------------------------------------------------------------------

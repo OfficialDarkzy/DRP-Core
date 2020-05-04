@@ -11,6 +11,7 @@ function DoesRankHavePerms(rank, perm)
     end
     return false
 end
+exports("DoesRankHavePerms", DoesRankHavePerms)
 ---------------------------------------------------------------------------
 --- Events
 ---------------------------------------------------------------------------

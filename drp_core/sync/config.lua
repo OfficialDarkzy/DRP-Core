@@ -1,6 +1,7 @@
 
 DRPSync = {}
 DRPSync.DRPWeatherConfig = {}
+DRPSync.DRPTimeConfig = {}
 
 DRPSync.DRPWeatherConfig = {
 
