@@ -13,7 +13,6 @@ DRPCoreConfig.ID = false -- Have you got CHARACTER CREATION ADDON ADDED?
 -- CORE SETTINGS
 DRPCoreConfig.AutoRespawn = false -- Turn this True if DO NOT HAVE A CUSTOM DEATH SYSTEM I.E. drp_death
 DRPCoreConfig.Whitelisted = true -- true or false if you want to add the whitelist system (REQUIRES EXTERNALSQL)
-DRPCoreConfig.Debug = false -- Developer Mode, this will be seen by all the players in game (not recommended)
 DRPCoreConfig.CommunityName = "DRP" -- This will show when you load into the server to tell you, you are banned, been kicked or not whitelisted
 DRPCoreConfig.MapLocations = false -- This will display all the locations below on the map
 DRPCoreConfig.Crosshair = false -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
@@ -29,8 +28,8 @@ DRPCoreConfig.StaffRanks.ranks = {"user", "admin", "superadmin"} -- All the Defi
 ---------------------------------------------------------------------------
 DRPCoreConfig.StaffRanks.perms = { -- This is what you need to reference too in the database for your rank :)
     ["user"] = {}, -- This means User does not have any rank, also a typo :()
-    ["admin"] = {"time", "weather", "adminaddcop", "heal", "teleport", "vehicle", "clearchat", "noclip", "givekeys"}, -- The Perms Admins Have
-    ["superadmin"] = {"time", "weather", "adminaddcop", "heal", "addgroup", "teleport", "economy", "adminmenu", "kick", "ban", "vehicle", "clearchat", "noclip", "givekeys"} -- The Perms Superadmins have
+    ["admin"] = {"time", "weather", "adminaddcop", "heal", "teleport", "vehicle", "clearchat", "noclip", "givekeys", "revive"}, -- The Perms Admins Have
+    ["superadmin"] = {"time", "weather", "debugtools", "adminaddcop", "heal", "addgroup", "teleport", "economy", "adminmenu", "kick", "ban", "vehicle", "clearchat", "noclip", "givekeys", "revive"} -- The Perms Superadmins have
 }
 ---------------------------------------------------------------------------
 -- ESC Menu Config (ESC Menu AKA When you see "map", "settings" etc etc)

@@ -1,10 +1,16 @@
+local debug = false
 ---------------------------------------------------------------------------
 -- Debug
 ---------------------------------------------------------------------------
-if DRPCoreConfig.Debug then
-    Citizen.CreateThread(function()
-        while true do
-            Citizen.Wait(0)
+RegisterNetEvent("DRP_Core:ToggleDebugTools")
+AddEventHandler("DRP_Core:ToggleDebugTools", function()
+    debug = not debug
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1)
+        if debug then
             local player = PlayerPedId()
             x, y, z = table.unpack(GetEntityCoords(player, true))
             
@@ -48,8 +54,8 @@ if DRPCoreConfig.Debug then
                 DrawTxt("~r~Player Speed: ~s~"..rounds, 0.40, 0.90)
             end
         end
-    end)
-end
+    end
+end)
 
 function DrawTxt(text, x, y)
 	SetTextFont(0)

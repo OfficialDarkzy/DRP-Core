@@ -172,6 +172,38 @@ RegisterCommand("noclip", function(source, args, raw)
     end
 end, false)
 ---------------------------------------------------------------------------
+-- Revive Yourself or Player (THIS WILL BE THERE CURRENT INGAME SOURCE)
+---------------------------------------------------------------------------
+RegisterCommand("revive", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "revive") then
+            if args[1] ~= nil then
+                TriggerClientEvent("DRP_Core:Revive", args[1])
+            else
+                TriggerClientEvent("DRP_Core:Revive", src)
+            end
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to noclip"), 2500, false, "leftCenter")
+        end
+    end
+end, false)
+---------------------------------------------------------------------------
+-- Debug Tools
+---------------------------------------------------------------------------
+RegisterCommand("debug", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "debugtools") then
+            TriggerClientEvent("DRP_Core:ToggleDebugTools", src)
+        else
+            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to Debug Tools"), 2500, false, "leftCenter")
+        end
+    end
+end, false)
+---------------------------------------------------------------------------
 --- Delete Vehicle USAGE: /dv
 ---------------------------------------------------------------------------
 RegisterCommand("dv", function(source, args, raw)

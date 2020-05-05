@@ -41,7 +41,6 @@ Citizen.CreateThread(function()
                 end
             end
         if startAnimation then
-            local ped = PlayerPedId()
             SetPlayerInvincible(PlayerId(), true)
             isInvincible = true
             local dict = "combat@damage@rb_writhe"
@@ -69,10 +68,12 @@ Citizen.CreateThread(function()
         else
             ResetPedMovementClipset(ped, 0.0)
         end
-        if HasEntityBeenDamagedByAnyPed(ped) or HasEntityBeenDamagedByAnyVehicle(ped) or HasEntityBeenDamagedByAnyObject(ped) then
-            ClearEntityLastDamageEntity(ped)
-            local bloodEffect = DRP_Core.BloodEffects[math.random(#DRP_Core.BloodEffects)]
-            ApplyPedDamagePack(ped, bloodEffect, 0, 0)
+        if DRP_Core.AllowBloodEffects then
+            if HasEntityBeenDamagedByAnyPed(ped) or HasEntityBeenDamagedByAnyVehicle(ped) or HasEntityBeenDamagedByAnyObject(ped) then
+                ClearEntityLastDamageEntity(ped)
+                local bloodEffect = DRP_Core.BloodEffects[math.random(#DRP_Core.BloodEffects)]
+                ApplyPedDamagePack(ped, bloodEffect, 0, 0)
+            end
         end
         Citizen.Wait(0)
     end
@@ -88,24 +89,24 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-    local sleepTimer = 500
+    local sleepTimer = 750
     while true do
         if startAnimation and timeLeft > 0 then
             sleepTimer = 1
             local coords = GetEntityCoords(PlayerPedId(), false)
-            if DRP_Core.Static3DTextMessage then
+            if DRP_Core.Static3DTextMessage and not DRP_Core.Dynamic3DTextMessage then
                 exports["drp_core"]:drawText("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn")
-            elseif DRP_Core.Dynamic3DTextMessage then
+            elseif DRP_Core.Dynamic3DTextMessage and not DRP_Core.Static3DTextMessage then
                 exports['drp_core']:DrawText3Ds(coords.x, coords.y, coords.z + 0.5, tostring("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn"))
             else
-                print("Your server admin needs to set a config for draw text :)")
+                print("Your server admin needs to set a config for draw text or not have two messages toggled :)")
             end
         elseif startAnimation and timeLeft == 0 then
             canRespawn = true
             TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn now"), 1000, false, "leftCenter")
             Citizen.Wait(5000)
         else
-            sleepTimer = 500
+            sleepTimer = 750
         end
         Citizen.Wait(sleepTimer)
     end
@@ -116,13 +117,13 @@ end)
 RegisterNetEvent("DRP_Core:InitDeath")
 AddEventHandler("DRP_Core:InitDeath", function(time)
     local ped = PlayerPedId()
-    while GetEntitySpeed(ped) >= 0.25 do
-        Citizen.Wait(500)
+    while GetEntitySpeed(ped) >= 0.15 do
+        Citizen.Wait(1000)
     end
     local pedPos = GetEntityCoords(ped, false)
+    Citizen.Wait(250)
     ResurrectPed(ped)
     SetEntityCoords(ped, pedPos.x, pedPos.y, pedPos.z, 0.0, 0.0, 0.0, 0)
-    Citizen.Wait(250)
     if not IsPedRunningRagdollTask(ped) then
         startAnimation = true
         timeLeft = time
@@ -143,29 +144,21 @@ end)
 RegisterNetEvent("DRP_Core:Revive")
 AddEventHandler("DRP_Core:Revive", function()
     local ped = PlayerPedId()
-    startAnimation = false
-    playerDied = false
-    canRespawn = false
-    timeLeft = -1
-    ResurrectPed(ped)
-    ClearPedTasksImmediately(ped)
-    local pedPos = GetEntityCoords(ped, false)
-    SetEntityCoords(ped, pedPos.x, pedPos.y, pedPos.z + 0.3, 0.0, 0.0, 0.0, 0)
-    TriggerServerEvent("DRP_Death:Revived", false)
-end)
----------------------------------------------------------------------------
--- Commands
----------------------------------------------------------------------------
-RegisterCommand("adminrevive", function(source, args, raw)
     if playerDied then
-        TriggerEvent("DRP_Core:Revive")
+        startAnimation = false
+        playerDied = false
         canRespawn = false
+        timeLeft = -1
+        ResurrectPed(ped)
+        ClearPedTasksImmediately(ped)
+        local pedPos = GetEntityCoords(ped, false)
+        SetEntityCoords(ped, pedPos.x, pedPos.y, pedPos.z + 0.3, 0.0, 0.0, 0.0, 0)
+        TriggerServerEvent("DRP_Death:Revived", false)
     else
-        print("not dead!")
-        ResetPedMovementClipset(PlayerPedId(), 0.0) -- Just in case it gets bugged in the animation:)
-        ClearPedTasksImmediately(PlayerPedId())
+        ResetPedMovementClipset(ped, 0.0) -- Just in case it gets bugged in the animation:)
+        ClearPedTasksImmediately(ped)
     end
-end, false)
+end)
 ---------------------------------------------------------------------------
 RegisterCommand("respawn", function(source, args, raw)
     if playerDied then
