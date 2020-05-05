@@ -8,12 +8,12 @@ games { 'rdr3', 'gta5' }
 
 
 dependencies {
-    "externalsql"
+    "externalsql",
+    "drp_core"
 }
 
 -- Client Scripts
 client_script "client.lua"
-client_script "dropondeath.lua"
 client_script "config.lua"
 
 -- Server Scripts

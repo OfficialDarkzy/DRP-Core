@@ -3,9 +3,8 @@ DRP_Core.HospitalLocations = {}
 ---------------------------------------------------------------------------
 -- DO NOT EDIT ABOVE
 ---------------------------------------------------------------------------
-DRP_Core.Timer = 480 -- seconds 480
-DRP_Core.TimerActive = true -- timer Display for Death
-DRP_Core.DropCashOnDeath = false -- Drop Cash On Death
+DRP_Core.Timer = 480 -- Seconds Before you can Respawn
+DRP_Core.TimerActive = true -- Timer Display for Death
 DRP_Core.Static3DTextMessage = false -- Static on screen draw text
 DRP_Core.Dynamic3DTextMessage = true -- Dynamic on character 3d text
 DRP_Core.BloodAffects = true -- Allow Blood Effects, when you or the other players are shot and killed

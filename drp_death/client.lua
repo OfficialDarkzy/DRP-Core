@@ -35,7 +35,6 @@ Citizen.CreateThread(function()
                 if not playerDied then
                     TriggerServerEvent("DRP_Core:TriggerDeathStart")
                     TriggerServerEvent("DRP_Death:Revived", true)
-                    TriggerServerEvent("DRP_Bank:DropOnDeath")
                     diedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
                     playerDied = true
                     ResetPedMovementClipset(ped, 0.0)
