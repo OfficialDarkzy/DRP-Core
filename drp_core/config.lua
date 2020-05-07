@@ -28,7 +28,7 @@ DRPCoreConfig.StaffRanks.ranks = {"user", "admin", "superadmin"} -- All the Defi
 ---------------------------------------------------------------------------
 DRPCoreConfig.StaffRanks.perms = { -- This is what you need to reference too in the database for your rank :)
     ["user"] = {}, -- This means User does not have any rank, also a typo :()
-    ["admin"] = {"time", "weather", "adminaddcop", "heal", "teleport", "vehicle", "clearchat", "noclip", "givekeys", "revive"}, -- The Perms Admins Have
+    ["admin"] = {"time", "weather", "adminaddcop", "heal", "teleport", "vehicle", "clearchat", "noclip", "givekeys", "revive", "coords"}, -- The Perms Admins Have
     ["superadmin"] = {"time", "weather", "debugtools", "adminaddcop", "heal", "addgroup", "teleport", "economy", "adminmenu", "kick", "ban", "vehicle", "clearchat", "noclip", "givekeys", "revive"} -- The Perms Superadmins have
 }
 ---------------------------------------------------------------------------
