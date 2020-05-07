@@ -354,5 +354,32 @@ RegisterCommand("clearchat", function(source, args, raw)
         end
     end
 end, false)
-
+---------------------------------------------------------------------------
+-- Show coordinates in chat (using clearchat perms)
+---------------------------------------------------------------------------
+RegisterCommand("coords", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "clearchat") then
+            TriggerClientEvent("DRP_Core:SendCoords", src)
+        else
+            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions to show coordinates"))
+        end
+    end
+end, false)
+---------------------------------------------------------------------------
+-- Show coordinates on UI (using clearchat perms)
+---------------------------------------------------------------------------
+RegisterCommand("showcoords", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "clearchat") then
+            TriggerClientEvent("DRP_Core:ShowCoords", src)
+        else
+            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions to show coordinates"))
+        end
+    end
+end, false)
 

@@ -402,3 +402,53 @@ Citizen.CreateThread( function()
         end
      end
 end ) 
+---------------------------------------------------------------------------
+-- Send coordinates in chat
+---------------------------------------------------------------------------
+RegisterNetEvent('DRP_Core:SendCoords')
+AddEventHandler('DRP_Core:SendCoords', function()
+	local playerPed = PlayerPedId()
+    local pedcoords = GetEntityCoords(playerPed)
+	local playerH = GetEntityHeading(playerPed)
+	local msg = ("^4X^7: %s ^4Y^7: %s ^4Z^7: %s ^4H^7: %s"):format(formatCoord(pedcoords.x), formatCoord(pedcoords.y), formatCoord(pedcoords.z), formatCoord(playerH))
+	
+	TriggerEvent('chat:addMessage', {		
+		args = { "Coordinates", msg }
+	})
+end)
+---------------------------------------------------------------------------
+-- Show coordinates on screen 3D text
+---------------------------------------------------------------------------
+local showing_coord = false
+
+RegisterNetEvent('DRP_Core:ShowCoords')
+AddEventHandler('DRP_Core:ShowCoords', function()
+	showing_coord = not showing_coord
+end)
+
+Citizen.CreateThread(function()
+    while true do
+		local sleepThread = 250
+		
+		if showing_coord then
+			sleepThread = 5
+
+			local playerPed = PlayerPedId()
+			local pedcoords = GetEntityCoords(playerPed)
+			local playerH = GetEntityHeading(playerPed)
+			local msg = ("~b~X~w~: %s ~b~Y~w~: %s ~b~Z~w~: %s ~b~H~w~: %s"):format(formatCoord(pedcoords.x), formatCoord(pedcoords.y), formatCoord(pedcoords.z), formatCoord(playerH))
+			
+			exports['drp_core']:DrawText3Ds(pedcoords.x, pedcoords.y, pedcoords.z + 0.5, msg)			
+		end
+
+		Citizen.Wait(sleepThread)
+	end
+end)
+
+-- Format coordinates to two decimals
+formatCoord = function(coord)
+	if coord == nil then
+		return "unknown"
+	end
+	return tonumber(string.format("%.2f", coord))
+end
