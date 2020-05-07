@@ -20,6 +20,16 @@ RegisterNUICallback("send_message", function(data, cb)
     TriggerServerEvent("DRP_Core:SendMessage", data.message)
     cb("ok")
 end)
+
+RegisterNUICallback("setjob", function(data, cb)
+    TriggerServerEvent("DRP_Core:SetJob", data)
+    cb("ok")
+end)
+
+RegisterNUICallback("setrank", function(data, cb)
+    TriggerServerEvent("DRP_Core:SetRank", data)
+    cb("ok")
+end)
 ---------------------------------------------------------------------------
 --- THREAD
 ---------------------------------------------------------------------------
@@ -123,6 +133,25 @@ AddEventHandler("DRP_Core:OpenAdminMenu", function(players)
         type = "open_admin_menu",
         players = players
     })
+end)
+---------------------------------------------------------------------------
+-- Update Admin Menu
+---------------------------------------------------------------------------
+RegisterNetEvent("DRP_Core:UpdateAdminMenu")
+AddEventHandler("DRP_Core:UpdateAdminMenu", function(value, bool)
+    if bool then
+        SendNUIMessage({
+            type = "update_admin_menu",
+            values = value,
+            bool = bool
+        })
+    else
+        SendNUIMessage({
+            type = "update_admin_menu",
+            values = value,
+            bool = bool
+        })
+    end
 end)
 ---------------------------------------------------------------------------
 -- Send Admin Chat Message

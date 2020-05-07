@@ -124,6 +124,30 @@
                             </v-container>
                         </div>
 
+                        <div id="DRP_Admin_Page_PermsJobs" v-if="currentPage == 'Jobs/Rank'">
+                            <div id="showSelectedPlayer">Player: {{selectedPlayer.id}} - {{selectedPlayer.name}} | Job: {{selectedPlayer.job}} | Rank: {{selectedPlayer.rank}}</div>
+                            <v-container grid-list-xs>
+                                <v-layout row>
+                                    <v-flex xs6>
+                                        <v-layout row>
+                                            <v-flex xs12>
+                                                <v-select :items="JobTypes" v-model="JobType" label="Jobs"></v-select>
+                                                <v-btn color="green" @click="SetJob()" dark block>Set Job</v-btn>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-flex>
+                                    <v-flex xs6>
+                                        <v-layout row>
+                                            <v-flex xs12>
+                                                <v-select :items="ranktypes" v-model="RankType" label="Ranks"></v-select>
+                                                <v-btn color="green" @click="SetRank()" dark block>Set Rank</v-btn>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </div>
+
                         <div id="DRP_Admin_Page_Whitelist" v-if="currentPage == 'Whitelist'">
                             Whitelisting Not Available
                         </div>
