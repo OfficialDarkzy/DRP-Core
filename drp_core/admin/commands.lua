@@ -276,7 +276,7 @@ RegisterCommand("addcash", function(source, args, raw)
     local character = exports["drp_id"]:GetCharacterData(src)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "economy") then
-            TriggerEvent("DRP_Bank:AddCashMoney", src, character.charid, tonumber(args[1]))
+            TriggerEvent("DRP_Bank:AddCashMoney", character, tonumber(args[1]))
         else
             TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
         end
@@ -291,7 +291,7 @@ RegisterCommand("removecash", function(source, args, raw)
     local character = exports["drp_id"]:GetCharacterData(src)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "economy") then
-            TriggerEvent("DRP_Bank:RemoveCashMoney", src, character.charid, tonumber(args[1]))
+            TriggerEvent("DRP_Bank:RemoveCashMoney", character, tonumber(args[1]))
         else
             TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to remove cash!"), 2500, false, "leftCenter")
         end
@@ -306,7 +306,7 @@ RegisterCommand("addbank", function(source, args, raw)
     local character = exports["drp_id"]:GetCharacterData(src)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "economy") then
-            TriggerEvent("DRP_Bank:AddBankMoney", src, character.charid, tonumber(args[1]))
+            TriggerEvent("DRP_Bank:AddBankMoney", character, tonumber(args[1]))
         else
             TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
         end
@@ -322,7 +322,7 @@ RegisterCommand("removebank", function(source, args, raw)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "economy") then
             AlertDiscord("Remove Bank Command", player, false, "Removed Money From Himself for the amount of: "..args[1])
-            TriggerEvent("DRP_Bank:RemoveBankMoney", src, character.charid, tonumber(args[1]))
+            TriggerEvent("DRP_Bank:RemoveBankMoney", character, tonumber(args[1]))
         else
             TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to remove money!"), 2500, false, "leftCenter")
         end
