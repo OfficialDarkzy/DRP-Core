@@ -9,14 +9,14 @@ AddEventHandler("DRP_Core:AddWeaponToPed", function(weapon, ammo)
     GiveWeaponToPed(ped, weapon, ammo, false, false)
 end)
 ---------------------------------------------------------------------------
---- Functions
+--- Functions NOT SURE THIS WORKS AS AN EXPORT :0
 ---------------------------------------------------------------------------
 function GetPlayers()
   return GetActivePlayers()
 end
 ---------------------------------------------------------------------------
 function GetClosestPlayer()
-	local players = GetPlayers()
+    local players = GetPlayers()
 	local closestDistance = -1
 	local closestPlayer = -1
 	local ply = PlayerPedId()
@@ -33,7 +33,6 @@ function GetClosestPlayer()
 			end
 		end
 	end
-	
 	return closestPlayer, closestDistance
 end
 exports("GetClosestPlayer", GetClosestPlayer)
