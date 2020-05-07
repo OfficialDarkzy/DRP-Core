@@ -8,9 +8,11 @@ const DRP_AdminApp = new Vue({
         playerModalActive: false,
 
         // Arrays
-        pages: ["Chat", "Reports", "Kick", "Ban", "Whitelist"],
+        pages: ["Chat", "Reports", "Kick", "Ban", "Jobs/Rank", "Whitelist"],
         players: [],
         banTypes: ["Minutes", "Hours", "Days", "Weeks", "Months", "Years"],
+        ranktypes: ["User", "Admin", "Superadmin"],
+        JobTypes: ["Unemployed", "Police", "State", "Sheriff", "Taxi Driver", "Mechanic"],
 
         // Selected Page
         currentPage: "Chat",
@@ -30,7 +32,11 @@ const DRP_AdminApp = new Vue({
         banType: "",
         banAmount: 0,
         banPermanent: false,
-        banReason: ""
+        banReason: "",
+
+        //Job & Rank
+        JobType: "",
+        RankType: ""
 
     },
 
@@ -63,8 +69,46 @@ const DRP_AdminApp = new Vue({
         },
 
         SelectPlayer(index) {
-            this.selectedPlayer = {id: this.players[index].id, name: this.players[index].name};
+            this.selectedPlayer = {id: this.players[index].id, name: this.players[index].name, job: this.players[index].job, rank: this.players[index].rank};
             this.playerModalActive = false;
+        },
+
+        // Set Job
+        SetJob() {
+            axios.post("http://drp_core/setjob",
+            {
+                job: this.JobType,
+                playerid: this.selectedPlayer.id
+
+            }).then( (response) => {
+                console.log(response);
+                this.JobType = "";
+            }).catch( (error) => {
+                console.log(error);
+            });
+        },
+
+        // Set Rank
+        SetRank() {
+            axios.post("http://drp_core/setrank",
+            {
+                rank: this.RankType,
+                playerid: this.selectedPlayer.id
+
+            }).then( (response) => {
+                console.log(response);
+                this.RankType = "";
+            }).catch( (error) => {
+                console.log(error);
+            });
+        },
+
+        UpdateValues(values, bool) {
+            if ( bool ) {
+                this.selectedPlayer.rank = values
+            } else {
+                this.selectedPlayer.job = values
+            }
         },
 
         // Admin Chat
@@ -172,6 +216,8 @@ document.onreadystatechange = () => {
                 DRP_AdminApp.OpenAdminMenu(event.data.players);
             } else if (event.data.type == "recieve_admin_message") {
                 DRP_AdminApp.RecieveMessage(event.data.name, event.data.message, event.data.isSender);
+            } else if (event.data.type == "update_admin_menu") {
+                DRP_AdminApp.UpdateValues(event.data.values, event.data.bool)
             }
         });
     };

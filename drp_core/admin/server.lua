@@ -73,3 +73,40 @@ AddEventHandler("DRP_Core:BanPlayer", function(selectedPlayer, message, time, pe
         end)
     end
 end)
+---------------------------------------------------------------------------
+RegisterServerEvent("DRP_Core:SetJob")
+AddEventHandler("DRP_Core:SetJob", function(values)
+    local src = source
+    local job = string.upper(values.job)
+    if values.playerid ~= nil and values.job ~= nil then
+        if exports["drp_jobcore"]:DoesJobExist(job) then
+            local joblabel = exports["drp_jobcore"]:GetJobLabels(job)
+            TriggerClientEvent("DRP_Core:Info", src, "Admin Menu", tostring("You changed job for ID: ".. values.playerid), 2500, true, "leftCenter")
+            exports["drp_jobcore"]:RequestJobChange(values.playerid, job, joblabel, false)
+            TriggerClientEvent("DRP_Core:UpdateAdminMenu", src, values.job, false)
+        end
+    else
+        TriggerClientEvent("DRP_Core:Info", src, "Admin Menu", tostring("You didn't pick a player"), 2500, true, "leftCenter")
+    end
+end)
+---------------------------------------------------------------------------
+RegisterServerEvent("DRP_Core:SetRank")
+AddEventHandler("DRP_Core:SetRank", function(values)
+    local src = source
+    if values.playerid ~= nil and values.rank ~= nil then
+        exports["externalsql"]:AsyncQueryCallback({
+            query = "UPDATE `users` SET `rank` = :rank WHERE `identifier` = :identifier",
+            data = {
+                identifier = PlayerIdentifier("license", values.playerid),
+                rank = string.lower(values.rank)
+            }
+        }, function(results)
+            TriggerClientEvent("DRP_Core:UpdateAdminMenu", src, values.rank, true)
+            exports["drp_core"]:UpdatePlayerTable(values.playerid, string.lower(values.rank))
+            TriggerClientEvent("DRP_Core:Info", src, "Admin Menu", tostring("You changed rank for ID: ".. values.playerid), 2500, true, "leftCenter")
+            TriggerClientEvent("DRP_Core:Info", values.playerid, "Admin Menu", tostring("You now have the rank: ".. string.lower(values.rank)), 2500, true, "leftCenter")
+        end)
+    else
+        TriggerClientEvent("DRP_Core:Info", src, "Admin Menu", tostring("You didn't pick a player"), 2500, true, "leftCenter")
+    end
+end)

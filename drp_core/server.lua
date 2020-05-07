@@ -93,6 +93,15 @@ AddEventHandler("DRP_Core:AddPlayerToTable", function()
     end)
 end)
 ---------------------------------------------------------------------------
+function UpdatePlayerTable(src, rank)
+    for a = 1, #players do
+        if players[a].id == src then
+            players[a].rank = rank
+        end
+    end
+end
+exports("UpdatePlayerTable", UpdatePlayerTable)
+---------------------------------------------------------------------------
 -- Functions
 ---------------------------------------------------------------------------
 function PlayerIdentifier(type, id)

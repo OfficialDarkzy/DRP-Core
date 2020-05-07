@@ -18,7 +18,9 @@ RegisterCommand("admin", function(source, args, raw)
             local players = GetPlayers()
             local new_list = {}
             for a = 1, #players do
-                table.insert(new_list, {id = tonumber(players[a]), name = GetPlayerName(tonumber(players[a]))})
+                local playerJob = exports["drp_jobcore"]:GetPlayerJob(tonumber(players[a]))
+                local player = exports["drp_core"]:GetPlayerData(tonumber(players[a]))
+                table.insert(new_list, {id = tonumber(players[a]), name = GetPlayerName(tonumber(players[a])), job = playerJob.jobLabel, rank = player.rank})
             end
             TriggerClientEvent("DRP_Core:OpenAdminMenu", src, new_list)
         else
