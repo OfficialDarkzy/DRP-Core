@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 
 require("./routes")(app);
 
-app.listen(config.api.port, (req, res) => {
+app.listen(config.api.port, "localhost", (req, res) => {
     console.log(`API Server Listening On Port: ${config.api.port}`)
   })
 
