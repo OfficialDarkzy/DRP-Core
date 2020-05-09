@@ -1,9 +1,11 @@
 local authToken = nil
+local resource = GetCurrentResourceName()
+local config = json.decode(LoadResourceFile(resource, "config.json"))
 
 -- Generate Token On Start
 AddEventHandler("onResourceStart", function(resource)
     if resource == GetCurrentResourceName() then
-        if SQLConfig.CreateTokenOnStart then
+        if config.createtokenonstart then
             Wait(1000)
             DBCreateToken(function()
                 print("^1[DRP] Database ^0: ^4Resource Start Token Generated^0")
@@ -19,7 +21,7 @@ function AsyncQueryCallback(queryData, callback)
         if authToken ~= nil then
             queryData.data = queryData.data or {}
 
-            PerformHttpRequest("http://" .. SQLConfig.host .. ":" .. SQLConfig.port .. SQLConfig.apipath .. "/execute", function(code, text, headers)
+            PerformHttpRequest("http://" .. config.api.host .. ":" .. config.api.port .. config.api.route .. "/execute", function(code, text, headers)
                 local decode = json.decode(text)
                 if decode.status ~= false then
                     callback({status = true, data = decode.results})
@@ -29,7 +31,7 @@ function AsyncQueryCallback(queryData, callback)
             end, "POST", json.encode({
                 query = queryData.query,
                 data = queryData.data,
-                secret = SQLConfig.secret
+                secret = config.api.secret
             }), {
                 ["Content-Type"] = "application/json",
                 ["Authentication"] = tostring("Bearer " .. authToken)
@@ -42,7 +44,7 @@ exports("AsyncQueryCallback", AsyncQueryCallback)
 function AsyncQuery(queryData)
     local p = promise.new()
     if authToken ~= nil then
-        PerformHttpRequest("http://" .. SQLConfig.host .. ":" .. SQLConfig.port .. SQLConfig.apipath .. "/execute", function(code, text, headers)
+        PerformHttpRequest("http://" .. config.api.host .. ":" .. config.api.port .. config.api.route .. "/execute", function(code, text, headers)
             local decode = json.decode(text)
             if decode.status ~= false then
                 p:resolve({status = true, data = decode.results})
@@ -52,7 +54,7 @@ function AsyncQuery(queryData)
         end, "POST", json.encode({
             query = queryData.query,
             data = queryData.data,
-            secret = SQLConfig.secret
+            secret = config.api.secret
         }), {
             ["Content-Type"] = "application/json",
             ["Authentication"] = tostring("Bearer " .. authToken)
@@ -66,7 +68,7 @@ exports("AsyncQuery", AsyncQuery)
 
 function DBCreateToken(callback)
     authToken = nil
-    PerformHttpRequest("http://" .. SQLConfig.host .. ":" .. SQLConfig.port .. SQLConfig.apipath .. "/authentication", function(code, text, headers)
+    PerformHttpRequest("http://" .. config.api.host .. ":" .. config.api.port .. config.api.route .. "/authentication", function(code, text, headers)
         local decode = json.decode(text)
         if decode.status ~= false then
             authToken = decode.authToken
@@ -76,8 +78,8 @@ function DBCreateToken(callback)
 
         callback()
     end, "POST", json.encode({
-        community = SQLConfig.community,
-        secret = SQLConfig.secret
+        community = config.api.community,
+        secret = config.api.secret
     }), {
         ["Content-Type"] = "application/json"
     })

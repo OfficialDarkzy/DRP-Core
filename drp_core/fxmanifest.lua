@@ -30,6 +30,7 @@ client_script "config.lua"
 
 client_script "managers/voip.lua"
 client_script "managers/managers.lua"
+client_script "managers/networkcallbacks"
 client_script "managers/vehicle_managers.lua"
 
 client_script "sync/config.lua"
@@ -40,6 +41,7 @@ client_script "admin/debugMenu.lua"
 
 
 server_script "managers/server_managers.lua"
+server_script "managers/networkcallbacks"
 
 server_script "config.lua"
 server_script "server.lua"

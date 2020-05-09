@@ -1,9 +1,9 @@
 const mysql = require("mysql");
-const config = require("./config").database;
-const devmode = require("./config").dev;
+const config = require("./config.json");
+const devmode = config.devmodeactive;
 
 // Connection Pool
-var pool = mysql.createPool(config);
+var pool = mysql.createPool(config.database);
 
 function SendQuery(query, data) {
 	return new Promise((resolve) => {
