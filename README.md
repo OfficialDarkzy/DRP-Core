@@ -31,12 +31,11 @@ Download the framework folder from the GitHub, which you are most likely reading
 
 --- https://github.com/OfficialDarkzy/DRP-Core/blob/master/DatabaseAPI/README.md ---
 
-1. To Install the Database in the Git repo then move the DatabaseAPI & externalsql files into your resource main folder
+1. To Install the Database in the Git repo then move the externalsql file into your resource main folder
 
-2. Then open the config file in DatabaseAPI folder (JavaScript) and ExternalSQL folder (LUA)
+2. Then open the config file in ExternalSQL folder (LUA)
 
-3. Edit The Config Accordiningly here is what it will look like http://prntscr.com/ns3p54 and http://prntscr.com/ns3pdf
-YOU NEED TO HAVE THE SECRETS IN BOTH EXTERNALSQL and DATABASEAPI THE SAME, THIS ALLOWS THEM TO COMMUNICATE WITH EACHOTHER
+3. Edit The Config Accordiningly to your database settings and change your secret and database name to what you want
 
 4. Import the relevant Database Dump into your Database Tool of choice (I use HeidiSQL) to load all the tables required
 
@@ -45,7 +44,6 @@ YOU NEED TO HAVE THE SECRETS IN BOTH EXTERNALSQL and DATABASEAPI THE SAME, THIS 
 ## Server.cfg Installation
 
 ```
-ensure DatabaseAPI
 ensure externalsql
 ensure drp_core
 ensure drp_id
