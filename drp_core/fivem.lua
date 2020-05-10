@@ -3,14 +3,17 @@ local firstSpawn = true
 -- Spawning player into server.. Setup char menu etc..
 ---------------------------------------------------------------------------
 AddEventHandler('playerSpawned', function()
-    if DRPCoreConfig.ID then
-        if firstSpawn then
-            Citizen.Wait(100)
-            TriggerEvent("DRP_ID:StartSkyCamera")
-            TriggerServerEvent("DRP_ID:RequestOpenMenu")
-            firstSpawn = false
-        end
-    end
+	exports['ntsy_callbacks']:serverCallback('DRP_Core:UsingID', 'DRPCoreConfigID', -1
+	, function(result)
+		if result then
+			if firstSpawn then
+				Citizen.Wait(100)
+				TriggerEvent("DRP_ID:StartSkyCamera")
+				TriggerServerEvent("DRP_ID:RequestOpenMenu")
+				firstSpawn = false
+			end
+		end		
+	end)
 end)
 ---------------------------------------------------------------------------
 AddEventHandler("onClientMapStart", function()
