@@ -73,7 +73,7 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
                     data = {
                         identifier = PlayerIdentifier("license", src),
                         name = GetPlayerName(src),
-                        rank = "User",
+                        rank = "user",
                         bandata = json.encode({banned = false, reason = "", by = "", time = 0, perm = false}),
                         whitelisted = false
                     }
