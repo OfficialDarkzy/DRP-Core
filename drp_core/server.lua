@@ -3,6 +3,20 @@
 ---------------------------------------------------------------------------
 local players = {}
 ---------------------------------------------------------------------------
+-- Checking if DRP_ID is present
+---------------------------------------------------------------------------
+local ConfigID = false
+
+AddEventHandler('onResourceStarting', function(resourceName)
+	if (resourceName == "drp_id") then
+		ConfigID = true
+	end
+end)
+
+DRP.NetCallbacks.Register("DRP_Core:UsingID", function(data, send)
+	send(ConfigID)
+end)
+---------------------------------------------------------------------------
 -- Player Connecting Mess. Do Not Edit Unless you are a Magical Person.... or an Attack Heli 
 ---------------------------------------------------------------------------
 AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)

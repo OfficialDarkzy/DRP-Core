@@ -8,8 +8,6 @@ DRPCoreConfig.ESCMenu = {}
 ---------------------------------------------------------------------------
 -- Game Settings
 ---------------------------------------------------------------------------
--- Addon SETTINGS
-DRPCoreConfig.ID = true -- Have you got CHARACTER CREATION ADDON ADDED?
 -- CORE SETTINGS
 DRPCoreConfig.AutoRespawn = false -- Turn this True if DO NOT HAVE A CUSTOM DEATH SYSTEM I.E. drp_death
 DRPCoreConfig.Whitelisted = true -- true or false if you want to add the whitelist system (REQUIRES EXTERNALSQL)
