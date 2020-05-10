@@ -25,7 +25,7 @@ if isServer then
 
   -- USAGE EXAMPLE
   -- Citizen.CreateThread(function()
-  --   Callbacks.Register("Testing", function(data, send)
+  --   DRP.NetCallbacks.Register("Testing", function(data, send)
   --     print(json.encode(data))
   --     send() -- trigger the callback to send back to the client (You don't need to pass anything. Leave nil if you want)
   --   end)
@@ -52,7 +52,7 @@ else
   -- USAGE EXAMPLE
   -- Citizen.CreateThreadNow(function()
   --   Citizen.Wait(1000)
-  --   Callbacks.Trigger("Testing", function(data)
+  --   DRP.NetCallbacks.Trigger("Testing", function(data)
   --     print("CALLBACK TRIGGERED!")
   --   end)
   -- end)
