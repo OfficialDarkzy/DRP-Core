@@ -3,6 +3,28 @@
 ---------------------------------------------------------------------------
 local players = {}
 ---------------------------------------------------------------------------
+-- Checking if DRP_ID is present
+---------------------------------------------------------------------------
+AddEventHandler('onResourceStarting', function(resourceName)
+	if (resourceName == "drp_id") then
+		local configContent = 'DRPCoreConfig.ID = true -- Have you got CHARACTER CREATION ADDON ADDED?'
+	
+		local data = LoadResourceFile('drp_core', 'config.lua')
+		local content = {}
+		for s in data:gmatch("[^\r\n]+") do
+			table.insert(content, s)
+		end
+		data = {}
+		
+		if content[12] ~= configContent then
+			content[12] = configContent
+
+			data = table.concat(content, '\n')
+			SaveResourceFile('drp_core', 'config.lua', data, -1)		
+		end
+	end
+end)
+---------------------------------------------------------------------------
 -- Player Connecting Mess. Do Not Edit Unless you are a Magical Person.... or an Attack Heli 
 ---------------------------------------------------------------------------
 AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
