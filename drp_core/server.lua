@@ -16,7 +16,7 @@ end)
 RegisterServerEvent("DRP_Core:UsingID")
 AddEventHandler("DRP_Core:UsingID", function(key, data)
 	local src = source	
-    TriggerClientEvent('NTSY:cbClient', src, key, ConfigID)
+	TriggerClientEvent('NTSY:cbClient', src, key, ConfigID)
 end)
 ---------------------------------------------------------------------------
 -- Player Connecting Mess. Do Not Edit Unless you are a Magical Person.... or an Attack Heli 
