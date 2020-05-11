@@ -18,7 +18,9 @@ RegisterCommand("admin", function(source, args, raw)
             local players = GetPlayers()
             local new_list = {}
             for a = 1, #players do
-                table.insert(new_list, {id = tonumber(players[a]), name = GetPlayerName(tonumber(players[a]))})
+                local playerJob = exports["drp_jobcore"]:GetPlayerJob(tonumber(players[a]))
+                local player = exports["drp_core"]:GetPlayerData(tonumber(players[a]))
+                table.insert(new_list, {id = tonumber(players[a]), name = GetPlayerName(tonumber(players[a])), job = playerJob.jobLabel, rank = player.rank})
             end
             TriggerClientEvent("DRP_Core:OpenAdminMenu", src, new_list)
         else
@@ -274,7 +276,7 @@ RegisterCommand("addcash", function(source, args, raw)
     local character = exports["drp_id"]:GetCharacterData(src)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "economy") then
-            TriggerEvent("DRP_Bank:AddCashMoney", src, character.charid, tonumber(args[1]))
+            TriggerEvent("DRP_Bank:AddCashMoney", character, tonumber(args[1]))
         else
             TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
         end
@@ -289,7 +291,7 @@ RegisterCommand("removecash", function(source, args, raw)
     local character = exports["drp_id"]:GetCharacterData(src)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "economy") then
-            TriggerEvent("DRP_Bank:RemoveCashMoney", src, character.charid, tonumber(args[1]))
+            TriggerEvent("DRP_Bank:RemoveCashMoney", character, tonumber(args[1]))
         else
             TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to remove cash!"), 2500, false, "leftCenter")
         end
@@ -304,7 +306,7 @@ RegisterCommand("addbank", function(source, args, raw)
     local character = exports["drp_id"]:GetCharacterData(src)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "economy") then
-            TriggerEvent("DRP_Bank:AddBankMoney", src, character.charid, tonumber(args[1]))
+            TriggerEvent("DRP_Bank:AddBankMoney", character, tonumber(args[1]))
         else
             TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
         end
@@ -320,7 +322,7 @@ RegisterCommand("removebank", function(source, args, raw)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "economy") then
             AlertDiscord("Remove Bank Command", player, false, "Removed Money From Himself for the amount of: "..args[1])
-            TriggerEvent("DRP_Bank:RemoveBankMoney", src, character.charid, tonumber(args[1]))
+            TriggerEvent("DRP_Bank:RemoveBankMoney", character, tonumber(args[1]))
         else
             TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to remove money!"), 2500, false, "leftCenter")
         end
@@ -354,5 +356,32 @@ RegisterCommand("clearchat", function(source, args, raw)
         end
     end
 end, false)
-
+---------------------------------------------------------------------------
+-- Show coordinates in chat
+---------------------------------------------------------------------------
+RegisterCommand("coords", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "coords") then
+            TriggerClientEvent("DRP_Core:SendCoords", src)
+        else
+            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions to show coordinates"))
+        end
+    end
+end, false)
+---------------------------------------------------------------------------
+-- Show coordinates on UI
+---------------------------------------------------------------------------
+RegisterCommand("showcoords", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    if player ~= false then
+        if DoesRankHavePerms(player.rank, "coords") then
+            TriggerClientEvent("DRP_Core:ShowCoords", src)
+        else
+            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions to show coordinates"))
+        end
+    end
+end, false)
 

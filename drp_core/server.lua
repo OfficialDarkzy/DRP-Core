@@ -3,6 +3,20 @@
 ---------------------------------------------------------------------------
 local players = {}
 ---------------------------------------------------------------------------
+-- Checking if DRP_ID is present
+---------------------------------------------------------------------------
+local ConfigID = false
+
+AddEventHandler('onResourceStarting', function(resourceName)
+	if (resourceName == "drp_id") then
+		ConfigID = true
+	end
+end)
+
+DRP.NetCallbacks.Register("DRP_Core:UsingID", function(data, send)
+	send(ConfigID)
+end)
+---------------------------------------------------------------------------
 -- Player Connecting Mess. Do Not Edit Unless you are a Magical Person.... or an Attack Heli 
 ---------------------------------------------------------------------------
 AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
@@ -59,7 +73,7 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
                     data = {
                         identifier = PlayerIdentifier("license", src),
                         name = GetPlayerName(src),
-                        rank = "User",
+                        rank = "user",
                         bandata = json.encode({banned = false, reason = "", by = "", time = 0, perm = false}),
                         whitelisted = false
                     }
@@ -92,6 +106,15 @@ AddEventHandler("DRP_Core:AddPlayerToTable", function()
 	table.insert(players, {id = src, rank = playerResults.data[1].rank, playerid = playerResults.data[1].id})
     end)
 end)
+---------------------------------------------------------------------------
+function UpdatePlayerTable(src, rank)
+    for a = 1, #players do
+        if players[a].id == src then
+            players[a].rank = rank
+        end
+    end
+end
+exports("UpdatePlayerTable", UpdatePlayerTable)
 ---------------------------------------------------------------------------
 -- Functions
 ---------------------------------------------------------------------------

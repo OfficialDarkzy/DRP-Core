@@ -1,0 +1,18 @@
+{
+    "api": {
+      "host": "localhost",
+      "port": 2000,
+      "route": "/external/api",
+      "secret": "drpsecret",
+      "community": "DRP"
+    },
+    "database": {
+      "connectionLimit": 100,
+      "host": "localhost",
+      "user": "root",
+      "password": "",
+      "database": "drp"
+    },
+    "devmodeactive": false,
+    "createtokenonstart": true
+  }

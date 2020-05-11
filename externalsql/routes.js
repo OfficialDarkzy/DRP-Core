@@ -1,12 +1,12 @@
 const SendQuery = require("./database");
 const jwt = require("jsonwebtoken");
-const config = require("./config").api;
+const config = require("./config.json");
 
 module.exports = (app) => {
 
     // Authentication Request
-    app.post(config.route + "/authentication", (req, res) => {
-        if (CheckSecretKey(req.body.secret, config.secret)) {
+    app.post(config.api.route + "/authentication", (req, res) => {
+        if (CheckSecretKey(req.body.secret, config.api.secret)) {
             jwt.sign({ community: req.body.community }, req.body.secret, {expiresIn: '2 days'}, (error, token) => {
                 res.json({status: true, message: "Key Valid", authToken: token});
             })
@@ -16,7 +16,7 @@ module.exports = (app) => {
     });
 
     // Database Request
-    app.post(config.route + "/execute", verifyToken, async (req, res) => {
+    app.post(config.api.route + "/execute", verifyToken, async (req, res) => {
         jwt.verify(req.token, req.body.secret, async (error, authData) => {
             if (error) {
                 res.json({status: false, message: error, results: ""});
