@@ -2,14 +2,13 @@
    Scripted By: Darkzy
 --]]
 
-resource_type 'gametype' { name = 'DRP' }
-
 fx_version 'adamant'
 games { 'rdr3', 'gta5' }
 
-dependencies {
-    "externalsql"
-}
+-- dependencies {
+--     "externalsql"
+-- }
+
 
 ui_page "ui/index.html"
 
@@ -25,8 +24,8 @@ files {
 }
 
 -- Shared Scripts
-shared_script "shared.lua"
-shared_script "sync/config.lua"
+shared_script "shared/shared.lua"
+shared_script "worldSync/config.lua"
 shared_script "config.lua"
 shared_script "managers/networkcallbacks.lua"
 
@@ -36,14 +35,14 @@ client_script "client.lua"
 client_script "managers/voip.lua"
 client_script "managers/managers.lua"
 client_script "managers/vehicle_managers.lua"
-client_script "sync/client.lua"
+client_script "worldSync/client.lua"
 client_script "admin/client.lua"
 client_script "admin/debugMenu.lua"
 
 -- Server Scripts
 server_script "managers/server_managers.lua"
 server_script "server.lua"
-server_script "sync/server.lua"
+server_script "worldSync/server.lua"
 server_script "admin/server.lua"
 server_script "admin/commands.lua"
 

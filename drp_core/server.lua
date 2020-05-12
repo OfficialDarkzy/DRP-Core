@@ -2,13 +2,14 @@
 -- Do not edit this Table name below or it will break EVERYTHING bro
 ---------------------------------------------------------------------------
 local players = {}
+SetGameType("Darkzy Is Dope")
 ---------------------------------------------------------------------------
 -- Checking if DRP_ID is present
 ---------------------------------------------------------------------------
 local ConfigID = false
 
 AddEventHandler('onResourceStarting', function(resourceName)
-	if (resourceName == "drp_id") then
+    if (resourceName == "drp_id") then
 		ConfigID = true
 	end
 end)
@@ -25,69 +26,62 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
 	deferrals.defer()
     deferrals.update("Checking Your Information, please wait...")
     SetTimeout(2500, function()
-        exports["externalsql"]:AsyncQueryCallback({
-            query = "SELECT * FROM `users` WHERE `identifier` = :identifier",
-            data = {
-                identifier = PlayerIdentifier("license", src)
-            }
-        }, function(results)
-            if #results["data"] >= 1 then
-                local player = results["data"][1]
-                local isBanned = json.decode(player.ban_data)
-                local isWhitelisted = player.whitelisted
-                if DRPCoreConfig.Whitelisted then
-                    if isWhitelisted == 0 then
-                        deferrals.done("["..DRPCoreConfig.CommunityName.."]: You are not whitelisted")
-                        return
-                    end
-                end
-                if isBanned.banned then
-                    if isBanned.perm == true then
-                        deferrals.done("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - Permanent")
-                        return
-                    end
-
-                    local timeLeft = isBanned.time - joinTime
-                    local banquery = ""
-                    if math.floor(timeLeft / 60) <= 0 then -- REMOVE BAN
-                        exports["externalsql"]:AsyncQueryCallback({
-                            query = "UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier",
-                            data = {
-                                bandata = json.encode({banned = false, reason = "", by = "", time = 0, perm = false}),
-                                identifier = PlayerIdentifier("license", src)
-                            }
-                        }, function(removeBan)
-                            -- CHECKER
-                        end)
-                        banquery = tostring("["..DRPCoreConfig.CommunityName.."]: Ban Removed Sucessfully, please reconnect!")
-                    else
-                        banquery = tostring("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - ( " .. math.floor(timeLeft / 60) .. " ) minutes")
-                    end
-                    deferrals.done(banString)
+        local results = exports["externalsql"]:AsyncQuery({
+            query = [[SELECT * FROM `users` WHERE `identifier` = :identifier]],
+            data = {identifier = PlayerIdentifier("license", src)}
+        })
+        if #results["data"] >= 1 then
+            local player = results["data"][1]
+            local isBanned = json.decode(player.ban_data)
+            local isWhitelisted = player.whitelisted
+            if DRPCoreConfig.Whitelisted then
+                if isWhitelisted == 0 then
+                    deferrals.done("["..DRPCoreConfig.CommunityName.."]: You are not whitelisted")
                     return
                 end
-                deferrals.done()
-            else
-                exports["externalsql"]:AsyncQueryCallback({
-                    query = "INSERT INTO `users` SET `identifier` = :identifier, `name` = :name, `rank` = :rank, `ban_data` = :bandata, `whitelisted` = :whitelisted",
-                    data = {
-                        identifier = PlayerIdentifier("license", src),
-                        name = GetPlayerName(src),
-                        rank = "user",
-                        bandata = json.encode({banned = false, reason = "", by = "", time = 0, perm = false}),
-                        whitelisted = false
-                    }
-                }, function(createdPlayer)
-                    print(json.encode(createdPlayer))
-                ------------------------------------------------------------------------------------
-                    if DRPCoreConfig.Whitelisted then
-                        deferrals.done("Please reconnect.. Your information has been saved and now ready to be whitelisted")
-                    else
-                        deferrals.done()
-                    end
-                end)
             end
-        end)
+            if isBanned.banned then
+                if isBanned.perm == true then
+                    deferrals.done("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - Permanent")
+                    return
+                end
+
+                local timeLeft = isBanned.time - joinTime
+                local banquery = ""
+                if math.floor(timeLeft / 60) <= 0 then -- REMOVE BAN
+                    local removeBan = exports["externalsql"]:AsyncQuery({
+                        query = [[UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier]],
+                        data = {
+                            bandata = json.encode({banned = false, reason = "", by = "", time = 0, perm = false}),
+                            identifier = PlayerIdentifier("license", src)
+                        }
+                    })
+                    banquery = tostring("["..DRPCoreConfig.CommunityName.."]: Ban Removed Sucessfully, please reconnect!")
+                else
+                    banquery = tostring("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - ( " .. math.floor(timeLeft / 60) .. " ) minutes")
+                end
+                deferrals.done(banString)
+                return
+            end
+            deferrals.done()
+        else
+            local createdPlayer = exports["externalsql"]:AsyncQuery({
+                query = [[INSERT INTO `users` SET `identifier` = :identifier, `name` = :name, `rank` = :rank, `ban_data` = :bandata, `whitelisted` = :whitelisted]],
+                data = {
+                    identifier = PlayerIdentifier("license", src),
+                    name = GetPlayerName(src),
+                    rank = "user",
+                    bandata = json.encode({banned = false, reason = "", by = "", time = 0, perm = false}),
+                    whitelisted = false
+                }
+            })
+            ------------------------------------------------------------------------------------
+            if DRPCoreConfig.Whitelisted then
+                deferrals.done("Please reconnect.. Your information has been saved and now ready to be whitelisted")
+            else
+                deferrals.done()
+            end
+        end
     end)
 end)
 ---------------------------------------------------------------------------
@@ -96,15 +90,12 @@ end)
 RegisterServerEvent("DRP_Core:AddPlayerToTable")
 AddEventHandler("DRP_Core:AddPlayerToTable", function()
     local src = source
-    exports["externalsql"]:AsyncQueryCallback({
-        query = "SELECT * FROM `users` WHERE `identifier` = :identifier",
-        data = {
-            identifier = PlayerIdentifier("license", src)
-        }
-	}, function(playerResults)
-	------------------------------------------------------------------------------------
-	table.insert(players, {id = src, rank = playerResults.data[1].rank, playerid = playerResults.data[1].id})
-    end)
+    local playerResults = exports["externalsql"]:AsyncQuery({
+        query = [[SELECT * FROM `users` WHERE `identifier` = :identifier]],
+        data = {identifier = PlayerIdentifier("license", src)}
+    })
+    local personsData = playerResults["data"][1]
+	table.insert(players, {id = src, rank = personsData.rank, playerid = personsData.id}) -- ID = SOURCE (NOTE TO SELF: DARKZY DONT FUCKING FORGET I PUT THIS INTO THE TABLES DURRRRRR)
 end)
 ---------------------------------------------------------------------------
 function UpdatePlayerTable(src, rank)
