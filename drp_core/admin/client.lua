@@ -236,15 +236,12 @@ RegisterNetEvent('DRP_Core:FixVehicle')
 AddEventHandler('DRP_Core:FixVehicle', function()
     local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
     local fuel = exports["drp_LegacyFuel"]:GetFuel(vehicle)
-
     SetVehicleFixed(vehicle)
     exports["drp_LegacyFuel"]:SetFuel(vehicle, fuel)
 end)
-
 ---------------------------------------------------------------------------
 -- Admin noclip
 ---------------------------------------------------------------------------
-
 local loadedAnims = false
 local noclip_ANIM_A = "amb@world_human_stand_impatient@male@no_sign@base"
 local noclip_ANIM_B = "base"

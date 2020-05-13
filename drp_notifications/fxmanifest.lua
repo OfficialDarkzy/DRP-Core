@@ -5,9 +5,9 @@
 fx_version 'adamant'
 games { 'rdr3', 'gta5' }
 
-dependencies {
-    "drp_core"
-}
+-- dependencies {
+--     "drp_core"
+-- }
 
 ui_page "ui/index.html"
 

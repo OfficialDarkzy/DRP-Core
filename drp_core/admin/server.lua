@@ -61,16 +61,10 @@ AddEventHandler("DRP_Core:BanPlayer", function(selectedPlayer, message, time, pe
         else
             new_ban_data = json.encode({time = os.time() + time, banned = true, reason = message, by = GetPlayerName(src), perm = false})
         end
-        print(new_ban_data)
-        exports["externalsql"]:AsyncQueryCallback({
-            query = "UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier",
-            data = {
-                identifier = PlayerIdentifier("license", player.id),
-                bandata = new_ban_data
-            }
-        }, function(results)
-            DropPlayer(selectedPlayer.id, reason)
-        end)
+        local updateUsers = exports["externalsql"]:AsyncQuery({
+            query = [[UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier]],
+            data = {identifier = PlayerIdentifier("license", player.id), bandata = new_ban_data}})
+        DropPlayer(selectedPlayer.id, reason)
     end
 end)
 ---------------------------------------------------------------------------
@@ -94,18 +88,14 @@ RegisterServerEvent("DRP_Core:SetRank")
 AddEventHandler("DRP_Core:SetRank", function(values)
     local src = source
     if values.playerid ~= nil and values.rank ~= nil then
-        exports["externalsql"]:AsyncQueryCallback({
-            query = "UPDATE `users` SET `rank` = :rank WHERE `identifier` = :identifier",
-            data = {
-                identifier = PlayerIdentifier("license", values.playerid),
-                rank = string.lower(values.rank)
-            }
-        }, function(results)
+        local usersSetRank = exports["externalsql"]:AsyncQuery({
+            query = [[UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier]],
+            data = {identifier = PlayerIdentifier("license", values.playerid), rank = string.lower(values.rank)}})
+            
             TriggerClientEvent("DRP_Core:UpdateAdminMenu", src, values.rank, true)
             exports["drp_core"]:UpdatePlayerTable(values.playerid, string.lower(values.rank))
             TriggerClientEvent("DRP_Core:Info", src, "Admin Menu", tostring("You changed rank for ID: ".. values.playerid), 2500, true, "leftCenter")
             TriggerClientEvent("DRP_Core:Info", values.playerid, "Admin Menu", tostring("You now have the rank: ".. string.lower(values.rank)), 2500, true, "leftCenter")
-        end)
     else
         TriggerClientEvent("DRP_Core:Info", src, "Admin Menu", tostring("You didn't pick a player"), 2500, true, "leftCenter")
     end

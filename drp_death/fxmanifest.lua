@@ -7,10 +7,10 @@ fx_version 'adamant'
 games { 'rdr3', 'gta5' }
 
 
-dependencies {
-    "externalsql",
-    "drp_core"
-}
+-- dependencies {
+--     "externalsql",
+--     "drp_core"
+-- }
 
 -- Client Scripts
 client_script "client.lua"
