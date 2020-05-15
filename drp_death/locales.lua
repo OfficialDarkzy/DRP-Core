@@ -1,7 +1,7 @@
 ---------------------------------------------------------------------------
 -- Global variable
 ---------------------------------------------------------------------------
-Locale = {}
+locale = {}
 local isServer = IsDuplicityVersion()
 ---------------------------------------------------------------------------
 -- Get locales
@@ -11,7 +11,7 @@ if isServer then
 		if resourceName == GetCurrentResourceName() then
 			local localeData = exports['drp_core']:GetLocalesData(resourceName)
 			if localeData then
-				Locale = Locales:Convert(localeData)
+				locale = Locales:Convert(localeData)
 			end
 		end
 	end)
@@ -20,7 +20,7 @@ else
 		local resourceName = GetCurrentResourceName()
 		local localeData = exports['drp_core']:GetLocalesData(resourceName)
 		if localeData then
-			Locale = Locales:Convert(localeData)
+			locale = Locales:Convert(localeData)
 		end
 	end)
 end
