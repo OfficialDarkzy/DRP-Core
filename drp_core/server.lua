@@ -99,7 +99,7 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
             })
             ------------------------------------------------------------------------------------
             if DRPCoreConfig.Whitelisted then
-                deferrals.done(locale:GetValue('WaitWhitelist'))
+                deferrals.done(locale:GetValue('WaitWhitelist'):format(DRPCoreConfig.CommunityName))
             else
                 deferrals.done()
             end
