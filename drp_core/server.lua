@@ -2,18 +2,39 @@
 -- Do not edit this Table name below or it will break EVERYTHING bro
 ---------------------------------------------------------------------------
 local players = {}
+local locale = {}
 SetGameType("Darkzy Is Dope")
 ---------------------------------------------------------------------------
--- Checking if DRP_ID is present
+-- Resource events
 ---------------------------------------------------------------------------
 local ConfigID = false
 
 AddEventHandler('onResourceStarting', function(resourceName)
+	-- Load locales files before the resource start
+	if (resourceName ~= GetCurrentResourceName()) then
+		DRP.Locales:AddLocale(resourceName)
+	end
+	
+	-- Checking if DRP_ID is present
     if (resourceName == "drp_id") then
 		ConfigID = true
 	end
 end)
 
+AddEventHandler('onResourceStart', function(resourceName)
+	-- Needed to properly get the local for DRP_Core
+    if (resourceName == GetCurrentResourceName()) then
+		DRP.Locales:AddLocale(resourceName)
+		locale = DRP.Locales:GetLocale(resourceName)
+	end
+end)
+
+AddEventHandler('onResourceStop', function(resourceName)
+	-- Unload locales data
+    DRP.Locales:RemoveLocale(resourceName)
+end)
+
+-- Callback for DRP_ID
 DRP.NetCallbacks.Register("DRP_Core:UsingID", function(data, send)
 	send(ConfigID)
 end)
@@ -23,8 +44,9 @@ end)
 AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
 	local src = source
 	local joinTime = os.time()
+	
 	deferrals.defer()
-    deferrals.update("Checking Your Information, please wait...")
+    deferrals.update(locale:GetValue('InfoCheck'))
     SetTimeout(2500, function()
         local results = exports["externalsql"]:AsyncQuery({
             query = [[SELECT * FROM `users` WHERE `identifier` = :identifier]],
@@ -36,13 +58,13 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
             local isWhitelisted = player.whitelisted
             if DRPCoreConfig.Whitelisted then
                 if isWhitelisted == 0 then
-                    deferrals.done("["..DRPCoreConfig.CommunityName.."]: You are not whitelisted")
+                    deferrals.done(locale:GetValue('NotOnWhitelist'):format(DRPCoreConfig.CommunityName))
                     return
                 end
             end
             if isBanned.banned then
                 if isBanned.perm == true then
-                    deferrals.done("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - Permanent")
+                    deferrals.done(locale:GetValue('Banned'):format(DRPCoreConfig.CommunityName, isBanned.reason, isBanned.by))
                     return
                 end
 
@@ -56,9 +78,9 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
                             identifier = PlayerIdentifier("license", src)
                         }
                     })
-                    banquery = tostring("["..DRPCoreConfig.CommunityName.."]: Ban Removed Sucessfully, please reconnect!")
+                    banquery = locale:GetValue('BanRemoved'):format(DRPCoreConfig.CommunityName)
                 else
-                    banquery = tostring("["..DRPCoreConfig.CommunityName.."]: You have been banned for ( " .. isBanned.reason .. " ) by ( " .. isBanned.by .. " ) Duration - ( " .. math.floor(timeLeft / 60) .. " ) minutes")
+                    banquery = locale:GetValue('BannedTemporary'):format(DRPCoreConfig.CommunityName, isBanned.reason, isBanned.by, math.floor(timeLeft / 60))
                 end
                 deferrals.done(banString)
                 return
@@ -77,7 +99,7 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
             })
             ------------------------------------------------------------------------------------
             if DRPCoreConfig.Whitelisted then
-                deferrals.done("Please reconnect.. Your information has been saved and now ready to be whitelisted")
+                deferrals.done(locale:GetValue('WaitWhitelist'))
             else
                 deferrals.done()
             end

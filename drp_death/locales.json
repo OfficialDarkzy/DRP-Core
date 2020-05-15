@@ -1,0 +1,38 @@
+{
+    "en": {
+        "Death": "Death",
+        "HospitalAwake": "You have woken up at the Hospital and forgotten everything from the past!",
+        "Life": "Life",
+        "NotDead": "You are not dead!",
+        "PersonDead": "This Person Is Dead",
+        "PersonNotDead": "This person is not dead...",
+        "RespawnAvailable": "You can respawn now",
+        "RespawnTime": "~w~Respawn~r~ %s~w~ seconds remaing until you can respawn",
+        "RespawnWait": "You can respawn in %s seconds",
+        "TextConfigWrong": "Your server admin needs to set a config for draw text or not have two messages toggled :)"
+    },
+    "es": {
+        "Death": "Muerte",
+        "HospitalAwake": "¡Te has despertado en el Hospital y has olvidado todo!",
+        "Life": "Vida",
+        "NotDead": "¡No estás muerto!",
+        "PersonDead": "Esta persona está muerta",
+        "PersonNotDead": "Esta persona no está muerta...",
+        "RespawnAvailable": "Ya puedes reaparecer",
+        "RespawnTime": "~w~Reaparición~r~ %s~w~ segundos restantes hasta que puedas reaparecer",
+        "RespawnWait": "Puedes reaparecer en %s segundos",
+        "TextConfigWrong": "El administrador del servidor necesita establecer una configuración para dibujar el texto o no tener dos mensajes cambiados :)"
+    },
+    "fr": {
+        "Death": "Mort",
+        "HospitalAwake": "Vous vous êtes réveillé à l'hôpital et avez perdu les souvenirs de votre vie passée",
+        "Life": "Vie",
+        "NotDead": "Vous n'êtes pas mort !",
+        "PersonDead": "Cette personne est morte",
+        "PersonNotDead": "Cette personne n'est pas morte...",
+        "RespawnAvailable": "Vous pouvez maintenant revivre",
+        "RespawnTime": "~w~Résurection~r~ %s~w~ secondes avant de pouvoir revivre",
+        "RespawnWait": "Vous pouvez revivre dans %s secondes",
+        "TextConfigWrong": "L'admin du serveur doit configurer comment sont dessiner les textes de notifications ou ne pas avoir les deux options d'activées :)"
+    }
+}

@@ -1,3 +1,4 @@
+locale = {}
 local firstSpawn = true
 ---------------------------------------------------------------------------
 -- Spawning player into server.. Setup char menu etc..
@@ -13,6 +14,17 @@ AddEventHandler('playerSpawned', function()
 			end
 		end	
 	end)
+end)
+
+AddEventHandler('onClientResourceStart', function(resourceName)
+	DRP.Locales:AddLocale(resourceName)
+	if GetCurrentResourceName() == resourceName then
+		locale = DRP.Locales:GetLocale(resourceName)
+	end
+end)
+
+AddEventHandler('onClientResourceStop', function(resourceName)
+	DRP.Locales:RemoveLocale(resourceName)
 end)
 ---------------------------------------------------------------------------
 AddEventHandler("onClientMapStart", function()

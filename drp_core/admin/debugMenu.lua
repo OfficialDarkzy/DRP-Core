@@ -35,7 +35,7 @@ Citizen.CreateThread(function()
             rounds = tonumber(string.format("%.2f", speed))
 
             health = GetEntityHealth(player)
-            DrawTxt("~r~Player Health: ~s~"..health, 0.40, 0.85)
+            DrawTxt(locale:GetValue('DebugPlayerHealth'):format(health), 0.40, 0.85)
 
             veheng = GetVehicleEngineHealth(GetVehiclePedIsUsing(player))
             vehbody = GetVehicleBodyHealth(GetVehiclePedIsUsing(player))
@@ -43,15 +43,15 @@ Citizen.CreateThread(function()
                 vehenground = tonumber(string.format("%.2f", veheng))
                 vehbodround = tonumber(string.format("%.2f", vehbody))
 
-                DrawTxt("~r~Vehicle Speed: ~s~"..math.ceil(rounds*2.23694).."~r~MPH~s~", 0.40, 0.90)
+                DrawTxt(locale:GetValue('DebugVehicleSpeed'):format(math.ceil(rounds*2.23694)), 0.40, 0.90)
 
-                DrawTxt("~r~Engine Health: ~s~"..vehenground, 0.0, 0.73)
+                DrawTxt(locale:GetValue('DebugEngineHealth'):format(vehenground), 0.0, 0.73)
 
-                DrawTxt("~r~Body Health: ~s~"..vehbodround, 0.0, 0.69)
+                DrawTxt(locale:GetValue('DebugBodyHealth'):format(vehbodround), 0.0, 0.69)
 
-                DrawTxt("~r~Vehicle Fuel: ~s~"..tonumber(string.format("%.2f", GetVehicleFuelLevel(GetVehiclePedIsUsing(player)))), 0.0, 0.65)
+                DrawTxt(locale:GetValue('DebugVehicleFuel'):format(tonumber(string.format("%.2f", GetVehicleFuelLevel(GetVehiclePedIsUsing(player))))), 0.0, 0.65)
             else
-                DrawTxt("~r~Player Speed: ~s~"..rounds, 0.40, 0.90)
+                DrawTxt(locale:GetValue('DebugPlayerSpeed'):format(rounds), 0.40, 0.90)
             end
         end
     end

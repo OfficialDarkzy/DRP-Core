@@ -81,10 +81,10 @@ end)
 -- EXPORT FUNCTIONS
 ---------------------------------------------------------------------------
 function RemoteSetTime(mins, hrs)
-    if mins > 59 or mins < 0 then return {hasSet = false, msg = "Minutes does not have the correct range 0-59"} end
-    if hrs > 23 or hrs < 1 then return {hasSet = false, msg = "Hours does not have the correct range 1 - 24"} end
+    if mins > 59 or mins < 0 then return {hasSet = false, msg = locale:GetValue('IncorrectRangeMinutes')} end
+    if hrs > 23 or hrs < 1 then return {hasSet = false, msg = locale:GetValue('IncorrectRangeHours')} end
     hours = hrs
     mins = mins
     TriggerClientEvent("DRP_TimeSync:SetTime", -1, hours, minutes)
-    return {hasSet = true, msg = "You have set the time!"}
+    return {hasSet = true, msg = locale:GetValue('TimeSet')}
 end

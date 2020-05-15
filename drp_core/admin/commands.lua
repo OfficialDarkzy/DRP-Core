@@ -4,7 +4,7 @@
 RegisterCommand("adminrank", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
-    TriggerClientEvent("chatMessage", src, tostring("^2Your Permission Rank is: ^1"..player.rank))
+    TriggerClientEvent("chatMessage", src, locale:GetValue('AdminRank'):format(player.rank))
 end, false)
 ---------------------------------------------------------------------------
 -- Opens Admin Menu
@@ -24,7 +24,7 @@ RegisterCommand("admin", function(source, args, raw)
             end
             TriggerClientEvent("DRP_Core:OpenAdminMenu", src, new_list)
         else
-            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions to open the admin menu."))
+            TriggerClientEvent("chatMessage", src, locale:GetValue('PermissionAdminMenu'))
         end
     end
 end, false)
@@ -46,7 +46,7 @@ RegisterCommand("time", function(source, args, raw)
                 TriggerClientEvent("chatMessage", src, tostring(results.msg))
             end
         else
-            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions to set the Time"))
+            TriggerClientEvent("chatMessage", src, locale:GetValue('PermissionSetTime'))
         end
     end
 end, false)
@@ -62,11 +62,11 @@ RegisterCommand("weather", function(source, args, raw)
             local newWeather = string.upper(args[1])
             if newWeather ~= nil then
                 ManualWeatherSet(newWeather)
-                TriggerClientEvent("chatMessage", src, tostring("You have set the Weather"))
+                TriggerClientEvent("chatMessage", src, locale:GetValue('SetWeather'))
             end
         end
     else
-        TriggerClientEvent("chatMessage", src, tostring("You do not have permissions to set the Weather"))
+        TriggerClientEvent("chatMessage", src, locale:GetValue('PermissionSetWeather'))
     end
 end, false)
 ---------------------------------------------------------------------------
@@ -80,7 +80,7 @@ RegisterCommand("heal", function(source, args, raw)
         if DoesRankHavePerms(player.rank, perm) then
             TriggerClientEvent("DRP_Core:HealCharacter", src)
         else
-            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions for this"))
+            TriggerClientEvent("chatMessage", src, locale:GetValue('PermissionHeal'))
         end
     end
 end, false)
@@ -96,10 +96,10 @@ RegisterCommand("tpm", function(source, args, raw)
                 coords = { ['x'] = false, ['y'] = false, ['z'] = false }
             end
             TriggerClientEvent('DRP_Core:Teleport', src, coords)
-            TriggerClientEvent("DRP_Core:Success", src, "Admin System", tostring("You succesfuly teleported"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Success", src, locale:GetValue('AdminSystem'), locale:GetValue('Teleport'), 2500, false, "leftCenter")
         end
     else
-        TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to teleport"), 2500, false, "leftCenter")
+        TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionTeleport'), 2500, false, "leftCenter")
     end
 end, false)
 ---------------------------------------------------------------------------
@@ -120,12 +120,12 @@ RegisterCommand("tp", function(source, args, raw)
                     y = y,
                     z = z
                 })
-                TriggerClientEvent("DRP_Core:Success", src, "Admin System", tostring("You succesfuly teleported"), 2500, false, "leftCenter")
+                TriggerClientEvent("DRP_Core:Success", src, locale:GetValue('AdminSystem'), locale:GetValue('Teleport'), 2500, false, "leftCenter")
             else
-                TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("Invalid coordinates!"), 2500, false, "leftCenter")
+                TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('InvalidCoords'), 2500, false, "leftCenter")
             end
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to teleport"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionTeleport'), 2500, false, "leftCenter")
         end
     end
 end, false)
@@ -141,7 +141,7 @@ RegisterCommand("car", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "vehicle") then
             TriggerClientEvent("DRP_Core:VehicleSpawner", src, veh)
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to spawn vehicles"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionSpawnVehicle'), 2500, false, "leftCenter")
         end
     end
 end, false)
@@ -155,7 +155,7 @@ RegisterCommand("fix", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "vehicle") then
             TriggerClientEvent("DRP_Core:FixVehicle", src)
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to fix vehicles"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionFixVehicle'), 2500, false, "leftCenter")
         end
     end
 end, false)
@@ -169,7 +169,7 @@ RegisterCommand("noclip", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "noclip") then
             TriggerClientEvent("DRP_Core:NoClip", src)
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to noclip"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionNoClip'), 2500, false, "leftCenter")
         end
     end
 end, false)
@@ -187,7 +187,7 @@ RegisterCommand("revive", function(source, args, raw)
                 TriggerClientEvent("DRP_Core:Revive", src)
             end
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to noclip"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionNoClip'), 2500, false, "leftCenter")
         end
     end
 end, false)
@@ -201,7 +201,7 @@ RegisterCommand("debug", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "debugtools") then
             TriggerClientEvent("DRP_Core:ToggleDebugTools", src)
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to Debug Tools"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionDebugTools'), 2500, false, "leftCenter")
         end
     end
 end, false)
@@ -215,7 +215,7 @@ RegisterCommand("dv", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "vehicle") then
             TriggerClientEvent("DRP_Core:DeleteVehicle", src)
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to delete vehicles"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionDeleteVehicle'), 2500, false, "leftCenter")
         end
     end
 end, false)
@@ -253,15 +253,15 @@ RegisterCommand("adminaddcop", function(source, args, raw)
                                     charid = newCopID
                                 }
                             }, function(yeet)
-                                TriggerClientEvent("DRP_Core:Info", src, "Government", "This person has been added to the Police Employment Database", 5500, false, "leftCenter")
-                                TriggerClientEvent("DRP_Core:Info", newCopID, "Government", "You have been hired into the Police Force, Congratulations", 5500, false, "leftCenter")
+                                TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('Government'), locale:GetValue('AddedCop'), 5500, false, "leftCenter")
+                                TriggerClientEvent("DRP_Core:Info", newCopID, locale:GetValue('Government'), locale:GetValue('HiredCop'), 5500, false, "leftCenter")
                             end)
                         else
-                            TriggerClientEvent("DRP_Core:Warning", src, "Government", "This Person is already a Cop, do not need to add them twice", 5500, false, "leftCenter")
+                            TriggerClientEvent("DRP_Core:Warning", src, locale:GetValue('Government'), locale:GetValue('AlreadyCop'), 5500, false, "leftCenter")
                         end
                     end)
                 else
-                    TriggerClientEvent("DRP_Core:Warning", src, "Government", "This Person does not exist in this County", 5500, false, "leftCenter")
+                    TriggerClientEvent("DRP_Core:Warning", src, locale:GetValue('Government'), locale:GetValue('WrongID'), 5500, false, "leftCenter")
                 end
             end)
         end
@@ -278,7 +278,7 @@ RegisterCommand("addcash", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "economy") then
             TriggerEvent("DRP_Bank:AddCashMoney", character, tonumber(args[1]))
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionAddMoney'), 2500, false, "leftCenter")
         end
     end
 end, false) 
@@ -293,7 +293,7 @@ RegisterCommand("removecash", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "economy") then
             TriggerEvent("DRP_Bank:RemoveCashMoney", character, tonumber(args[1]))
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to remove cash!"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionRemoveCash'), 2500, false, "leftCenter")
         end
     end
 end, false) 
@@ -308,7 +308,7 @@ RegisterCommand("addbank", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "economy") then
             TriggerEvent("DRP_Bank:AddBankMoney", character, tonumber(args[1]))
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to add money!"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionAddMoney'), 2500, false, "leftCenter")
         end
     end
 end, false) 
@@ -324,7 +324,7 @@ RegisterCommand("removebank", function(source, args, raw)
             AlertDiscord("Remove Bank Command", player, false, "Removed Money From Himself for the amount of: "..args[1])
             TriggerEvent("DRP_Bank:RemoveBankMoney", character, tonumber(args[1]))
         else
-            TriggerClientEvent("DRP_Core:Error", src, "Admin System", tostring("You do not have permission to remove money!"), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionRemoveMoney'), 2500, false, "leftCenter")
         end
     end
 end, false) 
@@ -336,7 +336,7 @@ RegisterCommand("givekeys", function(source, args, raw)
     local player = GetPlayerData(src)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "givekeys") then
-            AlertDiscord("Given Keys", player, false, "Triggered Get Keys Command for a vehicle infront of them")
+            AlertDiscord("Given Keys", player, false, locale:GetValue('DiscordGiveKey'))
             TriggerClientEvent("DRP_Garages:GiveKeysToVehicleInfront", src)
         end
     end
@@ -350,9 +350,9 @@ RegisterCommand("clearchat", function(source, args, raw)
     if player ~= false then
         if DoesRankHavePerms(player.rank, "clearchat") then
             TriggerClientEvent('chat:clear', -1)
-            TriggerClientEvent("DRP_Core:Error", -1, "Admin System", tostring("Chat has been cleared by staff."), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", -1, locale:GetValue('AdminSystem'), locale:GetValue('ChatCleared'), 2500, false, "leftCenter")
         else
-            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions to clear the chat"))
+            TriggerClientEvent("chatMessage", src, locale:GetValue('PermissionClearChat'))
         end
     end
 end, false)
@@ -366,7 +366,7 @@ RegisterCommand("coords", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "coords") then
             TriggerClientEvent("DRP_Core:SendCoords", src)
         else
-            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions to show coordinates"))
+            TriggerClientEvent("chatMessage", src, locale:GetValue('PermissionShowCoords'))
         end
     end
 end, false)
@@ -380,7 +380,7 @@ RegisterCommand("showcoords", function(source, args, raw)
         if DoesRankHavePerms(player.rank, "coords") then
             TriggerClientEvent("DRP_Core:ShowCoords", src)
         else
-            TriggerClientEvent("chatMessage", src, tostring("You do not have permissions to show coordinates"))
+            TriggerClientEvent("chatMessage", src, locale:GetValue('PermissionShowCoords'))
         end
     end
 end, false)
