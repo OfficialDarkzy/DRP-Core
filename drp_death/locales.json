@@ -34,5 +34,17 @@
         "RespawnTime": "~w~Résurection~r~ %s~w~ secondes avant de pouvoir revivre",
         "RespawnWait": "Vous pouvez revivre dans %s secondes",
         "TextConfigWrong": "L'admin du serveur doit configurer comment sont dessiner les textes de notifications ou ne pas avoir les deux options d'activées :)"
+    },
+    "da": {
+        "Death": "Død",
+        "HospitalAwake": "Du er vågnet op på hospitalet og du har glemt alt fra fortiden!",
+        "Life": "Liv",
+        "NotDead": "Du er ikke død!",
+        "PersonDead": "Denne person er ikke død",
+        "PersonNotDead": "Denne person er ikke død...",
+        "RespawnAvailable": "Du kan genopstå nu",
+        "RespawnTime": "~w~Genopstå~r~ %s~w~ sekunder tilbage før du kan genopstå",
+        "RespawnWait": "Du kan genopstå om %s sekunder",
+        "TextConfigWrong": "Din serveradministrator skal indstille en konfiguration til tegnetekst eller ikke have to meddelelser skiftet :)"
     }
 }
