@@ -266,7 +266,7 @@ function toggleNoClipMode()
 end
 
 function turnNoClipOff()
-	TriggerEvent("DRP_Core:Error", "Admin System", tostring("Nocliped untoggled."), 2500, false, "leftCenter")
+	TriggerEvent("DRP_Core:Error", locale:GetValue('AdminSystem'), locale:GetValue('NoClipOff'), 2500, false, "leftCenter")
     local playerPed = PlayerPedId()
     local inVehicle = IsPedInAnyVehicle( playerPed, false )
 
@@ -286,7 +286,7 @@ function turnNoClipOff()
 end
 
 function turnNoClipOn()
-	TriggerEvent("DRP_Core:Info", "Admin System", tostring("Noclip toggled."), 2500, false, "leftCenter")
+	TriggerEvent("DRP_Core:Info", locale:GetValue('AdminSystem'), locale:GetValue('NoClipOn'), 2500, false, "leftCenter")
     blockinput = true
     local playerPed = PlayerPedId()
 	local inVehicle = IsPedInAnyVehicle( playerPed, false ) 
@@ -343,7 +343,7 @@ Citizen.CreateThread( function()
             updateForwardPush();
 		end 
 
-        local NoClipSpeedsWords = { "Slowest", "Slower", "Slow", "Normal", "Fast", "Faster", "Fastest" }
+        local NoClipSpeedsWords = { locale:GetValue('Slowest'), locale:GetValue('Slower'), locale:GetValue('Slow'), locale:GetValue('Normal'), locale:GetValue('Fast'), locale:GetValue('Faster'), locale:GetValue('Fastest') }
 
         ------ start draw text ------
 		SetTextColour(255, 0, 0, 255)
@@ -354,7 +354,7 @@ Citizen.CreateThread( function()
 		SetTextDropshadow(2, 2, 0, 0, 0)
 		SetTextEdge(1, 0, 0, 0, 205)
 		SetTextEntry("STRING")
-		AddTextComponentString("Current Speed = ".. NoClipSpeedsWords[travelSpeed])
+		AddTextComponentString(locale:GetValue('CurrentSpeed'):format(NoClipSpeedsWords[travelSpeed]))
         DrawText(0.830, 0.027)
         ------ end draw text ------
 
@@ -405,7 +405,7 @@ Citizen.CreateThread( function()
                 SetTextDropshadow(2, 2, 0, 0, 0)
                 SetTextEdge(1, 0, 0, 0, 205)
                 SetTextEntry("STRING")
-                AddTextComponentString("NoClip Enabled.")
+                AddTextComponentString(locale:GetValue('NoClipOnUI'))
                 DrawText(0.830, 0.007)
                 ------ end draw text ------
                 SetUserRadioControlEnabled(false)
@@ -439,7 +439,7 @@ AddEventHandler('DRP_Core:SendCoords', function()
 	local msg = ("^4X^7: %s ^4Y^7: %s ^4Z^7: %s ^4H^7: %s"):format(formatCoord(pedcoords.x), formatCoord(pedcoords.y), formatCoord(pedcoords.z), formatCoord(playerH))
 	
 	TriggerEvent('chat:addMessage', {		
-		args = { "Coordinates", msg }
+		args = { locale:GetValue('Coords'), msg }
 	})
 end)
 ---------------------------------------------------------------------------
@@ -474,7 +474,7 @@ end)
 -- Format coordinates to two decimals
 formatCoord = function(coord)
 	if coord == nil then
-		return "unknown"
+		return locale:GetValue('Unknown')
 	end
 	return tonumber(string.format("%.2f", coord))
 end

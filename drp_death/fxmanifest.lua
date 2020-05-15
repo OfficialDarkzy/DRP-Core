@@ -12,6 +12,13 @@ games { 'rdr3', 'gta5' }
 --     "drp_core"
 -- }
 
+-- Files
+file "locales.json"
+
+-- Shared Scripts
+shared_script "@drp_core/locales.lua"
+shared_script "locales.lua"
+
 -- Client Scripts
 client_script "client.lua"
 client_script "config.lua"

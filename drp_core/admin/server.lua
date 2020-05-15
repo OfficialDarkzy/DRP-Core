@@ -42,7 +42,7 @@ AddEventHandler("DRP_Core:KickPlayer", function(selectedPlayer, message)
     local perm = "kick"
     local player = GetPlayerData(src)
     if DoesRankHavePerms(player.rank, perm) then
-        local reason = "You have been kicked by (" .. GetPlayerName(src) .. ") for [" .. message .. "]"
+        local reason = locale:GetValue('KickMessage'):format(GetPlayerName(src), message)
         DropPlayer(selectedPlayer.id, reason)
     end
 end)
@@ -54,7 +54,7 @@ AddEventHandler("DRP_Core:BanPlayer", function(selectedPlayer, message, time, pe
     local perm = "ban"
     local player = GetPlayerData(src)
     if DoesRankHavePerms(player.rank, perm) then
-        local reason = "You have been banned by (" .. GetPlayerName(src) .. ") for [" .. message .. "]"
+        local reason = locale:GetValue('BanMessage'):format(GetPlayerName(src), message)
         local new_ban_data = ""
         if permban then
             new_ban_data = json.encode({time = time, banned = true, reason = message, by = GetPlayerName(src), perm = true})
@@ -75,12 +75,12 @@ AddEventHandler("DRP_Core:SetJob", function(values)
     if values.playerid ~= nil and values.job ~= nil then
         if exports["drp_jobcore"]:DoesJobExist(job) then
             local joblabel = exports["drp_jobcore"]:GetJobLabels(job)
-            TriggerClientEvent("DRP_Core:Info", src, "Admin Menu", tostring("You changed job for ID: ".. values.playerid), 2500, true, "leftCenter")
+            TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('ChangedJob'):format(values.playerid), 2500, true, "leftCenter")
             exports["drp_jobcore"]:RequestJobChange(values.playerid, job, joblabel, false)
             TriggerClientEvent("DRP_Core:UpdateAdminMenu", src, values.job, false)
         end
     else
-        TriggerClientEvent("DRP_Core:Info", src, "Admin Menu", tostring("You didn't pick a player"), 2500, true, "leftCenter")
+        TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('NoPlayer'), 2500, true, "leftCenter")
     end
 end)
 ---------------------------------------------------------------------------
@@ -94,9 +94,9 @@ AddEventHandler("DRP_Core:SetRank", function(values)
             
             TriggerClientEvent("DRP_Core:UpdateAdminMenu", src, values.rank, true)
             exports["drp_core"]:UpdatePlayerTable(values.playerid, string.lower(values.rank))
-            TriggerClientEvent("DRP_Core:Info", src, "Admin Menu", tostring("You changed rank for ID: ".. values.playerid), 2500, true, "leftCenter")
-            TriggerClientEvent("DRP_Core:Info", values.playerid, "Admin Menu", tostring("You now have the rank: ".. string.lower(values.rank)), 2500, true, "leftCenter")
+            TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('ChangedJob'):format(values.playerid), 2500, true, "leftCenter")
+            TriggerClientEvent("DRP_Core:Info", values.playerid, locale:GetValue('AdminMenu'), locale:GetValue('NewRank'):format(string.lower(values.rank)), 2500, true, "leftCenter")
     else
-        TriggerClientEvent("DRP_Core:Info", src, "Admin Menu", tostring("You didn't pick a player"), 2500, true, "leftCenter")
+        TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('NoPlayer'), 2500, true, "leftCenter")
     end
 end)

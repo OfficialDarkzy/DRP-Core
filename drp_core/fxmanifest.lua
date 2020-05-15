@@ -20,7 +20,8 @@ files {
     "ui/index.html",
     "ui/style.css",
     "ui/script.js",
-    "ui/sounds/admin_chat_notification.ogg"
+    "ui/sounds/admin_chat_notification.ogg",
+	"locales.json"
 }
 
 -- Shared Scripts
@@ -28,6 +29,8 @@ shared_script "shared/shared.lua"
 shared_script "worldSync/config.lua"
 shared_script "config.lua"
 shared_script "managers/networkcallbacks.lua"
+shared_script "locales.lua"
+shared_script "managers/locales.lua"
 
 -- Client Scripts
 client_script "fivem.lua"

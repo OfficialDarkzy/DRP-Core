@@ -9,6 +9,7 @@ DRPCoreConfig.ESCMenu = {}
 -- Game Settings
 ---------------------------------------------------------------------------
 -- CORE SETTINGS
+DRPCoreConfig.Language = 'en' -- The language to load for each locales.json file
 DRPCoreConfig.AutoRespawn = false -- Turn this True if DO NOT HAVE A CUSTOM DEATH SYSTEM I.E. drp_death
 DRPCoreConfig.Whitelisted = true -- true or false if you want to add the whitelist system (REQUIRES EXTERNALSQL)
 DRPCoreConfig.CommunityName = "DRP" -- This will show when you load into the server to tell you, you are banned, been kicked or not whitelisted

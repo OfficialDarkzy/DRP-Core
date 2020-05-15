@@ -95,15 +95,15 @@ Citizen.CreateThread(function()
             sleepTimer = 1
             local coords = GetEntityCoords(PlayerPedId(), false)
             if DRP_Core.Static3DTextMessage and not DRP_Core.Dynamic3DTextMessage then
-                exports["drp_core"]:drawText("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn")
+                exports["drp_core"]:drawText(locale:GetValue('RespawnTime'):format(timeLeft))
             elseif DRP_Core.Dynamic3DTextMessage and not DRP_Core.Static3DTextMessage then
-                exports['drp_core']:DrawText3Ds(coords.x, coords.y, coords.z + 0.5, tostring("~w~Respawn~r~ " .. timeLeft .. "~w~ seconds remaing until you can respawn"))
+                exports['drp_core']:DrawText3Ds(coords.x, coords.y, coords.z + 0.5, locale:GetValue('RespawnTime'):format(timeLeft))
             else
-                print("Your server admin needs to set a config for draw text or not have two messages toggled :)")
+                print(locale:GetValue('TextConfigWrong'))
             end
         elseif startAnimation and timeLeft == 0 then
             canRespawn = true
-            TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn now"), 1000, false, "leftCenter")
+            TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('RespawnAvailable'), 1000, false, "leftCenter")
             Citizen.Wait(5000)
         else
             sleepTimer = 750
@@ -134,10 +134,10 @@ RegisterNetEvent("DRP_Death:IsDeadStatus")
 AddEventHandler("DRP_Death:IsDeadStatus", function(data)
     local ped = PlayerPedId()
     if data[1].isDead == 1 then
-        print("This Person Is Dead")
+        print(locale:GetValue('PersonDead'))
         SetEntityHealth(ped, 0) -- This will set them to die
     else
-        print("This person is not dead...")
+        print(locale:GetValue('PersonNotDead'))
     end
 end)
 ---------------------------------------------------------------------------
@@ -170,7 +170,7 @@ RegisterCommand("respawn", function(source, args, raw)
             timeLeft = -1
             local hosSpawns = DRP_Core.HospitalLocations[math.random(1, #DRP_Core.HospitalLocations)]
             exports["spawnmanager"]:spawnPlayer({x = hosSpawns.x, y = hosSpawns.y, z = hosSpawns.z, heading = hosSpawns.h})
-            TriggerEvent("DRP_Core:Info", "Life", tostring("You have woken up at the Hospital and forgotten everything in the past!"), 7000, false, "leftCenter")
+            TriggerEvent("DRP_Core:Info", locale:GetValue('Life'), locale:GetValue('HospitalAwake'), 7000, false, "leftCenter")
             -- Drop All Your Inventory And Guns
             TriggerServerEvent("DRP_Inventory:RespawnWipe")
             TriggerServerEvent("DRP_Gunstore:RespawnWipe")
@@ -178,10 +178,10 @@ RegisterCommand("respawn", function(source, args, raw)
             ClearPedTasks(ped)
             ClearPedBloodDamage(ped)
         else
-            TriggerEvent("DRP_Core:Error", "Death", tostring("You can respawn in " .. timeLeft .. " seconds"), 5000, false, "leftCenter")
+            TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('RespawnWait'):format(timeLeft), 5000, false, "leftCenter")
         end
     else
-        TriggerEvent("DRP_Core:Error", "Death", tostring("You are not dead!"), 5000, false, "leftCenter")
+        TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('NotDead'), 5000, false, "leftCenter")
     end
 end, false)
 ---------------------------------------------------------------------------
