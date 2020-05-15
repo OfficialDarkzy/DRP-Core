@@ -1,8 +1,8 @@
 ---------------------------------------------------------------------------
 -- Do not edit this Table name below or it will break EVERYTHING bro
 ---------------------------------------------------------------------------
+locale = {}
 local players = {}
-local locale = {}
 SetGameType("Darkzy Is Dope")
 ---------------------------------------------------------------------------
 -- Resource events
