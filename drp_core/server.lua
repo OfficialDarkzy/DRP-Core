@@ -1,8 +1,8 @@
 ---------------------------------------------------------------------------
 -- Do not edit this Table name below or it will break EVERYTHING bro
 ---------------------------------------------------------------------------
+locale = {}
 local players = {}
-local locale = {}
 SetGameType("Darkzy Is Dope")
 ---------------------------------------------------------------------------
 -- Resource events
@@ -99,7 +99,7 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
             })
             ------------------------------------------------------------------------------------
             if DRPCoreConfig.Whitelisted then
-                deferrals.done(locale:GetValue('WaitWhitelist'))
+                deferrals.done(locale:GetValue('WaitWhitelist'):format(DRPCoreConfig.CommunityName))
             else
                 deferrals.done()
             end
