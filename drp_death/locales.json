@@ -37,13 +37,13 @@
     },
     "da": {
         "Death": "Død",
-        "HospitalAwake": "Du er vågnet op på hospitalet og du har glemt alt fra fortiden!",
+        "HospitalAwake": "Du er vågnet op på hospitalet og har glemt alt fra fortiden!",
         "Life": "Liv",
         "NotDead": "Du er ikke død!",
         "PersonDead": "Denne person er ikke død",
         "PersonNotDead": "Denne person er ikke død...",
         "RespawnAvailable": "Du kan genopstå nu",
-        "RespawnTime": "~w~Genopstå~r~ %s~w~ sekunder tilbage før du kan genopstå",
+        "RespawnTime": "~w~Geopståelse om~r~ %s~w~ sekunder",
         "RespawnWait": "Du kan genopstå om %s sekunder",
         "TextConfigWrong": "Din serveradministrator skal indstille en konfiguration til tegnetekst eller ikke have to meddelelser skiftet :)"
     }
