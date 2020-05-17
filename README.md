@@ -3,6 +3,11 @@
 FiveM Public Framework by **Darkzy**
 Backend Built using **Xander1998**'s [ExternalSQL Resource](https://github.com/xander1998/ExternalSQL)
 
+# Discord
+
+Please join the Discord server for live updates when changes are made and join the FiveM Dev Labs :D
+https://discord.gg/QTuvsPd
+
 # Readme
 
 This is the official repository of **DRP_Core** part of **DRP_Framework**.
@@ -13,9 +18,5 @@ Please check the wiki: https://github.com/OfficialDarkzy/DRP-Core/wiki
 
 ![Diagram](./wiki/Error%20Diagram.svg)
 
-# Discord
-
-Please join the Discord server for live updates when changes are made and join the FiveM Dev Labs :D
-https://discord.gg/QTuvsPd
 
 ### Send your custom resource to me and I will add it to the community releases

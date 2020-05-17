@@ -33,6 +33,7 @@ Citizen.CreateThread(function()
             end
             if isDead then
                 if not playerDied then
+                    print("i am dead?")
                     TriggerServerEvent("DRP_Core:TriggerDeathStart")
                     TriggerServerEvent("DRP_Death:Revived", true)
                     diedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
