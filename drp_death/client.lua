@@ -12,8 +12,8 @@ local deadData = {health = nil, cause = nil, source = nil, time = nil}
 -- Main Thread Listener
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
-    local ped = PlayerPedId()
     while true do
+            local ped = PlayerPedId()
             health = GetEntityHealth(ped)
             currentHealth = health
             if IsEntityDead(ped) then
@@ -33,6 +33,7 @@ Citizen.CreateThread(function()
             end
             if isDead then
                 if not playerDied then
+                    print("i am dead?")
                     TriggerServerEvent("DRP_Core:TriggerDeathStart")
                     TriggerServerEvent("DRP_Death:Revived", true)
                     diedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
