@@ -187,7 +187,7 @@ RegisterCommand("revive", function(source, args, raw)
                 TriggerClientEvent("DRP_Core:Revive", src)
             end
         else
-            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionNoClip'), 2500, false, "leftCenter")
+            TriggerClientEvent("DRP_Core:Error", src, locale:GetValue('AdminSystem'), locale:GetValue('PermissionRevive'), 2500, false, "leftCenter")
         end
     end
 end, false)
