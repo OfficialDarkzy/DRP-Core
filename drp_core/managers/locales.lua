@@ -43,7 +43,7 @@ function DRP.Locales:AddLocale(resourceName)
 		
 		local locales = Locales.New({Length = #languages, Languages = languages, Strings = decoded, SelectedLanguage = localLanguage})
 		self[resourceName] = locales
-		print(('^1[DRP] Local^0 :^2 locales.json file loaded for %s^0'):format(resourceName))
+		print(('^1[DRP] Local^0 :^4 locales.json file loaded for %s^0'):format(resourceName))
 	end	
 end
 
@@ -51,8 +51,12 @@ end
 -- Remove a locales file
 ---------------------------------------------------------------------------
 function DRP.Locales:RemoveLocale(resourceName)
-	print(('^1[DRP] Local^0 :^4 unloaded locales for %s^0'):format(resourceName))
-	self[resourceName] = nil
+	for k in pairs(self) do
+		if k == resourceName then			
+			print(('^1[DRP] Local^0 :^4 unloaded locales for %s^0'):format(resourceName))
+			self[resourceName] = nil
+		end
+	end	
 end
 
 ---------------------------------------------------------------------------
