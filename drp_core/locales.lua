@@ -5,7 +5,7 @@
 -----------------------------How to use -----------------------------------
 -- local localeData = exports['drp_core']:GetLocalesData(resourceName)
 -- if localeData then
---   local locale = Locales:Convert(localeData)
+--   local locale = Locales.Convert(localeData)
 --   print(locale:GetValue('key'))
 -- end
 ---------------------------------------------------------------------------
@@ -24,7 +24,7 @@ function Locales.New(locales)
 	return newLocale
 end
 
-function Locales:Convert(localesObject)
+function Locales.Convert(localesObject)
 	return setmetatable(localesObject, Locales)
 end
 
