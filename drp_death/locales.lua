@@ -11,7 +11,7 @@ if isServer then
 		if resourceName == GetCurrentResourceName() then
 			local localeData = exports['drp_core']:GetLocalesData(resourceName)
 			if localeData then
-				locale = Locales:Convert(localeData)
+				locale = Locales.Convert(localeData)
 			end
 		end
 	end)
@@ -20,7 +20,7 @@ else
 		local resourceName = GetCurrentResourceName()
 		local localeData = exports['drp_core']:GetLocalesData(resourceName)
 		if localeData then
-			locale = Locales:Convert(localeData)
+			locale = Locales.Convert(localeData)
 		end
 	end)
 end
