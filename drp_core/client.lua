@@ -54,7 +54,7 @@ Citizen.CreateThread(function()
 --------------------Disable Health Regeneration----------------------------
         SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
 ----------------------Remove Police Audio----------------------------------	
-        DisablePoliceReports()
+        CancelCurrentPoliceReport()
 ----------------------Hiding Hud Components--------------------------------
       	if IsHudComponentActive(1) then 
             HideHudComponentThisFrame(1)  -- Wanted Stars
