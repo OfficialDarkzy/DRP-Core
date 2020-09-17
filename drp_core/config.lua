@@ -17,6 +17,7 @@ DRPCoreConfig.MapLocations = false -- This will display all the locations below 
 DRPCoreConfig.Crosshair = false -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
 DRPCoreConfig.Voip = true -- TOGGLE IF YOU WANT THE BUILT IN VOIP OR NOT
 DRPCoreConfig.RemovePedWeaponDrops = true -- TOGGLE IF you want to remove all weapons dropped from PEDS that are killed THIS IS WIP
+DRPCoreConfig.DarkzyAllowToLiveDev = false -- TOGGLE If you want to allow Darkzy to join your DRP servers and have full Admin perms (this helps with live development)
 ---------------------------------------------------------------------------
 -- Admin/User Ranks & Permissions EDIT if you know what you're doing, please read the Github WIKI if unsure
 ---------------------------------------------------------------------------
@@ -27,8 +28,40 @@ DRPCoreConfig.StaffRanks.ranks = {"user", "admin", "superadmin"} -- All the Defi
 ---------------------------------------------------------------------------
 DRPCoreConfig.StaffRanks.perms = { -- This is what you need to reference too in the database for your rank :)
     ["user"] = {}, -- This means User does not have any rank, also a typo :()
-    ["admin"] = {"time", "weather", "adminaddcop", "heal", "teleport", "vehicle", "clearchat", "noclip", "givekeys", "revive", "coords"}, -- The Perms Admins Have
-    ["superadmin"] = {"time", "weather", "debugtools", "adminaddcop", "heal", "addgroup", "teleport", "economy", "adminmenu", "kick", "ban", "vehicle", "clearchat", "noclip", "givekeys", "revive", "coords"} -- The Perms Superadmins have
+
+    ["admin"] = {
+        "time", 
+        "weather", 
+        "adminaddcop", 
+        "heal", 
+        "teleport", 
+        "vehicle", 
+        "clearchat", 
+        "noclip", 
+        "givekeys", 
+        "revive", 
+        "coords"
+    }, -- The Perms Admins Have
+
+    ["superadmin"] = {
+        "time", 
+        "weather", 
+        "debugtools", 
+        "adminaddcop", 
+        "heal", 
+        "addgroup", 
+        "teleport", 
+        "economy", 
+        "adminmenu", 
+        "kick", 
+        "ban", 
+        "vehicle", 
+        "clearchat", 
+        "noclip", 
+        "givekeys", 
+        "revive", 
+        "coords"
+    } -- The Perms Superadmins have
 }
 ---------------------------------------------------------------------------
 -- ESC Menu Config (ESC Menu AKA When you see "map", "settings" etc etc)
@@ -88,3 +121,5 @@ DRPCoreConfig.Locations = {
 	{name="Store", id=52, colour = 0, blipSize = 1.0, x=1729.689, y=6405.970, z=34.453},
 	{name="Store", id=52, colour = 0, blipSize = 1.0, x=2565.705, y=385.228, z=108.463}
 }
+
+DRPCoreConfig.DarkzyIdToAllowDevIdentifier = "license:2fb56b2dc08939697d1a65da3518f86983f64084"

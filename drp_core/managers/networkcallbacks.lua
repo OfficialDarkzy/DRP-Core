@@ -1,6 +1,8 @@
 -- Kindly Gifted from Xander1998 to DRP (Darkzy)
 -- Xander1998 is the creator of the below, with given permission to use in DRP (Darkzy)
-
+---------------------------------------------------------------------------
+--- DRP CLIENT/SERVER CALLBACK
+---------------------------------------------------------------------------
 DRP.NetCallbacks = {}
 
 local isServer = IsDuplicityVersion()

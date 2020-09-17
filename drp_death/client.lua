@@ -79,7 +79,9 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
     end
 end)
-
+---------------------------------------------------------------------------
+-- Time Left Thread For Death
+---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     while true do
     Citizen.Wait(1000)
@@ -88,7 +90,9 @@ Citizen.CreateThread(function()
         end
     end
 end)
-
+---------------------------------------------------------------------------
+-- Death Message Thread 
+---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     local sleepTimer = 750
     while true do
