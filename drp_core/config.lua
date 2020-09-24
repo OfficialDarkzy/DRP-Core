@@ -5,6 +5,7 @@ DRPCoreConfig = {}
 DRPCoreConfig.StaffRanks = {}
 DRPCoreConfig.Locations = {}
 DRPCoreConfig.ESCMenu = {}
+DRPCoreConfig.HospitalLocations = {}
 ---------------------------------------------------------------------------
 -- Game Settings
 ---------------------------------------------------------------------------
@@ -62,6 +63,32 @@ DRPCoreConfig.StaffRanks.perms = { -- This is what you need to reference too in 
         "revive", 
         "coords"
     } -- The Perms Superadmins have
+}
+---------------------------------------------------------------------------
+-- DRP Death System
+---------------------------------------------------------------------------
+DRPCoreConfig.Timer = 420 -- Seconds Before you can Respawn
+DRPCoreConfig.TimerActive = true -- Timer Display for Death
+DRPCoreConfig.Static3DTextMessage = false -- Static on screen draw text
+DRPCoreConfig.Dynamic3DTextMessage = true -- Dynamic on character 3d text
+DRPCoreConfig.AllowBloodEffects = true -- Allow Blood Effects, when you or the other players are shot and killed
+---------------------------------------------------------------------------
+-- Blood Effects
+---------------------------------------------------------------------------
+DRPCoreConfig.BloodEffects = {
+    "BigHitByVehicle",
+    "Useful_Bits",
+    "Explosion_Med",
+    "Skin_Melee_0",
+    "Car_Crash_Heavy",
+    "BigRunOverByVehicle",
+	"HitByVehicle"
+}
+---------------------------------------------------------------------------
+-- Hospital Locations
+---------------------------------------------------------------------------
+DRPCoreConfig.HospitalLocations = {
+    {x = 339.09, y = -1396.91, z = 32.51, h = 61.27} -- ADD MORE :)
 }
 ---------------------------------------------------------------------------
 -- ESC Menu Config (ESC Menu AKA When you see "map", "settings" etc etc)

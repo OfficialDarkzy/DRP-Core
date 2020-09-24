@@ -1,7 +1,10 @@
 ---------------------------------------------------------------------------
 --- DO NOT EDIT These Three Things Below. They have Magic built into them bro
 ---------------------------------------------------------------------------
-local isPlayerReady = false
+Citizen.CreateThread(function()
+    SetNuiFocus(false, false)
+    TriggerServerEvent("DRP_Core:AddPlayerToTable")
+end)
 ---------------------------------------------------------------------------
 --- Core Functions Dont EDIT BROOO ITS MY NAME CAMONNNN GIMME CREDIIIIIITTTTTTTTTTTTT
 ---------------------------------------------------------------------------
@@ -29,11 +32,6 @@ Citizen.CreateThread(function()
         PopScaleformMovieFunctionVoid()    
     end
 end)
-
-Citizen.CreateThread(function()
-    SetNuiFocus(false, false)
-    TriggerServerEvent("DRP_Core:AddPlayerToTable")
-end)
 ---------------------------------------------------------------------------
 --- You Can Edit The Below To Your Requirements, 
 --  only touch if you know what you are doing,
@@ -44,18 +42,18 @@ AddEventHandler("playerSpawned", function()
     TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
     TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
     Citizen.CreateThread(function()
-        local playerPed = PlayerPedId()
+        local ped = PlayerPedId()
         NetworkSetFriendlyFireOption(true) -- Enable Friendly Fire
-        SetCanAttackFriendly(playerPed, true, true) -- Enable Friendly Fire
+        SetCanAttackFriendly(ped, true, true) -- Enable Friendly Fire
         SetMaxWantedLevel(0) -- Set Max Wanted Level to 0
         SetCreateRandomCops(0) -- Prevent AI Cop Creation
         SetCreateRandomCopsNotOnScenarios(0) -- Prevent AI Cop Creation
         SetCreateRandomCopsOnScenarios(0) -- Prevent AI Cop Creation
         SetPlayerHealthRechargeLimit(PlayerId(), 0) -- Disable Health Recharge
-        SetPedSuffersCriticalHits(playerPed, false) -- Disable Critical Hits
-        SetPedMinGroundTimeForStungun(playerPed, 6000) -- Time spent on ground after being tased (in ms)
-        SetPedConfigFlag(playerPed, 184, true) -- Disable Seat Shuffle
-        SetPedConfigFlag(playerPed, 35, false) -- Disable Automatic Bike Helmet
+        SetPedSuffersCriticalHits(ped, false) -- Disable Critical Hits
+        SetPedMinGroundTimeForStungun(ped, 6000) -- Time spent on ground after being tased (in ms)
+        SetPedConfigFlag(ped, 184, true) -- Disable Seat Shuffle
+        SetPedConfigFlag(ped, 35, false) -- Disable Automatic Bike Helmet
     end)
 end)
 ---------------------------------------------------------------------------

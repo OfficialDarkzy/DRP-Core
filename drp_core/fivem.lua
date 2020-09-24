@@ -35,10 +35,10 @@ end)
 ---------------------------------------------------------------------------
 AddEventHandler("onClientMapStart", function()
     exports["spawnmanager"]:spawnPlayer()
-    if DRPCoreConfig.AutoRespawn then
-        exports["spawnmanager"]:setAutoSpawn(true)
-    else
+    if DRPCoreConfig.DeathSystem then
         exports["spawnmanager"]:setAutoSpawn(false)
+    else
+        exports["spawnmanager"]:setAutoSpawn(true)
     end
     -- Remove Patrolling cars etc.
     for a = 1, 15 do

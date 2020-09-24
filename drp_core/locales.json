@@ -71,7 +71,17 @@
         "VoipRange": "Range: %s",
         "WaitWhitelist": "[%s]: Please reconnect.. Your information has been saved and now ready to be whitelisted",
         "WhitelistNotAvailable": "Whitelisting Not Available",
-        "WrongID": "This Person does not exist in this County"
+        "WrongID": "This Person does not exist in this County",
+        "Death": "Death",
+        "HospitalAwake": "You have woken up at the Hospital and forgotten everything from the past!",
+        "Life": "Life",
+        "NotDead": "You are not dead!",
+        "PersonDead": "This Person Is Dead",
+        "PersonNotDead": "This person is not dead...",
+        "RespawnAvailable": "You can respawn now",
+        "RespawnTime": "~w~Respawn~r~ %s~w~ seconds remaing until you can respawn",
+        "RespawnWait": "You can respawn in %s seconds",
+        "TextConfigWrong": "Your server admin needs to set a config for draw text or not have two messages toggled :)"
     },
     "es": {
         "AddedCop": "Esta persona ha sido añadida a la base de datos de empleo de la policía",
@@ -145,7 +155,17 @@
         "VoipRange": "Rango: %s",
         "WaitWhitelist": "[%s]: Por favor reconecta.. u información ha sido guardada y ahora está lista para ser incluida en la whitelist",
         "WhitelistNotAvailable": "No disponibles",
-        "WrongID": "Esta persona no existe en este condado"
+        "WrongID": "Esta persona no existe en este condado",
+        "Death": "Muerte",
+        "HospitalAwake": "¡Te has despertado en el Hospital y has olvidado todo!",
+        "Life": "Vida",
+        "NotDead": "¡No estás muerto!",
+        "PersonDead": "Esta persona está muerta",
+        "PersonNotDead": "Esta persona no está muerta...",
+        "RespawnAvailable": "Ya puedes reaparecer",
+        "RespawnTime": "~w~Reaparición~r~ %s~w~ segundos restantes hasta que puedas reaparecer",
+        "RespawnWait": "Puedes reaparecer en %s segundos",
+        "TextConfigWrong": "El administrador del servidor necesita establecer una configuración para dibujar el texto o no tener dos mensajes cambiados :)"
     },
     "fr": {
         "AddedCop": "Cette personne a été ajouter au registre des employés de la Police",
@@ -219,7 +239,17 @@
         "VoipRange": "Portée : %s",
         "WaitWhitelist": "[%s]: Merci de vous reconnecter.. Vos informations ont été sauvegardé et vous pouvez maintenant être Whitelisté",
         "WhitelistNotAvailable": "Le whitelisting n'est pas encore disponible",
-        "WrongID": "Cette personne n'hésiste pas dans cette région"
+        "WrongID": "Cette personne n'hésiste pas dans cette région",
+        "Death": "Mort",
+        "HospitalAwake": "Vous vous êtes réveillé à l'hôpital et avez perdu les souvenirs de votre vie passée",
+        "Life": "Vie",
+        "NotDead": "Vous n'êtes pas mort !",
+        "PersonDead": "Cette personne est morte",
+        "PersonNotDead": "Cette personne n'est pas morte...",
+        "RespawnAvailable": "Vous pouvez maintenant revivre",
+        "RespawnTime": "~w~Résurection~r~ %s~w~ secondes avant de pouvoir revivre",
+        "RespawnWait": "Vous pouvez revivre dans %s secondes",
+        "TextConfigWrong": "L'admin du serveur doit configurer comment sont dessiner les textes de notifications ou ne pas avoir les deux options d'activées :)"
     },
     "da": {
         "AddedCop": "Personen er blevet tilføjet til politi databasen",
@@ -293,6 +323,16 @@
         "VoipRange": "Rækkevide: %s",
         "WaitWhitelist": "[%s]: Join venligst igen.. Din information er nu gemt og klar til at blive whitelisted",
         "WhitelistNotAvailable": "Whitelisting ikke tilgængelig",
-        "WrongID": "Denne person eksistere ikke i dette land!"
+        "WrongID": "Denne person eksistere ikke i dette land!",
+        "Death": "Død",
+        "HospitalAwake": "Du er vågnet op på hospitalet og har glemt alt fra fortiden!",
+        "Life": "Liv",
+        "NotDead": "Du er ikke død!",
+        "PersonDead": "Denne person er ikke død",
+        "PersonNotDead": "Denne person er ikke død...",
+        "RespawnAvailable": "Du kan genopstå nu",
+        "RespawnTime": "~w~Geopståelse om~r~ %s~w~ sekunder",
+        "RespawnWait": "Du kan genopstå om %s sekunder",
+        "TextConfigWrong": "Din serveradministrator skal indstille en konfiguration til tegnetekst eller ikke have to meddelelser skiftet :)"
     }
 }
