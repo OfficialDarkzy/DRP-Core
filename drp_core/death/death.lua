@@ -34,7 +34,7 @@ Citizen.CreateThread(function()
             end
             if isDead then
                 if not playerDied then
-                    TriggerServerEvent("DRPCoreConfig:TriggerDeathStart")
+                    TriggerServerEvent("DRP_Core:TriggerDeathStart")
                     TriggerServerEvent("DRP_Death:Revived", true)
                     diedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
                     playerDied = true
@@ -101,15 +101,15 @@ Citizen.CreateThread(function()
             sleepTimer = 1
             local coords = GetEntityCoords(PlayerPedId(), false)
             if DRPCoreConfig.Static3DTextMessage and not DRPCoreConfig.Dynamic3DTextMessage then
-                exports["DRPCoreConfig"]:drawText(locale:GetValue('RespawnTime'):format(timeLeft))
+                exports["DRP_Core"]:drawText(locale:GetValue('RespawnTime'):format(timeLeft))
             elseif DRPCoreConfig.Dynamic3DTextMessage and not DRPCoreConfig.Static3DTextMessage then
-                exports['DRPCoreConfig']:DrawText3Ds(coords.x, coords.y, coords.z + 0.5, locale:GetValue('RespawnTime'):format(timeLeft))
+                exports['DRP_Core']:DrawText3Ds(coords.x, coords.y, coords.z + 0.5, locale:GetValue('RespawnTime'):format(timeLeft))
             else
                 print(locale:GetValue('TextConfigWrong'))
             end
         elseif startAnimation and timeLeft == 0 then
             canRespawn = true
-            TriggerEvent("DRPCoreConfig:Error", "Death", locale:GetValue('RespawnAvailable'), 1000, false, "leftCenter")
+            TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('RespawnAvailable'), 1000, false, "leftCenter")
             Citizen.Wait(5000)
         else
             sleepTimer = 750
@@ -120,8 +120,8 @@ end)
 ---------------------------------------------------------------------------
 -- Events 
 ---------------------------------------------------------------------------
-RegisterNetEvent("DRPCoreConfig:InitDeath")
-AddEventHandler("DRPCoreConfig:InitDeath", function(time)
+RegisterNetEvent("DRP_Core:InitDeath")
+AddEventHandler("DRP_Core:InitDeath", function(time)
     local ped = PlayerPedId()
     while GetEntitySpeed(ped) >= 0.15 do
         Citizen.Wait(1000)
@@ -147,8 +147,8 @@ AddEventHandler("DRP_Death:IsDeadStatus", function(data)
     end
 end)
 ---------------------------------------------------------------------------
-RegisterNetEvent("DRPCoreConfig:Revive")
-AddEventHandler("DRPCoreConfig:Revive", function()
+RegisterNetEvent("DRP_Core:Revive")
+AddEventHandler("DRP_Core:Revive", function()
     local ped = PlayerPedId()
     if playerDied then
         startAnimation = false
@@ -176,7 +176,7 @@ RegisterCommand("respawn", function(source, args, raw)
             timeLeft = -1
             local hosSpawns = DRPCoreConfig.HospitalLocations[math.random(1, #DRPCoreConfig.HospitalLocations)]
             exports["spawnmanager"]:spawnPlayer({x = hosSpawns.x, y = hosSpawns.y, z = hosSpawns.z, heading = hosSpawns.h})
-            TriggerEvent("DRPCoreConfig:Info", locale:GetValue('Life'), locale:GetValue('HospitalAwake'), 7000, false, "leftCenter")
+            TriggerEvent("DRP_Core:Info", locale:GetValue('Life'), locale:GetValue('HospitalAwake'), 7000, false, "leftCenter")
             -- Drop All Your Inventory And Guns
             TriggerServerEvent("DRP_Inventory:RespawnWipe")
             TriggerServerEvent("DRP_Gunstore:RespawnWipe")
@@ -184,10 +184,10 @@ RegisterCommand("respawn", function(source, args, raw)
             ClearPedTasks(ped)
             ClearPedBloodDamage(ped)
         else
-            TriggerEvent("DRPCoreConfig:Error", "Death", locale:GetValue('RespawnWait'):format(timeLeft), 5000, false, "leftCenter")
+            TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('RespawnWait'):format(timeLeft), 5000, false, "leftCenter")
         end
     else
-        TriggerEvent("DRPCoreConfig:Error", "Death", locale:GetValue('NotDead'), 5000, false, "leftCenter")
+        TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('NotDead'), 5000, false, "leftCenter")
     end
 end, false)
 ---------------------------------------------------------------------------
