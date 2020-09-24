@@ -16,7 +16,7 @@ DRPCoreConfig.Whitelisted = true -- true or false if you want to add the whiteli
 DRPCoreConfig.CommunityName = "DRP" -- This will show when you load into the server to tell you, you are banned, been kicked or not whitelisted
 DRPCoreConfig.MapLocations = false -- This will display all the locations below on the map
 DRPCoreConfig.Crosshair = false -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
-DRPCoreConfig.Voip = true -- TOGGLE IF YOU WANT THE BUILT IN VOIP OR NOT
+DRPCoreConfig.Voip = false -- TOGGLE IF YOU WANT THE BUILT IN VOIP OR NOT
 DRPCoreConfig.RemovePedWeaponDrops = true -- TOGGLE IF you want to remove all weapons dropped from PEDS that are killed THIS IS WIP
 DRPCoreConfig.DarkzyAllowToLiveDev = false -- TOGGLE If you want to allow Darkzy to join your DRP servers and have full Admin perms (this helps with live development)
 ---------------------------------------------------------------------------
