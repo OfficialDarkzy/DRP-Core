@@ -13,6 +13,7 @@ local deadData = {health = nil, cause = nil, source = nil, time = nil}
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     while true do
+        if exports['drp_id']:SpawnedInAndLoaded() then
             local ped = PlayerPedId()
             health = GetEntityHealth(ped)
             currentHealth = health
@@ -33,7 +34,6 @@ Citizen.CreateThread(function()
             end
             if isDead then
                 if not playerDied then
-                    print("i am dead?")
                     TriggerServerEvent("DRP_Core:TriggerDeathStart")
                     TriggerServerEvent("DRP_Death:Revived", true)
                     diedPos = GetEntityCoords(GetPlayerPed(PlayerId()), false)
@@ -41,39 +41,40 @@ Citizen.CreateThread(function()
                     ResetPedMovementClipset(ped, 0.0)
                 end
             end
-        if startAnimation then
-            SetPlayerInvincible(PlayerId(), true)
-            isInvincible = true
-            local dict = "combat@damage@rb_writhe"
-            local anim = "rb_writhe_loop"
-            while not IsEntityPlayingAnim(ped, dict, anim, 1) do
-                RequestAnimDict(dict)
-                while not HasAnimDictLoaded(dict) do
-                    Citizen.Wait(1)
+            if startAnimation then
+                SetPlayerInvincible(PlayerId(), true)
+                isInvincible = true
+                local dict = "combat@damage@rb_writhe"
+                local anim = "rb_writhe_loop"
+                while not IsEntityPlayingAnim(ped, dict, anim, 1) do
+                    RequestAnimDict(dict)
+                    while not HasAnimDictLoaded(dict) do
+                        Citizen.Wait(1)
+                    end
+                    TaskPlayAnim(ped, dict, anim, 1.0, 1.0, -1, 14, 1.0, 0, 0, 0)
+                    Citizen.Wait(0)
                 end
-                TaskPlayAnim(ped, dict, anim, 1.0, 1.0, -1, 14, 1.0, 0, 0, 0)
-                Citizen.Wait(0)
+            else
+                if isInvincible then
+                    SetPlayerInvincible(PlayerId(), false)
+                    isInvincible = false
+                end
             end
-        else
-            if isInvincible then
-                SetPlayerInvincible(PlayerId(), false)
-                isInvincible = false
+            if health <= 150.00 then
+                RequestAnimSet("move_heist_lester")
+                while not HasAnimSetLoaded("move_heist_lester") do 
+                    Citizen.Wait(0)    
+                end
+                SetPedMovementClipset(ped, "move_heist_lester", true)
+            else
+                ResetPedMovementClipset(ped, 0.0)
             end
-        end
-        if health <= 150.00 then
-            RequestAnimSet("move_heist_lester")
-            while not HasAnimSetLoaded("move_heist_lester") do 
-                Citizen.Wait(0)    
-            end
-            SetPedMovementClipset(ped, "move_heist_lester", true)
-        else
-            ResetPedMovementClipset(ped, 0.0)
-        end
-        if DRP_Core.AllowBloodEffects then
-            if HasEntityBeenDamagedByAnyPed(ped) or HasEntityBeenDamagedByAnyVehicle(ped) or HasEntityBeenDamagedByAnyObject(ped) then
-                ClearEntityLastDamageEntity(ped)
-                local bloodEffect = DRP_Core.BloodEffects[math.random(#DRP_Core.BloodEffects)]
-                ApplyPedDamagePack(ped, bloodEffect, 0, 0)
+            if DRP_Core.AllowBloodEffects then
+                if HasEntityBeenDamagedByAnyPed(ped) or HasEntityBeenDamagedByAnyVehicle(ped) or HasEntityBeenDamagedByAnyObject(ped) then
+                    ClearEntityLastDamageEntity(ped)
+                    local bloodEffect = DRP_Core.BloodEffects[math.random(#DRP_Core.BloodEffects)]
+                    ApplyPedDamagePack(ped, bloodEffect, 0, 0)
+                end
             end
         end
         Citizen.Wait(0)
