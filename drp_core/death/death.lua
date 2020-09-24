@@ -101,9 +101,9 @@ Citizen.CreateThread(function()
             sleepTimer = 1
             local coords = GetEntityCoords(PlayerPedId(), false)
             if DRPCoreConfig.Static3DTextMessage and not DRPCoreConfig.Dynamic3DTextMessage then
-                exports["DRP_Core"]:drawText(locale:GetValue('RespawnTime'):format(timeLeft))
+                drawText(locale:GetValue('RespawnTime'):format(timeLeft))
             elseif DRPCoreConfig.Dynamic3DTextMessage and not DRPCoreConfig.Static3DTextMessage then
-                exports['DRP_Core']:DrawText3Ds(coords.x, coords.y, coords.z + 0.5, locale:GetValue('RespawnTime'):format(timeLeft))
+                DrawText3Ds(coords.x, coords.y, coords.z + 0.5, locale:GetValue('RespawnTime'):format(timeLeft))
             else
                 print(locale:GetValue('TextConfigWrong'))
             end
