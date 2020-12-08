@@ -96,12 +96,12 @@ DRPCoreConfig.HospitalLocations = {
 DRPCoreConfig.ESCMenu = {
 	["TITLE"] = "DRP-Framework",
     ["SUBTITLE"] = "Created by Darkzy",
-    ["MAP"] = "Map",
-    ["STATUS"] = "Status",
-    ["GAME"] = "Game",
-    ["INFO"] = "Info",
-    ["SETTINGS"] = "Settings",
-    ["R*EDITOR"] = "Rockstar Editor"
+    ["MAP"] = "MAP",
+    ["STATUS"] = "STATUS",
+    ["GAME"] = "GAME",
+    ["INFO"] = "INFO",
+    ["SETTINGS"] = "SETTINGS",
+    ["R*EDITOR"] = "ROCKSTAR EDITOR"
 }
 ---------------------------------------------------------------------------
 -- Anti Cheat Table/Settings
