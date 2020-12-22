@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
                         Citizen.Wait(1)
                     end
                     TaskPlayAnim(ped, dict, anim, 1.0, 1.0, -1, 14, 1.0, 0, 0, 0)
-                    Citizen.Wait(0)
+                    Citizen.Wait(15)
                 end
             else
                 if isInvincible then
@@ -77,7 +77,7 @@ Citizen.CreateThread(function()
                 end
             end
         end
-        Citizen.Wait(0)
+        Citizen.Wait(15)
     end
 end)
 ---------------------------------------------------------------------------
