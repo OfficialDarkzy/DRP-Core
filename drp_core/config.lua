@@ -10,7 +10,7 @@ DRPCoreConfig.HospitalLocations = {}
 -- Game Settings
 ---------------------------------------------------------------------------
 -- CORE SETTINGS
-DRPCoreConfig.Language = 'en' -- The language to load for each locales.json file. Currently supports - {en, es, fr, da}
+DRPCoreConfig.Language = 'en' -- The language to load for each locales.json file. Currently supports - {en, es, fr, da, no}
 DRPCoreConfig.DeathSystem = true -- Turn this True if DO NOT HAVE A CUSTOM DEATH SYSTEM I.E. drp_death
 DRPCoreConfig.Whitelisted = true -- true or false if you want to add the whitelist system (REQUIRES EXTERNALSQL)
 DRPCoreConfig.CommunityName = "DRP" -- This will show when you load into the server to tell you, you are banned, been kicked or not whitelisted
@@ -31,36 +31,36 @@ DRPCoreConfig.StaffRanks.perms = { -- This is what you need to reference too in 
     ["user"] = {}, -- This means User does not have any rank, also a typo :()
 
     ["admin"] = {
-        "time", 
-        "weather", 
-        "adminaddcop", 
-        "heal", 
-        "teleport", 
-        "vehicle", 
-        "clearchat", 
-        "noclip", 
-        "givekeys", 
-        "revive", 
+        "time",
+        "weather",
+        "adminaddcop",
+        "heal",
+        "teleport",
+        "vehicle",
+        "clearchat",
+        "noclip",
+        "givekeys",
+        "revive",
         "coords"
     }, -- The Perms Admins Have
 
     ["superadmin"] = {
-        "time", 
-        "weather", 
-        "debugtools", 
-        "adminaddcop", 
-        "heal", 
-        "addgroup", 
-        "teleport", 
-        "economy", 
-        "adminmenu", 
-        "kick", 
-        "ban", 
-        "vehicle", 
-        "clearchat", 
-        "noclip", 
-        "givekeys", 
-        "revive", 
+        "time",
+        "weather",
+        "debugtools",
+        "adminaddcop",
+        "heal",
+        "addgroup",
+        "teleport",
+        "economy",
+        "adminmenu",
+        "kick",
+        "ban",
+        "vehicle",
+        "clearchat",
+        "noclip",
+        "givekeys",
+        "revive",
         "coords"
     } -- The Perms Superadmins have
 }
