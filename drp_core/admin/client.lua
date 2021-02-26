@@ -63,65 +63,91 @@ AddEventHandler("DRP_Core:HealCharacter", function()
     ClearPedBloodDamage(ped)
 end)
 ---------------------------------------------------------------------------
---- Trigger Teleport to Marker
+--- Trigger Teleport to Marker : Credit to Cyntaax
 ---------------------------------------------------------------------------
 RegisterNetEvent('DRP_Core:Teleport')
 AddEventHandler('DRP_Core:Teleport', function(coords)
-	Citizen.CreateThread(function()
-			local entity = PlayerPedId()
-			
-			if IsPedInAnyVehicle(entity, false) then
-				entity = GetVehiclePedIsUsing(entity)
-			end
+	 local pedId = PlayerPedId()
+    local plCoords = GetEntityCoords(pedId)
+    local ox, oy, oz = table.unpack(plCoords)
+    local waypoint = GetFirstBlipInfoId(8)
+    if DoesBlipExist(waypoint) == 0 then
+        return
+    end
+    local wpCoords = GetBlipInfoIdCoord(waypoint)
+    local x, y, z = table.unpack(wpCoords)
+    NetworkFadeOutEntity(pedId, false, true)
+    if IsPedInAnyVehicle(pedId, false) then
+        local veh = GetVehiclePedIsIn(pedId, false)
+        NetworkFadeOutEntity(veh, false, true)
+    end
+    DoScreenFadeOut(500)
+    while not IsScreenFadedOut() do
+        Citizen.Wait(0)
+    end
+    for i = 1, 1001, 1 do
+        RequestCollisionAtCoord(x, y, i + 0.0)
+        if IsPedInAnyVehicle(pedId, false) then
+            SetPedCoordsKeepVehicle(pedId, x, y, i + 0.0)
+        else
+            SetEntityCoords(pedId, x, y, i + 0.0)
+        end
 
-			local blipFound = false
-			local blipIterator = GetBlipInfoIdIterator()
-			local blip = GetFirstBlipInfoId(8)
+        NewLoadSceneStart(x, y, i + 0.0, x, y, i + 0.0, 50.0, 0)
 
-			while DoesBlipExist(blip) do
-				if GetBlipInfoIdType(blip) == 4 then
-					cx, cy, cz = table.unpack(Citizen.InvokeNative(0xFA7C7F0AADF25D09, blip, Citizen.ReturnResultAnyway(), Citizen.ResultAsVector())) --GetBlipInfoIdCoord(blip)
-					blipFound = true
-					break
-				end
-				blip = GetNextBlipInfoId(blipIterator)
-			end
+        while IsNetworkLoadingScene() do
+            Citizen.Wait(0)
+        end
 
-			if blipFound then
-				local groundFound = false
-				local yaw = GetEntityHeading(entity)
-				
-				for i = 0, 1000, 1 do
-					SetEntityCoordsNoOffset(entity, cx, cy, ToFloat(i), false, false, false)
-					SetEntityRotation(entity, 0, 0, 0, 0 ,0)
-					SetEntityHeading(entity, yaw)
-					SetGameplayCamRelativeHeading(0)
-					Citizen.Wait(0)
-					--groundFound = true
-					if GetGroundZFor_3dCoord(cx, cy, ToFloat(i), cz, false) then --GetGroundZFor3dCoord(cx, cy, i, 0, 0) GetGroundZFor_3dCoord(cx, cy, i)
-						cz = ToFloat(i)
-						groundFound = true
-						break
-					end
-				end
-				if not groundFound then
-					cz = -300.0
-				end
-				success = true
-			end
+        while not HasCollisionLoadedAroundEntity(pedId) do
+            Citizen.Wait(0)
+        end
 
-			if success then
-				SetEntityCoordsNoOffset(entity, cx, cy, cz, false, false, true)
-				SetGameplayCamRelativeHeading(0)
-				if IsPedSittingInAnyVehicle(PlayerPedId()) then
-					if GetPedInVehicleSeat(GetVehiclePedIsUsing(PlayerPedId()), -1) == PlayerPedId() then
-						SetVehicleOnGroundProperly(GetVehiclePedIsUsing(PlayerPedId()))
-					end
-				end
-				blipFound = false
-			end
-		
-	end)
+        local foundGround, zPos = GetGroundZFor_3dCoord(x, y, i + 0.0, false)
+        if foundGround == 1 then
+            if IsPedInAnyVehicle(pedId, false) then
+                SetPedCoordsKeepVehicle(pedId, x, y, zPos)
+            else
+                SetEntityCoords(pedId, x, y, zPos)
+            end
+
+            DoScreenFadeIn(500)
+            while not IsScreenFadedIn() do
+                Citizen.Wait(0)
+            end
+            NetworkFadeInEntity(pedId, true)
+            if IsPedInAnyVehicle(pedId, false) then
+                local veh = GetVehiclePedIsIn(pedId, false)
+                NetworkFadeInEntity(veh, false)
+            end
+            return
+        end
+
+    end
+
+    RequestCollisionAtCoord(ox, oy, oz)
+    SetPedCoordsKeepVehicle(pedId, ox, oy, oz - 1)
+    FreezeEntityPosition(pedId, true)
+    while not HasCollisionLoadedAroundEntity(pedId) do
+        Citizen.Wait(0)
+
+    end
+
+    NewLoadSceneStart(ox, oy, oz, ox, oy, oz, 50.0, 0)
+    while IsNetworkLoadingScene() do
+        Citizen.Wait(0)
+    end
+
+    FreezeEntityPosition(pedId, false)
+    DoScreenFadeIn(500)
+    while not IsScreenFadedIn() do
+        Citizen.Wait(0)
+    end
+    NetworkFadeInEntity(pedId, true)
+    if IsPedInAnyVehicle(pedId, false) then
+        local veh = GetVehiclePedIsIn(pedId, false)
+        NetworkFadeInEntity(veh, false, true)
+    end
 end)
 ---------------------------------------------------------------------------
 -- Open Admin Menu
