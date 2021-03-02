@@ -29,6 +29,7 @@ shared_script "shared/shared.lua"
 shared_script "worldSync/config.lua"
 shared_script "config.lua"
 shared_script "managers/networkcallbacks.lua"
+shared_script "managers/clientcallbacks.lua"
 shared_script "locales.lua"
 shared_script "managers/locales.lua"
 
