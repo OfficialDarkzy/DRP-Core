@@ -3,12 +3,11 @@
 ---------------------------------------------------------------------------
 locale = {}
 local players = {}
+local ConfigID = false
 SetGameType("DRP Is Epic")
 ---------------------------------------------------------------------------
 -- Resource events
 ---------------------------------------------------------------------------
-local ConfigID = false
-
 AddEventHandler('onResourceStarting', function(resourceName)
 	-- Load locales files before the resource start
 	if (resourceName ~= GetCurrentResourceName()) then

@@ -49,6 +49,37 @@ function lagSwitchTick()
 end
 lagSwitchTick()
 ---------------------------------------------------------------------------
+function peopleData(src)
+    local identifiers = {
+        steam = "",
+        ip = "",
+        discord = "",
+        license = "",
+        xbl = "",
+        live = ""
+    }
+
+    for i = 0, GetNumPlayerIdentifiers(src) - 1 do
+        local id = GetPlayerIdentifier(src, i)
+
+        if string.find(id, "steam") then
+            identifiers.steam = id
+        elseif string.find(id, "ip") then
+            identifiers.ip = id
+        elseif string.find(id, "discord") then
+            identifiers.discord = id
+        elseif string.find(id, "license") then
+            identifiers.license = id
+        elseif string.find(id, "xbl") then
+            identifiers.xbl = id
+        elseif string.find(id, "live") then
+            identifiers.live = id
+        end
+    end
+
+    return identifiers
+end
+---------------------------------------------------------------------------
 --- Events
 ---------------------------------------------------------------------------
 RegisterServerEvent("DRP_Core:SendMessage")
@@ -155,7 +186,7 @@ AddEventHandler("DRP_Core:SetRank", function(values)
     end
 end)
 ---------------------------------------------------------------------------
--- Lag Switching System
+-- Lag Switching System @ CREDITS TO SCRUBZ
 ---------------------------------------------------------------------------
 RegisterServerEvent('DRP_Core:AddPlayer')
 AddEventHandler('DRP_Core:AddPlayer', function()
@@ -165,8 +196,8 @@ AddEventHandler('DRP_Core:AddPlayer', function()
         shouldKick = true,
         firstRun = true,
         identifier = {      -- For logging if you so choose.
-            license = peopleData.licence,
-            steam = peopleData.steam,
+            license = peopleData(src).licence,
+            steam = peopleData(src).steam,
             name = GetPlayerName(src)
         }
     })

@@ -9,17 +9,26 @@ AddEventHandler('onClientResourceStart', function(resourceName)
 			if result then
 				if firstSpawn then
 					TriggerEvent("DRP_ID:StartSkyCamera")
-                    TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
-                    TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
+                        if DRPCoreConfig.WeatherSync then
+                            TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
+                        end
+                        if DRPCoreConfig.TimeSync then
+                            TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
+                        end
 					Wait(8500)
 					TriggerServerEvent("DRP_ID:RequestOpenMenu")
 					firstSpawn = false
 				end
             else
-                TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
-                TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
+                if DRPCoreConfig.WeatherSync then
+                    TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
+                end
+                if DRPCoreConfig.TimeSync then
+                    TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
+                end
 			end
             TriggerServerEvent("DRP_Core:CheckIfAdmin")
+            TriggerServerEvent("DRP_Core:AddPlayer") -- FOR LAG SWITCHING
 		end)
 	end
 end)

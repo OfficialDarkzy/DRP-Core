@@ -33,6 +33,7 @@ end
 RegisterServerEvent("DRP_WeatherSync:ConnectionSetWeather")
 AddEventHandler("DRP_WeatherSync:ConnectionSetWeather", function()
     local src = source
+    print("^1[DRP CORE]: ^4Weather Sync Activated")
     TriggerClientEvent("DRP_WeatherSync:SetWeather", src, currentWeather)
 end)
 ---------------------------------------------------------------------------
@@ -74,6 +75,7 @@ end
 RegisterServerEvent("DRP_TimeSync:ConnectionSetTime")
 AddEventHandler("DRP_TimeSync:ConnectionSetTime", function()
     local src = source
+    print("^1[DRP CORE]: ^4Time Sync Activated")
     TriggerClientEvent("DRP_TimeSync:SetTime", src, hours, minutes)
 end)
 

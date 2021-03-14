@@ -52,9 +52,13 @@ end)
 ---- Thread to set Time
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
+    local waitTimer = 1000
     while true do
-        Citizen.Wait(1)
-        NetworkOverrideClockTime(setHours, setMinutes, 0)
+        if DRPCoreConfig.TimeSync then
+            NetworkOverrideClockTime(setHours, setMinutes, 0)
+            waitTimer = 1
+        end
+        Citizen.Wait(waitTimer)
     end
 end)
 ---------------------------------------------------------------------------

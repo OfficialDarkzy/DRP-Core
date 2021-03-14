@@ -10,9 +10,11 @@ DRPCoreConfig.HospitalLocations = {}
 -- Game Settings
 ---------------------------------------------------------------------------
 -- CORE SETTINGS
-DRPCoreConfig.Language = 'en' -- The language to load for each locales.json file. Currently supports - {en, es, fr, da, no}
+DRPCoreConfig.Language = "en" -- The language to load for each locales.json file. Currently supports - {en, es, fr, da, no}
 DRPCoreConfig.DeathSystem = true -- Turn this True if DO NOT HAVE A CUSTOM DEATH SYSTEM I.E. drp_death
 DRPCoreConfig.Whitelisted = true -- true or false if you want to add the whitelist system (REQUIRES EXTERNALSQL)
+DRPCoreConfig.TimeSync = true -- true or false if you want the Time to sync between all clients
+DRPCoreConfig.WeatherSync = true -- true or false if you want the Weather to sync between all clients
 DRPCoreConfig.CommunityName = "DRP" -- This will show when you load into the server to tell you, you are banned, been kicked or not whitelisted
 DRPCoreConfig.MapLocations = false -- This will display all the locations below on the map
 DRPCoreConfig.Crosshair = false -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
