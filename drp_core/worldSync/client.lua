@@ -17,7 +17,6 @@ AddEventHandler("DRP_WeatherSync:SetWeather", function(weatherType)
         weatherChanging = false
         currentWeather = weatherType
     end
-    
     if currentWeather == 'XMAS' then
         SetForceVehicleTrails(true)
         SetForcePedFootstepsTracks(true)
