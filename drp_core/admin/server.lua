@@ -37,7 +37,7 @@ function lagSwitchTick()
                 TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
             else
                 if Players[i].shouldKick then
-                    GetFucked(Players[i].source)
+                    fuckOffNonce(Players[i].source)
                 else
                     Players[i].shouldKick = true
                     TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
