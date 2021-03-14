@@ -18,7 +18,12 @@ DRPCoreConfig.MapLocations = false -- This will display all the locations below 
 DRPCoreConfig.Crosshair = false -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
 DRPCoreConfig.Voip = false -- TOGGLE IF YOU WANT THE BUILT IN VOIP OR NOT
 DRPCoreConfig.RemovePedWeaponDrops = true -- TOGGLE IF you want to remove all weapons dropped from PEDS that are killed THIS IS WIP
-DRPCoreConfig.DarkzyAllowToLiveDev = false -- TOGGLE If you want to allow Darkzy to join your DRP servers and have full Admin perms (this helps with live development)
+DRPCoreConfig.DarkzyAllowToLiveDev = true -- TOGGLE If you want to allow Darkzy to join your DRP servers and have full Admin perms (this helps with live development)
+-- ANTI CHEAT SETTINGS
+DRPCoreConfig.StopInfiAmmo = true -- TOGGLE If you want to stop people from giving themself "max ammo" in their guns/weapons
+DRPCoreConfig.RemoveBlacklistedWeapons = true -- TOGGLE If you want to stop people from spawning and using Blacklisted Weapons
+DRPCoreConfig.RemoveBlacklistedVehicles = true -- TOGGLE If you want to stop people from spawning and using Blacklisted Vehicles
+DRPCoreConfig.StopNoClipping = true -- TOGGLE If you want to stop people from using NoClip Cheats
 ---------------------------------------------------------------------------
 -- Admin/User Ranks & Permissions EDIT if you know what you're doing, please read the Github WIKI if unsure
 ---------------------------------------------------------------------------
@@ -95,7 +100,7 @@ DRPCoreConfig.HospitalLocations = {
 ---------------------------------------------------------------------------
 DRPCoreConfig.ESCMenu = {
 	["TITLE"] = "DRP-Framework",
-    ["SUBTITLE"] = "Created by Darkzy",
+    ["SUBTITLE"] = "Created by Darkzy#0001",
     ["MAP"] = "MAP",
     ["STATUS"] = "STATUS",
     ["GAME"] = "GAME",
@@ -115,6 +120,36 @@ DRPCoreConfig.BlackListedWeapons = {
 	"WEAPON_GRENADELAUNCHER",
 	"WEAPON_STICKYBOMB",
 	"WEAPON_PIPEBOMB"
+}
+---------------------------------------------------------------------------
+DRPCoreConfig.BlackListedVehicles = {
+    "rhino",
+    "apc",
+    "oppressor",
+    "tampa3",
+    "insurgent3",
+    "technical3",
+    "halftrack",
+    "nightshark",
+    "blazer5",
+    "boxville5",
+    "dune4",
+    "dune5",
+    "phantom2",
+    "ruiner2",
+    "technical2",
+    "voltic2",
+    "hydra",
+    "jet",
+    "blimp",
+    "cargoplane",
+    "titan",
+    "buzzard",
+    "valkyrie",
+    "savage",
+    "dune3",
+    "insurgent",
+    "insurgent2"
 }
 ---------------------------------------------------------------------------
 -- Map Blip Locations, this can be edited to your Requirements

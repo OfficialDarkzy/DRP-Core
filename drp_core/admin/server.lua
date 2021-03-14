@@ -1,3 +1,4 @@
+local Players = {}
 ---------------------------------------------------------------------------
 --- Functions
 ---------------------------------------------------------------------------
@@ -12,6 +13,41 @@ function DoesRankHavePerms(rank, perm)
     return false
 end
 exports("DoesRankHavePerms", DoesRankHavePerms)
+---------------------------------------------------------------------------
+--- Lag Switching Checker
+---------------------------------------------------------------------------
+function fuckOffNonce(player)
+    local tableId
+    for i = 1, #Players do
+        if Players[i].source == player then
+            tableId = i
+            DropPlayer(Players[i].source, 'Heartbeat Not Detected')
+            break
+        end
+    end
+    -- NEED TO ADD A LOGGING SYSTEM HERE 4head
+    table.remove(Players, tableId)
+end
+---------------------------------------------------------------------------
+function lagSwitchTick()
+    if #Players >= 1 then
+        for i = 1, #Players do
+            if Players[i].firstRun then
+                Players[i].firstRun = false
+                TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
+            else
+                if Players[i].shouldKick then
+                    GetFucked(Players[i].source)
+                else
+                    Players[i].shouldKick = true
+                    TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
+                end
+            end
+        end
+    end
+    SetTimeout(500, lagSwitchTick)
+end
+lagSwitchTick()
 ---------------------------------------------------------------------------
 --- Events
 ---------------------------------------------------------------------------
@@ -84,6 +120,24 @@ AddEventHandler("DRP_Core:SetJob", function(values)
     end
 end)
 ---------------------------------------------------------------------------
+RegisterServerEvent("DRP_Core:CheckIfAdmin")
+AddEventHandler("DRP_Core:CheckIfAdmin", function()
+    print("^1[DRP ADMIN]: ^2CHECKING ADMIN STATUS...^0")
+    local src = source
+    local player = GetPlayerData(src)
+    local areYouAdmin = false
+    if player ~= nil or false then
+        if player.rank == "superadmin" or player.rank == "admin" then
+            areYouAdmin = true
+        else
+            areYouAdmin = false
+        end
+    else
+        print("^1[DRP ADMIN]: ^2Player Data is coming back as nil or false, something is broken... Maybe core has been restarted?")
+    end
+    TriggerClientEvent("DRP_Core:AmIAnAdmin", src, areYouAdmin)
+end)
+---------------------------------------------------------------------------
 RegisterServerEvent("DRP_Core:SetRank")
 AddEventHandler("DRP_Core:SetRank", function(values)
     local src = source
@@ -98,5 +152,43 @@ AddEventHandler("DRP_Core:SetRank", function(values)
             TriggerClientEvent("DRP_Core:Info", values.playerid, locale:GetValue('AdminMenu'), locale:GetValue('NewRank'):format(string.lower(values.rank)), 2500, true, "leftCenter")
     else
         TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('NoPlayer'), 2500, true, "leftCenter")
+    end
+end)
+---------------------------------------------------------------------------
+-- Lag Switching System
+---------------------------------------------------------------------------
+RegisterServerEvent('DRP_Core:AddPlayer')
+AddEventHandler('DRP_Core:AddPlayer', function()
+    local src = source
+    table.insert(Players, {
+        source = src,
+        shouldKick = true,
+        firstRun = true,
+        identifier = {      -- For logging if you so choose.
+            license = peopleData.licence,
+            steam = peopleData.steam,
+            name = GetPlayerName(src)
+        }
+    })
+end)
+---------------------------------------------------------------------------
+RegisterServerEvent('DRP_Core:ReturnPing')
+AddEventHandler('DRP_Core:ReturnPing', function()
+    local src = source
+    for i = 1, #Players do
+        if Players[i].source == src then
+            Players[i].shouldKick = false
+            return
+        end
+    end
+end)
+---------------------------------------------------------------------------
+AddEventHandler('playerDropped', function()
+    local src = source
+    for i = 1, #Players do
+        if Players[i].source == src then
+            table.remove(Players, i)
+            return
+        end
     end
 end)

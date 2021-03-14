@@ -1,3 +1,5 @@
+local amIAdmin = false
+local readyToAdminWatch = false
 ---------------------------------------------------------------------------
 -- NUI CALLBACKS
 ---------------------------------------------------------------------------
@@ -35,25 +37,83 @@ end)
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     while true do
-        -- Remove Blacklisted Weapons
-        for _,theWeapon in ipairs(DRPCoreConfig.BlackListedWeapons) do
-            Wait(1000)
-            if HasPedGotWeapon(PlayerPedId(), GetHashKey(theWeapon), false) == 1 then
-                RemoveWeaponFromPed(PlayerPedId(), GetHashKey(theWeapon))
+        if readyToAdminWatch then
+            if not amIAdmin then
+                local ped = PlayerPedId()
+                -- Remove Max Ammo Spawning
+                if DRPCoreConfig.StopInfiAmmo then
+                    SetPedInfiniteAmmoClip(ped, false)
+                end
+                -- Remove Blacklisted Weapons
+                if DRPCoreConfig.RemoveBlacklistedWeapons then
+                    for _,theWeapon in ipairs(DRPCoreConfig.BlackListedWeapons) do
+                        if HasPedGotWeapon(ped, GetHashKey(theWeapon), false) == 1 then
+                            RemoveWeaponFromPed(ped, GetHashKey(theWeapon))
+                        end
+                    end
+                end
+                -- Remove Blacklisted Vehicles / Vehicle Class
+                if DRPCoreConfig.RemoveBlacklistedVehicles then
+                    if IsPedSittingInAnyVehicle(ped) then
+                        local currentVehicle = GetVehiclePedIsIn(ped, false)
+                        for k,v in pairs(DRPCoreConfig.BlackListedVehicles) do
+                            if GetEntityModel(currentVehicle) == GetHashKey(v) and GetPedInVehicleSeat(currentVehicle, -1) == ped then
+                                deleteCar(currentVehicle)
+                            end
+                        end
+                        if GetVehicleClass(currentVehicle) == 16 and GetPedInVehicleSeat(currentVehicle, -1) == ped then
+                            deleteCar(currentVehicle)
+                        end
+                    end
+                end
+                -- Stop Noclipping (LIMITS MAX SPEED)
+                if DRPCoreConfig.StopNoClipping then
+                    local isFalling, isRagdoll, paraState = IsPedFalling(ped), IsPedRagdoll(ped), GetPedParachuteState(ped)
+                    if paraState >= 0 or isRagdoll or isFalling then
+                        SetEntityMaxSpeed(ped, 80.0)
+                    else
+                        SetEntityMaxSpeed(ped, 7.1)
+                    end
+                end
             end
+        else
+            print("Waiting for Admin Ready to watch...")
         end
-        Citizen.Wait(1000)
+        Citizen.Wait(2000)
     end
 end)
 ---------------------------------------------------------------------------
 --- FUNCTIONS
 ---------------------------------------------------------------------------
-local function deleteCar(vehicle)
+function deleteCar(vehicle)
 	SetEntityAsMissionEntity(vehicle, true, true)
 	Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(vehicle))
 end
 ---------------------------------------------------------------------------
+--- Is Ped An Admin Checker / Export
+---------------------------------------------------------------------------
+function isPedAnAdmin()
+    return amIAdmin
+end
+exports("amIAdmin", amIAdmin)
+---------------------------------------------------------------------------
 --- EVENTS
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+--- Is this person an ADMIN
+---------------------------------------------------------------------------
+RegisterNetEvent("DRP_Core:AmIAnAdmin")
+AddEventHandler("DRP_Core:AmIAnAdmin", function(bool)
+    readyToAdminWatch = true
+    amIAdmin = bool
+    if amIAdmin then
+        print("Applying Admin Data... You admin perms are now active")
+    else
+        print("Applying Admin Data... You are not an Admin")
+    end
+end)
+---------------------------------------------------------------------------
+--- Heal Player
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Core:HealCharacter")
 AddEventHandler("DRP_Core:HealCharacter", function()
@@ -217,6 +277,13 @@ AddEventHandler("DRP_Core:VehicleSpawner", function(vehmodel)
         TaskWarpPedIntoVehicle(ped, veh, -1)
         exports["drp_LegacyFuel"]:SetFuel(veh, fuel)
     end)
+end)
+---------------------------------------------------------------------------
+-- Lag Switching Checker
+---------------------------------------------------------------------------
+RegisterNetEvent('DRP_Core:ReceivePing')
+AddEventHandler('DRP_Core:ReceivePing', function()
+    TriggerServerEvent('DRP_Core:ReturnPing')
 end)
 ---------------------------------------------------------------------------
 -- Teleport To Coords

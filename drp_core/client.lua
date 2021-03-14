@@ -39,8 +39,6 @@ end)
 ---------------------------------------------------------------------------
 AddEventHandler("playerSpawned", function()
     Citizen.Wait(1000)
-    TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
-    TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
     Citizen.CreateThread(function()
         local ped = PlayerPedId()
         NetworkSetFriendlyFireOption(true) -- Enable Friendly Fire

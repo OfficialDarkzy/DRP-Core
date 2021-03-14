@@ -9,11 +9,17 @@ AddEventHandler('onClientResourceStart', function(resourceName)
 			if result then
 				if firstSpawn then
 					TriggerEvent("DRP_ID:StartSkyCamera")
-					Wait(5000)
+                    TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
+                    TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
+					Wait(8500)
 					TriggerServerEvent("DRP_ID:RequestOpenMenu")
 					firstSpawn = false
 				end
-			end	
+            else
+                TriggerServerEvent("DRP_WeatherSync:ConnectionSetWeather")
+                TriggerServerEvent("DRP_TimeSync:ConnectionSetTime")
+			end
+            TriggerServerEvent("DRP_Core:CheckIfAdmin")
 		end)
 	end
 end)
