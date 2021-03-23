@@ -26,6 +26,7 @@ DRPCoreConfig.StopInfiAmmo = true -- TOGGLE If you want to stop people from givi
 DRPCoreConfig.RemoveBlacklistedWeapons = true -- TOGGLE If you want to stop people from spawning and using Blacklisted Weapons
 DRPCoreConfig.RemoveBlacklistedVehicles = true -- TOGGLE If you want to stop people from spawning and using Blacklisted Vehicles
 DRPCoreConfig.StopNoClipping = true -- TOGGLE If you want to stop people from using NoClip Cheats
+DRPCoreConfig.AntiLagSwitch = false -- TOGGLE If you want to stop people from using a Lag Switch in game (IF YOU HAVE A SHIT PC or POTATO internet... This isnt the one to use currently lol WILL BE FIXED SOON)
 ---------------------------------------------------------------------------
 -- Admin/User Ranks & Permissions EDIT if you know what you're doing, please read the Github WIKI if unsure
 ---------------------------------------------------------------------------
