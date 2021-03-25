@@ -4,7 +4,7 @@
 locale = {}
 local players = {}
 local ConfigID = false
-SetGameType("DRP Is Epic")
+SetGameType("DRP")
 ---------------------------------------------------------------------------
 -- Resource events
 ---------------------------------------------------------------------------
@@ -171,6 +171,7 @@ function GetPlayerData(id) -- USE THIS MORE OFTEN!!!
     end
     return false
 end
+exports("GetPlayerData", GetPlayerData)
 ---------------------------------------------------------------------------
 -- GetPlayerData Server Handler
 ---------------------------------------------------------------------------
@@ -183,26 +184,6 @@ AddEventHandler("DRP_Core:GetPlayerData", function(id, callback)
     end
     callback(false)
 end)
----------------------------------------------------------------------------
--- Send to Discord BRAOOOO
----------------------------------------------------------------------------
-function AlertDiscord(messagetitle, givenName, colour, message)
-    -- Character name can be False :)
-    -- Same As Colour
-    if DRPCoreConfig.DiscordAdminCommandWebHook then
-        if not colour then
-            colour = 16007897
-        end
-        local data = {
-            {
-                ["colour"] = colour,
-                ["title"] = "**".. messagetitle .. "**",
-                ["description"] = "**"..givenName.."** "..message,
-            }
-        }
-        PerformHttpRequest(DRPCoreConfig.DiscordWebHook, function(err, text, headers) end, 'POST', json.encode({username = "Little Nonce", embeds = data}), { ['Content-Type'] = 'application/json' })
-    end
-end
 ---------------------------------------------------------------------------
 -- Who de fok is dis guy?
 ---------------------------------------------------------------------------

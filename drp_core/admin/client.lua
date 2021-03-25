@@ -7,22 +7,22 @@ RegisterNUICallback("close_admin_menu", function(data, cb)
     SetNuiFocus(false, false)
     cb("ok")
 end)
-
+---------------------------------------------------------------------------
 RegisterNUICallback("kick_player", function(data, cb)
     TriggerServerEvent("DRP_Core:KickPlayer", data.player, data.msg)
     cb("ok")
 end)
-
+---------------------------------------------------------------------------
 RegisterNUICallback("ban_player", function(data, cb)
     TriggerServerEvent("DRP_Core:BanPlayer", data.player, data.msg, data.time, data.perm)
     cb("ok")
 end)
-
+---------------------------------------------------------------------------
 RegisterNUICallback("send_message", function(data, cb)
     TriggerServerEvent("DRP_Core:SendMessage", data.message)
     cb("ok")
 end)
-
+---------------------------------------------------------------------------
 RegisterNUICallback("setjob", function(data, cb)
     TriggerServerEvent("DRP_Core:SetJob", data)
     cb("ok")
@@ -113,7 +113,7 @@ AddEventHandler("DRP_Core:AmIAnAdmin", function(bool)
     end
 end)
 ---------------------------------------------------------------------------
---- Heal Player
+--- Heal Ped
 ---------------------------------------------------------------------------
 RegisterNetEvent("DRP_Core:HealCharacter")
 AddEventHandler("DRP_Core:HealCharacter", function()
@@ -123,11 +123,18 @@ AddEventHandler("DRP_Core:HealCharacter", function()
     ClearPedBloodDamage(ped)
 end)
 ---------------------------------------------------------------------------
---- Trigger Teleport to Marker : Credit to Cyntaax
+-- Add Armour
+---------------------------------------------------------------------------
+RegisterNetEvent('DRP_Core:addArmour')
+AddEventHandler('DRP_Core:addArmour', function()
+    AddArmourToPed(PlayerPedId(), 100)
+end)
+---------------------------------------------------------------------------
+--- Trigger Teleport to Marker
 ---------------------------------------------------------------------------
 RegisterNetEvent('DRP_Core:Teleport')
 AddEventHandler('DRP_Core:Teleport', function(coords)
-	 local pedId = PlayerPedId()
+    local pedId = PlayerPedId()
     local plCoords = GetEntityCoords(pedId)
     local ox, oy, oz = table.unpack(plCoords)
     local waypoint = GetFirstBlipInfoId(8)
@@ -207,6 +214,26 @@ AddEventHandler('DRP_Core:Teleport', function(coords)
     if IsPedInAnyVehicle(pedId, false) then
         local veh = GetVehiclePedIsIn(pedId, false)
         NetworkFadeInEntity(veh, false, true)
+    end
+end)
+---------------------------------------------------------------------------
+-- Show Player Blips
+---------------------------------------------------------------------------
+RegisterNetEvent("DRP_Core:ShowPlayerBlips")
+AddEventHandler("DRP_Core:ShowPlayerBlips", function()
+    local players = GetActivePlayers()
+    for index, value in ipairs(players) do
+        local ped = GetPlayerPed(value)
+        local allPlayerCoords = GetEntityCoords(GetPlayerPed(ped), false)
+        local blip = AddBlipForEntity(ped)
+        SetBlipSprite(blip, 1)
+        SetBlipColour(blip, 2)
+        SetBlipAsShortRange(blip, true)
+        SetBlipDisplay(blip, 4)
+        SetBlipShowCone(blip, true)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString("Player")
+        EndTextCommandSetBlipName(blip)
     end
 end)
 ---------------------------------------------------------------------------
@@ -328,9 +355,10 @@ end)
 RegisterNetEvent('DRP_Core:FixVehicle')
 AddEventHandler('DRP_Core:FixVehicle', function()
     local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-    local fuel = exports["drp_LegacyFuel"]:GetFuel(vehicle)
+    local fuel = exports["drp_LegacyFuel"]:GetFuel(vehicle) -- WTF who did this? Setting it as it it? wot?
     SetVehicleFixed(vehicle)
-    exports["drp_LegacyFuel"]:SetFuel(vehicle, fuel)
+    SetVehicleDirtLevel(vehicle, 0)
+    exports["drp_LegacyFuel"]:SetFuel(vehicle, 100)
 end)
 ---------------------------------------------------------------------------
 -- Admin noclip
@@ -359,7 +387,7 @@ function toggleNoClipMode()
 end
 
 function turnNoClipOff()
-	TriggerEvent("DRP_Core:Error", locale:GetValue('AdminSystem'), locale:GetValue('NoClipOff'), 2500, false, "leftCenter")
+	TriggerEvent("DRP_Core:Error", locale:GetValue('AdminSystem'), locale:GetValue('NoClipOff'), 2500, false, "centerTop")
     local playerPed = PlayerPedId()
     local inVehicle = IsPedInAnyVehicle( playerPed, false )
 
@@ -379,7 +407,7 @@ function turnNoClipOff()
 end
 
 function turnNoClipOn()
-	TriggerEvent("DRP_Core:Info", locale:GetValue('AdminSystem'), locale:GetValue('NoClipOn'), 2500, false, "leftCenter")
+	TriggerEvent("DRP_Core:Info", locale:GetValue('AdminSystem'), locale:GetValue('NoClipOn'), 2500, false, "centerTop")
     blockinput = true
     local playerPed = PlayerPedId()
 	local inVehicle = IsPedInAnyVehicle( playerPed, false ) 

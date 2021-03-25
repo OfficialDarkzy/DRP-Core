@@ -49,7 +49,7 @@ function DrawText3Ds(x,y,z, text)
     local scale = scale*fov
     
     if onScreen then
-        SetTextScale(0.0*scale, 0.5*scale)
+        SetTextScale(0.0*scale, 0.4*scale)
         SetTextFont(fontId)
         SetTextProportional(1)
         SetTextColour(255, 255, 255, 255)
@@ -79,6 +79,7 @@ function drawText(text, x, y)
 	AddTextComponentString(text)
 	DrawText(x, y)
 end
+exports("drawText", drawText)
 ---------------------------------------------------------------------------
 --- Print Table Functionality (I did not create this, it was found online if the owner wants to contact me please do so, to enable me to credit. BUT AMAZINGNESS BRO)
 ---------------------------------------------------------------------------

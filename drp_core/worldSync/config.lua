@@ -30,7 +30,7 @@ DRPSync.DRPWeatherConfig = {
 
 DRPSync.DRPTimeConfig = {
     -- Time it takes for one minute to pass
-    SecPerMin = 10,
+    SecPerMin = 2500,
 
     -- If true it doesn't allow the time to change
     FreezeTime = false,

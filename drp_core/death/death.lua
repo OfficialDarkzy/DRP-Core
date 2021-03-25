@@ -53,6 +53,9 @@ Citizen.CreateThread(function()
                     end
                     TaskPlayAnim(ped, dict, anim, 1.0, 1.0, -1, 14, 1.0, 0, 0, 0)
                     Citizen.Wait(0)
+                    if isDead and startAnimation and not IsEntityPlayingAnim(ped, dict, anim, 1) then
+                        TaskPlayAnim(ped, dict, anim, 1.0, 1.0, -1, 14, 1.0, 0, 0, 0)
+                    end
                 end
             else
                 if isInvincible then
@@ -109,7 +112,7 @@ Citizen.CreateThread(function()
             end
         elseif startAnimation and timeLeft == 0 then
             canRespawn = true
-            TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('RespawnAvailable'), 1000, false, "leftCenter")
+            TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('RespawnAvailable'), 1000, false, "centerTop")
             Citizen.Wait(5000)
         else
             sleepTimer = 750
@@ -117,6 +120,14 @@ Citizen.CreateThread(function()
         Citizen.Wait(sleepTimer)
     end
 end)
+---------------------------------------------------------------------------
+-- FUNCTIONS & EXPORTS
+---------------------------------------------------------------------------
+function isPedDead()
+    return playerDied
+end
+exports("isPedDead", isPedDead)
+
 ---------------------------------------------------------------------------
 -- Events 
 ---------------------------------------------------------------------------
@@ -166,6 +177,8 @@ AddEventHandler("DRP_Core:Revive", function()
     end
 end)
 ---------------------------------------------------------------------------
+-- Commands 
+---------------------------------------------------------------------------
 RegisterCommand("respawn", function(source, args, raw)
     if playerDied then
         if canRespawn then
@@ -176,23 +189,16 @@ RegisterCommand("respawn", function(source, args, raw)
             timeLeft = -1
             local hosSpawns = DRPCoreConfig.HospitalLocations[math.random(1, #DRPCoreConfig.HospitalLocations)]
             exports["spawnmanager"]:spawnPlayer({x = hosSpawns.x, y = hosSpawns.y, z = hosSpawns.z, heading = hosSpawns.h})
-            TriggerEvent("DRP_Core:Info", locale:GetValue('Life'), locale:GetValue('HospitalAwake'), 7000, false, "leftCenter")
+            TriggerEvent("DRP_Core:Info", locale:GetValue('Life'), locale:GetValue('HospitalAwake'), 7000, false, "centerTop")
             -- Drop All Your Inventory And Guns
-            TriggerServerEvent("DRP_Inventory:RespawnWipe")
-            TriggerServerEvent("DRP_Gunstore:RespawnWipe")
+            TriggerServerEvent("DRP_Inventory:RespawnInventoryRemove")
             Wait(1000)
             ClearPedTasks(ped)
             ClearPedBloodDamage(ped)
         else
-            TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('RespawnWait'):format(timeLeft), 5000, false, "leftCenter")
+            TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('RespawnWait'):format(timeLeft), 5000, false, "centerTop")
         end
     else
-        TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('NotDead'), 5000, false, "leftCenter")
+        TriggerEvent("DRP_Core:Error", "Death", locale:GetValue('NotDead'), 5000, false, "centerTop")
     end
 end, false)
----------------------------------------------------------------------------
--- EXPORTS DO NOT EDIT THIS
----------------------------------------------------------------------------
-function isPedDead()
-    return playerDied
-end

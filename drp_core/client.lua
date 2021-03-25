@@ -4,6 +4,10 @@
 Citizen.CreateThread(function()
     SetNuiFocus(false, false)
     TriggerServerEvent("DRP_Core:AddPlayerToTable")
+    if DRPCoreConfig.DiscordLogger then
+        Wait(2500)
+        TriggerServerEvent("DRP_Core:SendJoinDiscordLogs")
+    end
 end)
 ---------------------------------------------------------------------------
 --- Core Functions Dont EDIT BROOO ITS MY NAME CAMONNNN GIMME CREDIIIIIITTTTTTTTTTTTT
@@ -11,7 +15,7 @@ end)
 function AddTextEntry(key, value)
 	Citizen.InvokeNative(`ADD_TEXT_ENTRY`, key, value)
 end
-
+---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     AddTextEntry('PM_SCR_MAP', DRPCoreConfig.ESCMenu["MAP"])
     AddTextEntry('PM_SCR_STA', DRPCoreConfig.ESCMenu["STATUS"])
@@ -63,7 +67,7 @@ Citizen.CreateThread(function()
             item.blip = AddBlipForCoord(item.x, item.y, item.z)
             SetBlipSprite(item.blip, item.id)
             SetBlipColour(item.blip, item.colour)
-            SetBlipScale(item.blip, item.blipSize)
+            SetBlipScale(item.blip, 0.6)
             SetBlipAsShortRange(item.blip, true)
             BeginTextCommandSetBlipName("STRING")
             AddTextComponentString(item.name)
@@ -91,6 +95,11 @@ Citizen.CreateThread(function()
             HideHudComponentThisFrame(4) -- MP CASH
         end
 
+        HideHudComponentThisFrame(19) -- Weapon Wheel
+        HideHudComponentThisFrame(20) -- Weapon Wheel Stats
+        DisableControlAction(0, 37, true) -- Weapon Wheel
+        DisableControlAction(0, 199, true) -- Weapon Wheel
+
         if not DRPCoreConfig.Crosshair then
             if IsHudComponentActive(14) then
                 HideHudComponentThisFrame(14) -- Cross Hair
@@ -116,7 +125,7 @@ function RemoveWeaponDrops()
 		N_0x616093ec6b139dd9(player, pickupList[a], false)
     end
 end
-
+---------------------------------------------------------------------------
 Citizen.CreateThread(function()     
     RemoveWeaponDrops()
 end)

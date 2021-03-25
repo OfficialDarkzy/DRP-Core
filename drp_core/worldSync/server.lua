@@ -66,7 +66,7 @@ function StartTimeChanging()
                 end
                 TriggerClientEvent("DRP_TimeSync:SetTime", -1, hours, minutes)
             end
-            Citizen.Wait(1000)
+            Citizen.Wait(DRPSync.DRPTimeConfig.SecPerMin)
         end
         StartTimeChanging()
     end)

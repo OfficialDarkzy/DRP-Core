@@ -4,9 +4,13 @@ local playerLoadedIn = false
 ---------------------------------------------------------------------------
 --- Functions
 ---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+--- DoesRankHavePerms Export/Function
+---------------------------------------------------------------------------
 function DoesRankHavePerms(rank, perm)
     local playerRank = string.lower(rank)
     local playerPerms = DRPCoreConfig.StaffRanks.perms[playerRank]
+    Wait(500)
     for a = 1, #playerPerms do
         if playerPerms[a] == perm then
             return true
@@ -27,7 +31,7 @@ function fuckOffNonce(player)
             break
         end
     end
-    -- NEED TO ADD A LOGGING SYSTEM HERE 4head
+    -- Add logging here BEFORE we remove them from the table.
     table.remove(Players, tableId)
 end
 ---------------------------------------------------------------------------
@@ -35,28 +39,43 @@ function hasPlayerLoadedIn()
     return playerLoadedIn
 end
 ---------------------------------------------------------------------------
-if DRPCoreConfig.AntiLagSwitch then
-    function lagSwitchTick()
-        if #Players >= 1 then
-            for i = 1, #Players do
-                if hasPlayerLoadedIn() then
-                    if Players[i].firstRun then
-                        Players[i].firstRun = false
-                        TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
+function lagSwitchTick()
+    if #Players >= 1 then
+        for i = 1, #Players do
+            if hasPlayerLoadedIn() then
+                if Players[i].firstRun then
+                    Players[i].firstRun = false
+                    TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
+                else
+                    if Players[i].shouldKick then
+                        fuckOffNonce(Players[i].source)
                     else
-                        if Players[i].shouldKick then
-                            fuckOffNonce(Players[i].source)
-                        else
-                            Players[i].shouldKick = true
-                            TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
-                        end
+                        Players[i].shouldKick = true
+                        TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
                     end
                 end
             end
         end
-        SetTimeout(500, lagSwitchTick)
     end
-    lagSwitchTick()
+    SetTimeout(500, lagSwitchTick)
+end
+lagSwitchTick()
+---------------------------------------------------------------------------
+-- Send to Discord BRAOOOO FUNCS
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+function sendDiscordAlert(details)
+    local messageContent = {
+        {
+            ["colour"] = "3863105",
+            ["title"] = "Darkzy Development Discord Bot",
+            ["description"] = details,
+            ["footer"] = {
+                ["text"] = "Created By Darkzy"
+            },
+        }
+    }
+    PerformHttpRequest(DRPCoreConfig.DiscordWebHook, function(err, text, headers) end, 'POST', json.encode({username = "DRP Admin Logger", embeds = messageContent}), { ['Content-Type'] = 'application/json' })
 end
 ---------------------------------------------------------------------------
 function peopleData(src)
@@ -123,6 +142,7 @@ AddEventHandler("DRP_Core:KickPlayer", function(selectedPlayer, message)
         DropPlayer(selectedPlayer.id, reason)
     end
 end)
+
 ---------------------------------------------------------------------------
 RegisterServerEvent("DRP_Core:BanPlayer")
 AddEventHandler("DRP_Core:BanPlayer", function(selectedPlayer, message, time, permban)
@@ -152,12 +172,12 @@ AddEventHandler("DRP_Core:SetJob", function(values)
     if values.playerid ~= nil and values.job ~= nil then
         if exports["drp_jobcore"]:DoesJobExist(job) then
             local joblabel = exports["drp_jobcore"]:GetJobLabels(job)
-            TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('ChangedJob'):format(values.playerid), 2500, true, "leftCenter")
+            TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('ChangedJob'):format(values.playerid), 2500, true, "centerTop")
             exports["drp_jobcore"]:RequestJobChange(values.playerid, job, joblabel, false)
             TriggerClientEvent("DRP_Core:UpdateAdminMenu", src, values.job, false)
         end
     else
-        TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('NoPlayer'), 2500, true, "leftCenter")
+        TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('NoPlayer'), 2500, true, "centerTop")
     end
 end)
 ---------------------------------------------------------------------------
@@ -189,14 +209,14 @@ AddEventHandler("DRP_Core:SetRank", function(values)
             
             TriggerClientEvent("DRP_Core:UpdateAdminMenu", src, values.rank, true)
             exports["drp_core"]:UpdatePlayerTable(values.playerid, string.lower(values.rank))
-            TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('ChangedJob'):format(values.playerid), 2500, true, "leftCenter")
-            TriggerClientEvent("DRP_Core:Info", values.playerid, locale:GetValue('AdminMenu'), locale:GetValue('NewRank'):format(string.lower(values.rank)), 2500, true, "leftCenter")
+            TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('ChangedJob'):format(values.playerid), 2500, true, "centerTop")
+            TriggerClientEvent("DRP_Core:Info", values.playerid, locale:GetValue('AdminMenu'), locale:GetValue('NewRank'):format(string.lower(values.rank)), 2500, true, "centerTop")
     else
-        TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('NoPlayer'), 2500, true, "leftCenter")
+        TriggerClientEvent("DRP_Core:Info", src, locale:GetValue('AdminMenu'), locale:GetValue('NoPlayer'), 2500, true, "centerTop")
     end
 end)
 ---------------------------------------------------------------------------
--- Lag Switching System @ CREDITS TO SCRUBZ
+-- Lag Switching System
 ---------------------------------------------------------------------------
 RegisterServerEvent('DRP_Core:AddPlayer')
 AddEventHandler('DRP_Core:AddPlayer', function()
@@ -232,4 +252,29 @@ AddEventHandler('playerDropped', function()
             return
         end
     end
+end)
+---------------------------------------------------------------------------
+-- Send to Discord BRAOOOO
+---------------------------------------------------------------------------
+RegisterServerEvent("DRP_Core:SendJoinDiscordLogs")
+AddEventHandler("DRP_Core:SendJoinDiscordLogs", function()
+    local src = source
+    local player = GetPlayerData(src)
+    local ping = GetPlayerPing(src)
+    local ip = GetPlayerEndpoint(src)
+    local otherInfoBits = peopleData(src)
+
+    local discordID = "\n**Discord ID:  ** <@" ..otherInfoBits.discord:gsub("discord:", "")..">"
+    local licence = "\n**License :  ** " ..otherInfoBits.license.. ""
+
+    sendDiscordAlert('**PLAYER JOINED TEMP ID:** '  ..player.id.. '\n **DATABASE PLAYER ID:** ' ..player.playerid.. '\n **PING:** '..ping.. '\n **IP:** ' ..ip.. '\n' ..discordID.. '\n' ..licence.. '')
+end)
+---------------------------------------------------------------------------
+RegisterServerEvent("DRP_Core:SendDiscordGameLogs")
+AddEventHandler("DRP_Core:SendDiscordGameLogs", function(callDetails)
+    local src = source
+    local player = GetPlayerData(src)
+    local character = exports["drp_id"]:GetCharacterData(src)
+
+    sendDiscordGameAlert('**CHARACTER NAME:** '..character.name.. '\n **EMERGENCY CALL DETAILS:** ' ..callDetails)
 end)

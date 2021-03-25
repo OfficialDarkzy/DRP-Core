@@ -13,10 +13,9 @@ games { 'rdr3', 'gta5' }
 ui_page "ui/index.html"
 
 files {
-    "ui/libraries/axios.min.js",
-    "ui/libraries/vue.min.js",
-    "ui/libraries/vuetify.js",
-    "ui/libraries/vuetify.css",
+    "ui/libraries/*.min.js",
+    "ui/libraries/*.js",
+    "ui/libraries/*.css",
     "ui/index.html",
     "ui/style.css",
     "ui/script.js",
@@ -29,7 +28,6 @@ shared_script "shared/shared.lua"
 shared_script "worldSync/config.lua"
 shared_script "config.lua"
 shared_script "managers/networkcallbacks.lua"
-shared_script "managers/clientcallbacks.lua"
 shared_script "locales.lua"
 shared_script "managers/locales.lua"
 
@@ -49,10 +47,3 @@ server_script "server.lua"
 server_script "worldSync/server.lua"
 server_script "admin/server.lua"
 server_script "admin/commands.lua"
-
--- Client Exports
-export "drawText"
-export "GetPlayers"
-
--- Server Exports
-server_export "GetPlayerData"
