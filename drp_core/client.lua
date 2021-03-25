@@ -95,15 +95,17 @@ Citizen.CreateThread(function()
             HideHudComponentThisFrame(4) -- MP CASH
         end
 
-        HideHudComponentThisFrame(19) -- Weapon Wheel
-        HideHudComponentThisFrame(20) -- Weapon Wheel Stats
-        DisableControlAction(0, 37, true) -- Weapon Wheel
-        DisableControlAction(0, 199, true) -- Weapon Wheel
-
         if not DRPCoreConfig.Crosshair then
             if IsHudComponentActive(14) then
                 HideHudComponentThisFrame(14) -- Cross Hair
             end
+        end
+
+        if not DRPCoreConfig.WeaponWheel then
+            HideHudComponentThisFrame(19) -- Weapon Wheel
+            HideHudComponentThisFrame(20) -- Weapon Wheel Stats
+            DisableControlAction(0, 37, true) -- Weapon Wheel
+            DisableControlAction(0, 199, true) -- Weapon Wheel
         end
 ------------------Controller For PED and VEHICLE density!------------------
         SetVehicleDensityMultiplierThisFrame(0.2)
