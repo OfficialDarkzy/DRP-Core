@@ -44,6 +44,12 @@ Citizen.CreateThread(function()
                 if DRPCoreConfig.StopInfiAmmo then
                     SetPedInfiniteAmmoClip(ped, false)
                 end
+		if DRPCoreConfig.StopInGodMode then
+		    isPlayerInvincible = GetPlayerInvincible_2(ped)
+			if isPlayerInvincible then
+				-- DROP HIS FUCKING TEEFS BRUV GET HIM GONE!				
+			end
+		end
                 -- Remove Blacklisted Weapons
                 if DRPCoreConfig.RemoveBlacklistedWeapons then
                     for _,theWeapon in ipairs(DRPCoreConfig.BlackListedWeapons) do
