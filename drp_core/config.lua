@@ -17,6 +17,7 @@ DRPCoreConfig.CommunityName = "Visual" -- This will show when you load into the 
 DRPCoreConfig.MapLocations = true -- This will display all the locations below on the map
 DRPCoreConfig.Crosshair = true -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
 DRPCoreConfig.WeaponWheel = true -- TOGGLE IF YOU WANT THE WEAPON WHEEL OR NOT
+DRPCoreConfig.StopInGodMode = false -- TOGGLE IF YOU WANT PEOPLE TO BE KICKED FOR BEING IN GODMODE OR NOT
 DRPCoreConfig.Voip = false -- TOGGLE IF YOU WANT THE BUILT IN VOIP OR NOT
 DRPCoreConfig.RemovePedWeaponDrops = true -- TOGGLE IF you want to remove all weapons dropped from PEDS that are killed THIS IS WIP
 DRPCoreConfig.DarkzyAllowToLiveDev = true -- TOGGLE If you want to allow Darkzy to join your DRP servers and have full Admin perms (this helps with live development)
