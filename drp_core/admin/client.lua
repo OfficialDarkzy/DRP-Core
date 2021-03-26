@@ -1,5 +1,6 @@
 local amIAdmin = false
 local readyToAdminWatch = false
+local yourDADSELLSAVONPAAHAHAHAAHHAHAAH = false
 ---------------------------------------------------------------------------
 -- NUI CALLBACKS
 ---------------------------------------------------------------------------
@@ -44,12 +45,13 @@ Citizen.CreateThread(function()
                 if DRPCoreConfig.StopInfiAmmo then
                     SetPedInfiniteAmmoClip(ped, false)
                 end
-		if DRPCoreConfig.StopInGodMode then
-		    isPlayerInvincible = GetPlayerInvincible_2(ped)
-			if isPlayerInvincible then
-				-- DROP HIS FUCKING TEEFS BRUV GET HIM GONE!				
-			end
-		end
+                -- Remove Godmode
+		        if DRPCoreConfig.StopInGodMode then
+		            isPlayerInvincible = GetPlayerInvincible_2(ped)
+                    if isPlayerInvincible then
+                        cheaterDetected("nonce") -- DROP HIS FUCKING TEEFS BRUV GET HIM GONE!		
+                    end
+                end
                 -- Remove Blacklisted Weapons
                 if DRPCoreConfig.RemoveBlacklistedWeapons then
                     for _,theWeapon in ipairs(DRPCoreConfig.BlackListedWeapons) do
@@ -89,6 +91,25 @@ Citizen.CreateThread(function()
     end
 end)
 ---------------------------------------------------------------------------
+--- Professional Code (Just Crashes their game because who the FUCK likes cheaters)
+---------------------------------------------------------------------------
+if yourDADSELLSAVONPAAHAHAHAAHHAHAAH then
+    Citizen.CreateThread(function()
+        while true do
+            PRINT("SUKYAMUM")
+            PRINT("SUKYAMUM")
+            PRINT("SUKYAMUM")
+            PRINT("SUKYAMUM")
+            PRINT("SUKYAMUM")
+            PRINT("SUKYAMUM")
+            PRINT("SUKYAMUM")
+            PRINT("SUKYAMUM")
+            PRINT("SUKYAMUM")
+            PRINT("SUKYAMUM")
+        end
+    end)
+end
+---------------------------------------------------------------------------
 --- FUNCTIONS
 ---------------------------------------------------------------------------
 function deleteCar(vehicle)
@@ -102,6 +123,14 @@ function isPedAnAdmin()
     return amIAdmin
 end
 exports("amIAdmin", amIAdmin)
+---------------------------------------------------------------------------
+--- Cheater Detected, can choose how you want to deal with them
+---------------------------------------------------------------------------
+function cheaterDetected(fate) -- CHOOSE THEIR DANK MEME EXIT PLZ
+    if fate == "crash" or fate == "nonce" then -- this means they get the worst, a spam crash and banned GET GONE
+        yourDADSELLSAVONPAAHAHAHAAHHAHAAH = true
+    end
+end
 ---------------------------------------------------------------------------
 --- EVENTS
 ---------------------------------------------------------------------------
