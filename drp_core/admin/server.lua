@@ -39,27 +39,29 @@ function hasPlayerLoadedIn()
     return playerLoadedIn
 end
 ---------------------------------------------------------------------------
-function lagSwitchTick()
-    if #Players >= 1 then
-        for i = 1, #Players do
-            if hasPlayerLoadedIn() then
-                if Players[i].firstRun then
-                    Players[i].firstRun = false
-                    TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
-                else
-                    if Players[i].shouldKick then
-                        fuckOffNonce(Players[i].source)
-                    else
-                        Players[i].shouldKick = true
+if DRPCoreConfig.LagSwitchChecker then
+    function lagSwitchTick()
+        if #Players >= 1 then
+            for i = 1, #Players do
+                if hasPlayerLoadedIn() then
+                    if Players[i].firstRun then
+                        Players[i].firstRun = false
                         TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
+                    else
+                        if Players[i].shouldKick then
+                            fuckOffNonce(Players[i].source)
+                        else
+                            Players[i].shouldKick = true
+                            TriggerClientEvent('DRP_Core:ReceivePing', Players[i].source)
+                        end
                     end
                 end
             end
         end
+        SetTimeout(500, lagSwitchTick)
     end
-    SetTimeout(500, lagSwitchTick)
+    lagSwitchTick()
 end
-lagSwitchTick()
 ---------------------------------------------------------------------------
 -- Send to Discord BRAOOOO FUNCS
 ---------------------------------------------------------------------------
