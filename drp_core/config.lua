@@ -26,6 +26,7 @@ DRPCoreConfig.RemoveBlacklistedWeapons = true -- TOGGLE If you want to stop peop
 DRPCoreConfig.RemoveBlacklistedVehicles = true -- TOGGLE If you want to stop people from spawning and using Blacklisted Vehicles
 DRPCoreConfig.StopNoClipping = true -- TOGGLE If you want to stop people from using NoClip Cheats
 DRPCoreConfig.StopInGodMode = false -- TOGGLE IF YOU WANT PEOPLE TO BE KICKED FOR BEING IN GODMODE OR NOT
+DRPCoreConfig.LagSwitchChecker = false -- TOGGLE IF YOU WANT PEOPLE TO BE KICKED IF THEY HAVE SHIT INTERNET OR ARE TRYING TO LAG SWITCH
 ---------------------------------------------------------------------------
 -- Admin/User Ranks & Permissions EDIT if you know what you're doing, please read the Github WIKI if unsure
 ---------------------------------------------------------------------------
