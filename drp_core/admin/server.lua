@@ -189,7 +189,7 @@ AddEventHandler("DRP_Core:CheckIfAdmin", function()
     local src = source
     local player = GetPlayerData(src)
     if player ~= nil or false then
-        if player.rank == "superadmin" or player.rank == "admin" then
+        if DoesRankHavePerms(player.rank, "adminmenu") then
             areYouAdmin = true
         else
             areYouAdmin = false
