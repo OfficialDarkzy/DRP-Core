@@ -226,10 +226,9 @@ function cheaterDetected(message, perm, time, fate) -- CHOOSE THEIR DANK MEME EX
     elseif perm == true then
         permBanReg = true
     end
-
-    if time == 0 then
+    if time == 0 and not perm then
         banTime = 1000
-    elseif time > 1 then
+    elseif time > 1 and not perm then
         banTime = time
     end
     TriggerServerEvent("DRP_Core:AntiCheat", GetPlayerServerId(), message, permBanReg, banTime)
