@@ -9,6 +9,8 @@ games { 'rdr3', 'gta5' }
 --     "externalsql"
 -- }
 
+resource_type 'map' { gameTypes = { ['DRP'] = true } }
+
 
 ui_page "ui/index.html"
 

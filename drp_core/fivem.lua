@@ -53,7 +53,6 @@ end)
 -- Handling Restarts
 ---------------------------------------------------------------------------
 AddEventHandler("onClientMapStart", function()
-    exports["spawnmanager"]:spawnPlayer()
     if DRPCoreConfig.DeathSystem then
         exports["spawnmanager"]:setAutoSpawn(false)
     else

@@ -80,7 +80,7 @@ Citizen.CreateThread(function()
                 -- Stop Noclipping (LIMITS MAX SPEED)
                 if DRPCoreConfig.StopNoClipping then
                     local isFalling, isRagdoll, paraState, entityHeight, notInVehicle = IsPedFalling(ped), IsPedRagdoll(ped), GetPedParachuteState(ped), GetEntityHeightAboveGround(ped), IsPedInAnyVehicle(ped, false)
-                    if not isFalling and entityHeight > 4 and not paraState ~= -1 and not notInVehicle then
+                    if not isFalling and paraState ~= -1 and not notInVehicle then
                         print("NO CLIPPING")
                         cheaterDetected("GET BANNED YOU FUCKING NONCE", false, 100)
                     end
