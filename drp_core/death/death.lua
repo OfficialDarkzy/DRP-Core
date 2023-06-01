@@ -13,7 +13,7 @@ local deadData = {health = nil, cause = nil, source = nil, time = nil}
 ---------------------------------------------------------------------------
 Citizen.CreateThread(function()
     while true do
-        if exports['drp_id']:SpawnedInAndLoaded() then
+        if DRPCoreConfig.DeathSystem then
             local ped = PlayerPedId()
             health = GetEntityHealth(ped)
             currentHealth = health
@@ -63,6 +63,7 @@ Citizen.CreateThread(function()
                     isInvincible = false
                 end
             end
+
             if health <= 150.00 then
                 RequestAnimSet("move_heist_lester")
                 while not HasAnimSetLoaded("move_heist_lester") do 

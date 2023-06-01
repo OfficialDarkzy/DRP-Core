@@ -3,7 +3,7 @@
 ---------------------------------------------------------------------------
 locale = {}
 local players = {}
-local ConfigID = false
+ConfigID = false
 SetGameType("DRP")
 ---------------------------------------------------------------------------
 -- Resource events
@@ -17,6 +17,10 @@ AddEventHandler('onResourceStarting', function(resourceName)
 	-- Checking if DRP_ID is present
     if (resourceName == "drp_id") then
 		ConfigID = true
+        print("^5[DRP CORE] DRP ID ACTIVE")
+    else
+        ConfigID = false
+        print("^7[DRP CORE] DRP ID NOT ACTIVE")
 	end
 end)
 
@@ -81,7 +85,7 @@ AddEventHandler("playerConnecting", function(playerName, kickReason, deferrals)
                 else
                     banquery = locale:GetValue('BannedTemporary'):format(DRPCoreConfig.CommunityName, isBanned.reason, isBanned.by, math.floor(timeLeft / 60))
                 end
-                deferrals.done(banString)
+                deferrals.done(banquery)
                 return
             end
             deferrals.done()

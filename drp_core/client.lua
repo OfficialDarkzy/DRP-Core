@@ -101,7 +101,7 @@ Citizen.CreateThread(function()
             end
         end
 
-        if not DRPCoreConfig.WeaponWheel then
+        if not DRPCoreConfig.ShowWeaponWheel then
             HideHudComponentThisFrame(19) -- Weapon Wheel
             HideHudComponentThisFrame(20) -- Weapon Wheel Stats
             DisableControlAction(0, 37, true) -- Weapon Wheel

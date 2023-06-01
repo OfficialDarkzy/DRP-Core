@@ -70,6 +70,22 @@ RegisterCommand("weather", function(source, args, raw)
     end
 end, false)
 ---------------------------------------------------------------------------
+--- Heal Yourself USAGE: /giveweapon WEAPONNAME
+---------------------------------------------------------------------------
+RegisterCommand("giveweapon", function(source, args, raw)
+    local src = source
+    local player = GetPlayerData(src)
+    local perm = "giveweapon"
+    if DoesRankHavePerms(player.rank, perm) then
+        print(args[1])
+        if string.upper(args[1]) == "RPG" then
+            TriggerClientEvent("DRP_Core:GiveWeapon", src)
+        else
+            print("ADMIN CAN ONLY DO RPGS")
+        end
+    end 
+end, false)
+---------------------------------------------------------------------------
 --- Heal Yourself USAGE: /heal
 ---------------------------------------------------------------------------
 RegisterCommand("heal", function(source, args, raw)
@@ -183,7 +199,6 @@ RegisterCommand("adminrevive", function(source, args, raw)
     local src = source
     local player = GetPlayerData(src)
     if player ~= false then
-        print("revive")
         if DoesRankHavePerms(player.rank, "revive") then
             if args[1] ~= nil then
                 TriggerClientEvent("DRP_Core:Revive", args[1])

@@ -148,7 +148,6 @@ end)
 ---------------------------------------------------------------------------
 RegisterServerEvent("DRP_Core:BanPlayer")
 AddEventHandler("DRP_Core:BanPlayer", function(selectedPlayer, message, time, permban)
-    print(permban)
     local src = source
     local perm = "ban"
     local player = GetPlayerData(src)
@@ -165,6 +164,24 @@ AddEventHandler("DRP_Core:BanPlayer", function(selectedPlayer, message, time, pe
             data = {identifier = PlayerIdentifier("license", player.id), bandata = new_ban_data}})
         DropPlayer(selectedPlayer.id, reason)
     end
+end)
+---------------------------------------------------------------------------
+RegisterServerEvent("DRP_Core:AntiCheat")
+AddEventHandler("DRP_Core:AntiCheat", function(serverid, message, permban, banTime)
+    local src = source
+    local time = 0
+    print(json.encode(permban))
+    -- local reason = locale:GetValue('BanMessage'):format(GetPlayerName(src), message)
+    local new_ban_data = ""
+    if permban or permban == 1 then
+        new_ban_data = json.encode({time = os.time(), banned = true, reason = message, by = GetPlayerName(src), perm = true})
+    else
+        new_ban_data = json.encode({time = os.time() + banTime, banned = true, reason = message, by = GetPlayerName(src), perm = false})
+    end
+    local updateUsers = exports["externalsql"]:AsyncQuery({
+        query = [[UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier]],
+        data = {identifier = PlayerIdentifier("license", serverid), bandata = new_ban_data}})
+    DropPlayer(serverid, message)
 end)
 ---------------------------------------------------------------------------
 RegisterServerEvent("DRP_Core:SetJob")
