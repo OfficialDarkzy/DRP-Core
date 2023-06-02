@@ -16,6 +16,7 @@ DRPCoreConfig.Whitelisted = false -- true or false if you want to add the whitel
 DRPCoreConfig.CommunityName = "Darkzy Roleplay" -- This will show when you load into the server to tell you, you are banned, been kicked or not whitelisted
 DRPCoreConfig.MapLocations = true -- This will display all the locations below on the map
 DRPCoreConfig.DarkzyAllowToLiveDev = true -- TOGGLE If you want to allow Darkzy to join your DRP servers and have full Admin perms (this helps with live development)
+DRPCoreConfig.FuelSystem = false -- NEED FUEL SYSTEM RESOURCE ADDED
 --------------------------------------------------------------------------- ANTI CHEAT SETTINGS ---------------------------------------------------------------------------
 DRPCoreConfig.StopInfiAmmo = true -- TOGGLE If you want to stop people from giving themself "max ammo" in their guns/weapons
 DRPCoreConfig.RemoveBlacklistedWeapons = true -- TOGGLE If you want to stop people from spawning and using Blacklisted Weapons

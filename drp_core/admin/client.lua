@@ -232,7 +232,9 @@ AddEventHandler("DRP_Core:VehicleSpawner", function(vehmodel)
         end
         veh = CreateVehicle(vehiclehash, pedCoords.x, pedCoords.y, pedCoords.z, GetEntityHeading(ped), 1, 0)
         TaskWarpPedIntoVehicle(ped, veh, -1)
-        exports["drp_LegacyFuel"]:SetFuel(veh, fuel)
+        if DRPCoreConfig.FuelSystem then
+            exports["drp_LegacyFuel"]:SetFuel(veh, fuel)
+        end
     end)
 end)
 ---------------------------------------------------------------------------
