@@ -23,7 +23,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         if readyToAdminWatch then
-            -- if not amIAdmin then
+            if not amIAdmin then
                 local ped = PlayerPedId()
                 -- Remove Max Ammo Spawning
                 if DRPCoreConfig.StopInfiAmmo then
@@ -153,7 +153,7 @@ Citizen.CreateThread(function()
                         print("trying to use vehicle explosives")
                     end
                 end
-            -- end
+            end
         else
             print("Waiting for Admin Ready to watch...")
         end
