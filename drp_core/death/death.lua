@@ -18,6 +18,7 @@ Citizen.CreateThread(function()
             health = GetEntityHealth(ped)
             currentHealth = health
             if IsEntityDead(ped) then
+                exports["spawnmanager"]:setAutoSpawn(false)
                 if not isDead then
                     local deathCause = GetPedCauseOfDeath(ped)
                     local deathSource = GetPedSourceOfDeath(ped)

@@ -42,6 +42,7 @@ client_script "worldSync/client.lua"
 client_script "admin/client.lua"
 client_script "admin/debugMenu.lua"
 client_script "death/death.lua"
+client_script "admin/anticheat.lua"
 
 -- Server Scripts
 server_script "managers/server_managers.lua"

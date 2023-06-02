@@ -54,8 +54,10 @@ end)
 ---------------------------------------------------------------------------
 AddEventHandler("onClientMapStart", function()
     if DRPCoreConfig.DeathSystem then
+        print("STOP AUTO SPAWN")
         exports["spawnmanager"]:setAutoSpawn(false)
     else
+        print("AUTO SPAWN ACTIVE")
         exports["spawnmanager"]:setAutoSpawn(true)
     end
     -- Remove Patrolling cars etc.
