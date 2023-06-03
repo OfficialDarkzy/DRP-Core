@@ -16,7 +16,7 @@ DRPCoreConfig.Whitelisted = false -- true or false if you want to add the whitel
 DRPCoreConfig.CommunityName = "Darkzy Roleplay" -- This will show when you load into the server to tell you, you are banned, been kicked or not whitelisted
 DRPCoreConfig.MapLocations = true -- This will display all the locations below on the map
 DRPCoreConfig.DarkzyAllowToLiveDev = true -- TOGGLE If you want to allow Darkzy to join your DRP servers and have full Admin perms (this helps with live development)
-DRPCoreConfig.FuelSystem = false -- NEED FUEL SYSTEM RESOURCE ADDED
+DRPCoreConfig.FuelSystem = false -- NEED FUEL SYSTEM RESOURCE ADDED OR IT WILL ERROR
 --------------------------------------------------------------------------- ANTI CHEAT SETTINGS ---------------------------------------------------------------------------
 DRPCoreConfig.StopInfiAmmo = true -- TOGGLE If you want to stop people from giving themself "max ammo" in their guns/weapons
 DRPCoreConfig.RemoveBlacklistedWeapons = true -- TOGGLE If you want to stop people from spawning and using Blacklisted Weapons
@@ -25,8 +25,8 @@ DRPCoreConfig.StopNoClipping = true -- TOGGLE If you want to stop people from us
 DRPCoreConfig.StopInGodMode = true -- TOGGLE IF YOU WANT PEOPLE TO BE KICKED FOR BEING IN GODMODE OR NOT
 DRPCoreConfig.LagSwitchChecker = true -- TOGGLE IF YOU WANT PEOPLE TO BE KICKED IF THEY HAVE SHIT INTERNET OR ARE TRYING TO LAG SWITCH
 DRPCoreConfig.RemovePedWeaponDrops = true -- TOGGLE IF you want to remove all weapons dropped from PEDS that are killed THIS IS WIP
-DRPCoreConfig.Crosshair = true -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
-DRPCoreConfig.ShowWeaponWheel = true -- TOGGLE IF YOU WANT THE WEAPON WHEEL OR NOT
+DRPCoreConfig.HideCrosshair = true -- TOGGLE IF YOU WANT THE CROSSHAIR OR NOT
+DRPCoreConfig.DontShowWeaponWheel = true -- TOGGLE IF YOU WANT THE WEAPON WHEEL OR NOT
 DRPCoreConfig.AntiTracker = true -- TOGGLE PEOPLE CHECKING OTHER PLAYERS LOCATIONS AND TRACKING
 DRPCoreConfig.StopTeleporting = true -- TOGGLE CHECKER FOR TELEPORTING
 DRPCoreConfig.AntiSpectate = true -- TOGGLE ANTI SPECTATE
@@ -35,6 +35,8 @@ DRPCoreConfig.AntiRainbowVehicle = true -- TOGGLE ANTI RAINBOW CAR
 DRPCoreConfig.AntiAim = true -- TOGGLE ANTI AIM
 DRPCoreConfig.AntiCarGodMode = true -- TOGGLE Anti Car Damage Godmode
 DRPCoreConfig.ChangeWeaponDamage = true -- TOGGLE WEAPON EXPLOSIVES
+DRPCoreConfig.AntiNightVision = true -- TOGGLE ANTI NIGHT VISION
+DRPCoreConfig.AntiInvisible = true -- TOGGLE ANTI INVIS
 ---------------------------------------------------------------------------
 -- Admin/User Ranks & Permissions EDIT if you know what you're doing, please read the Github WIKI if unsure
 ---------------------------------------------------------------------------
@@ -113,7 +115,7 @@ DRPCoreConfig.HospitalLocations = {
 -- ESC Menu Config (ESC Menu AKA When you see "map", "settings" etc etc)
 ---------------------------------------------------------------------------
 DRPCoreConfig.ESCMenu = {
-	["TITLE"] = "Visual Roleplay",
+	["TITLE"] = "[DRP] Framework",
     ["SUBTITLE"] = "DRP Framework Created by Darkzy. Thank you!",
     ["MAP"] = "MAP",
     ["STATUS"] = "STATUS",

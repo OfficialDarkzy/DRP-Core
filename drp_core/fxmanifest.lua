@@ -2,12 +2,9 @@
    Scripted By: Darkzy
 --]]
 
-fx_version 'adamant'
+fx_version 'cerulean'
 games { 'rdr3', 'gta5' }
 
--- dependencies {
---     "externalsql"
--- }
 
 resource_type 'map' { gameTypes = { ['DRP'] = true } }
 

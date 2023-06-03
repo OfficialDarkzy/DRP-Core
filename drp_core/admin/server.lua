@@ -151,13 +151,14 @@ AddEventHandler("DRP_Core:BanPlayer", function(selectedPlayer, message, time, pe
     local src = source
     local perm = "ban"
     local player = GetPlayerData(src)
+    local banTime = time * 100
     if DoesRankHavePerms(player.rank, perm) then
         local reason = locale:GetValue('BanMessage'):format(GetPlayerName(src), message)
         local new_ban_data = ""
         if permban then
             new_ban_data = json.encode({time = time, banned = true, reason = message, by = GetPlayerName(src), perm = true})
         else
-            new_ban_data = json.encode({time = os.time() + time, banned = true, reason = message, by = GetPlayerName(src), perm = false})
+            new_ban_data = json.encode({time = os.time() + banTime, banned = true, reason = message, by = GetPlayerName(src), perm = false})
         end
         local updateUsers = exports["externalsql"]:AsyncQuery({
             query = [[UPDATE users SET `ban_data` = :bandata WHERE `identifier` = :identifier]],

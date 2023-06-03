@@ -95,13 +95,13 @@ Citizen.CreateThread(function()
             HideHudComponentThisFrame(4) -- MP CASH
         end
 
-        if not DRPCoreConfig.Crosshair then
+        if not DRPCoreConfig.HideCrosshair then
             if IsHudComponentActive(14) then
                 HideHudComponentThisFrame(14) -- Cross Hair
             end
         end
 
-        if not DRPCoreConfig.ShowWeaponWheel then
+        if not DRPCoreConfig.DontShowWeaponWheel then
             HideHudComponentThisFrame(19) -- Weapon Wheel
             HideHudComponentThisFrame(20) -- Weapon Wheel Stats
             DisableControlAction(0, 37, true) -- Weapon Wheel
