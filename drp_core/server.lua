@@ -10,6 +10,7 @@ SetGameType("DRP")
 ---------------------------------------------------------------------------
 AddEventHandler('onResourceStarting', function(resourceName)
 	-- Load locales files before the resource start
+    print(resourceName)
 	if (resourceName ~= GetCurrentResourceName()) then
 		DRP.Locales:AddLocale(resourceName)
 	end
