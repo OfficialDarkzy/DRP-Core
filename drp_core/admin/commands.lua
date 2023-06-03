@@ -39,9 +39,13 @@ RegisterCommand("time", function(source, args, raw)
         if DoesRankHavePerms(player.rank, perm) then
             local hours = tonumber(args[1])
             local minutes = tonumber(args[2])
-            if hours ~= nil and minutes ~= nil then
+            if hours ~= nil then
                 if type(hours) ~= "number" then return end
-                if type(minutes) ~= "number" then return end
+                if minutes == nil then 
+                    minutes = 0
+                elseif minute ~= nil then
+                    if type(minutes) ~= "number" then return end
+                end
                 local results = RemoteSetTime(minutes, hours)
                 TriggerClientEvent("chatMessage", src, tostring(results.msg))
             end
