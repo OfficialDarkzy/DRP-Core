@@ -3,7 +3,7 @@
 ---------------------------------------------------------------------------
 locale = {}
 local players = {}
-ConfigID = false
+local ConfigID = false
 SetGameType("DRP")
 ---------------------------------------------------------------------------
 -- Resource events
@@ -19,9 +19,6 @@ AddEventHandler('onResourceStarting', function(resourceName)
     if (resourceName == "drp_id") then
 		ConfigID = true
         print("^5[DRP CORE] DRP ID ACTIVE")
-    else
-        ConfigID = false
-        print("^7[DRP CORE] DRP ID NOT ACTIVE")
 	end
 end)
 
